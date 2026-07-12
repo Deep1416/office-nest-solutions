@@ -9,38 +9,258 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as VirtualOfficesRouteImport } from './routes/virtual-offices'
+import { Route as BookingStatusRouteImport } from './routes/booking-status'
+import { Route as BlogsRouteImport } from './routes/blogs'
+import { Route as AdminRouteImport } from './routes/admin'
+import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as VirtualOfficesIdRouteImport } from './routes/virtual-offices.$id'
+import { Route as ServicesMailingAddressRouteImport } from './routes/services.mailing-address'
+import { Route as ServicesGstRegistrationRouteImport } from './routes/services.gst-registration'
+import { Route as ServicesEcommerceApobVpobRouteImport } from './routes/services.ecommerce-apob-vpob'
+import { Route as ServicesBusinessRegistrationRouteImport } from './routes/services.business-registration'
+import { Route as LocationsStateRouteImport } from './routes/locations.$state'
+import { Route as BookingOfficeIdRouteImport } from './routes/booking.$officeId'
+import { Route as BlogsSlugRouteImport } from './routes/blogs.$slug'
+import { Route as LocationsStateCityRouteImport } from './routes/locations.$state.$city'
 
+const VirtualOfficesRoute = VirtualOfficesRouteImport.update({
+  id: '/virtual-offices',
+  path: '/virtual-offices',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const BookingStatusRoute = BookingStatusRouteImport.update({
+  id: '/booking-status',
+  path: '/booking-status',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const BlogsRoute = BlogsRouteImport.update({
+  id: '/blogs',
+  path: '/blogs',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminRoute = AdminRouteImport.update({
+  id: '/admin',
+  path: '/admin',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AboutRoute = AboutRouteImport.update({
+  id: '/about',
+  path: '/about',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const VirtualOfficesIdRoute = VirtualOfficesIdRouteImport.update({
+  id: '/$id',
+  path: '/$id',
+  getParentRoute: () => VirtualOfficesRoute,
+} as any)
+const ServicesMailingAddressRoute = ServicesMailingAddressRouteImport.update({
+  id: '/services/mailing-address',
+  path: '/services/mailing-address',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ServicesGstRegistrationRoute = ServicesGstRegistrationRouteImport.update({
+  id: '/services/gst-registration',
+  path: '/services/gst-registration',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ServicesEcommerceApobVpobRoute =
+  ServicesEcommerceApobVpobRouteImport.update({
+    id: '/services/ecommerce-apob-vpob',
+    path: '/services/ecommerce-apob-vpob',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const ServicesBusinessRegistrationRoute =
+  ServicesBusinessRegistrationRouteImport.update({
+    id: '/services/business-registration',
+    path: '/services/business-registration',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const LocationsStateRoute = LocationsStateRouteImport.update({
+  id: '/locations/$state',
+  path: '/locations/$state',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const BookingOfficeIdRoute = BookingOfficeIdRouteImport.update({
+  id: '/booking/$officeId',
+  path: '/booking/$officeId',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const BlogsSlugRoute = BlogsSlugRouteImport.update({
+  id: '/$slug',
+  path: '/$slug',
+  getParentRoute: () => BlogsRoute,
+} as any)
+const LocationsStateCityRoute = LocationsStateCityRouteImport.update({
+  id: '/$city',
+  path: '/$city',
+  getParentRoute: () => LocationsStateRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/about': typeof AboutRoute
+  '/admin': typeof AdminRoute
+  '/blogs': typeof BlogsRouteWithChildren
+  '/booking-status': typeof BookingStatusRoute
+  '/virtual-offices': typeof VirtualOfficesRouteWithChildren
+  '/blogs/$slug': typeof BlogsSlugRoute
+  '/booking/$officeId': typeof BookingOfficeIdRoute
+  '/locations/$state': typeof LocationsStateRouteWithChildren
+  '/services/business-registration': typeof ServicesBusinessRegistrationRoute
+  '/services/ecommerce-apob-vpob': typeof ServicesEcommerceApobVpobRoute
+  '/services/gst-registration': typeof ServicesGstRegistrationRoute
+  '/services/mailing-address': typeof ServicesMailingAddressRoute
+  '/virtual-offices/$id': typeof VirtualOfficesIdRoute
+  '/locations/$state/$city': typeof LocationsStateCityRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/about': typeof AboutRoute
+  '/admin': typeof AdminRoute
+  '/blogs': typeof BlogsRouteWithChildren
+  '/booking-status': typeof BookingStatusRoute
+  '/virtual-offices': typeof VirtualOfficesRouteWithChildren
+  '/blogs/$slug': typeof BlogsSlugRoute
+  '/booking/$officeId': typeof BookingOfficeIdRoute
+  '/locations/$state': typeof LocationsStateRouteWithChildren
+  '/services/business-registration': typeof ServicesBusinessRegistrationRoute
+  '/services/ecommerce-apob-vpob': typeof ServicesEcommerceApobVpobRoute
+  '/services/gst-registration': typeof ServicesGstRegistrationRoute
+  '/services/mailing-address': typeof ServicesMailingAddressRoute
+  '/virtual-offices/$id': typeof VirtualOfficesIdRoute
+  '/locations/$state/$city': typeof LocationsStateCityRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/about': typeof AboutRoute
+  '/admin': typeof AdminRoute
+  '/blogs': typeof BlogsRouteWithChildren
+  '/booking-status': typeof BookingStatusRoute
+  '/virtual-offices': typeof VirtualOfficesRouteWithChildren
+  '/blogs/$slug': typeof BlogsSlugRoute
+  '/booking/$officeId': typeof BookingOfficeIdRoute
+  '/locations/$state': typeof LocationsStateRouteWithChildren
+  '/services/business-registration': typeof ServicesBusinessRegistrationRoute
+  '/services/ecommerce-apob-vpob': typeof ServicesEcommerceApobVpobRoute
+  '/services/gst-registration': typeof ServicesGstRegistrationRoute
+  '/services/mailing-address': typeof ServicesMailingAddressRoute
+  '/virtual-offices/$id': typeof VirtualOfficesIdRoute
+  '/locations/$state/$city': typeof LocationsStateCityRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/about'
+    | '/admin'
+    | '/blogs'
+    | '/booking-status'
+    | '/virtual-offices'
+    | '/blogs/$slug'
+    | '/booking/$officeId'
+    | '/locations/$state'
+    | '/services/business-registration'
+    | '/services/ecommerce-apob-vpob'
+    | '/services/gst-registration'
+    | '/services/mailing-address'
+    | '/virtual-offices/$id'
+    | '/locations/$state/$city'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/about'
+    | '/admin'
+    | '/blogs'
+    | '/booking-status'
+    | '/virtual-offices'
+    | '/blogs/$slug'
+    | '/booking/$officeId'
+    | '/locations/$state'
+    | '/services/business-registration'
+    | '/services/ecommerce-apob-vpob'
+    | '/services/gst-registration'
+    | '/services/mailing-address'
+    | '/virtual-offices/$id'
+    | '/locations/$state/$city'
+  id:
+    | '__root__'
+    | '/'
+    | '/about'
+    | '/admin'
+    | '/blogs'
+    | '/booking-status'
+    | '/virtual-offices'
+    | '/blogs/$slug'
+    | '/booking/$officeId'
+    | '/locations/$state'
+    | '/services/business-registration'
+    | '/services/ecommerce-apob-vpob'
+    | '/services/gst-registration'
+    | '/services/mailing-address'
+    | '/virtual-offices/$id'
+    | '/locations/$state/$city'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AboutRoute: typeof AboutRoute
+  AdminRoute: typeof AdminRoute
+  BlogsRoute: typeof BlogsRouteWithChildren
+  BookingStatusRoute: typeof BookingStatusRoute
+  VirtualOfficesRoute: typeof VirtualOfficesRouteWithChildren
+  BookingOfficeIdRoute: typeof BookingOfficeIdRoute
+  LocationsStateRoute: typeof LocationsStateRouteWithChildren
+  ServicesBusinessRegistrationRoute: typeof ServicesBusinessRegistrationRoute
+  ServicesEcommerceApobVpobRoute: typeof ServicesEcommerceApobVpobRoute
+  ServicesGstRegistrationRoute: typeof ServicesGstRegistrationRoute
+  ServicesMailingAddressRoute: typeof ServicesMailingAddressRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/virtual-offices': {
+      id: '/virtual-offices'
+      path: '/virtual-offices'
+      fullPath: '/virtual-offices'
+      preLoaderRoute: typeof VirtualOfficesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/booking-status': {
+      id: '/booking-status'
+      path: '/booking-status'
+      fullPath: '/booking-status'
+      preLoaderRoute: typeof BookingStatusRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/blogs': {
+      id: '/blogs'
+      path: '/blogs'
+      fullPath: '/blogs'
+      preLoaderRoute: typeof BlogsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin': {
+      id: '/admin'
+      path: '/admin'
+      fullPath: '/admin'
+      preLoaderRoute: typeof AdminRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/about': {
+      id: '/about'
+      path: '/about'
+      fullPath: '/about'
+      preLoaderRoute: typeof AboutRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -48,22 +268,120 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/virtual-offices/$id': {
+      id: '/virtual-offices/$id'
+      path: '/$id'
+      fullPath: '/virtual-offices/$id'
+      preLoaderRoute: typeof VirtualOfficesIdRouteImport
+      parentRoute: typeof VirtualOfficesRoute
+    }
+    '/services/mailing-address': {
+      id: '/services/mailing-address'
+      path: '/services/mailing-address'
+      fullPath: '/services/mailing-address'
+      preLoaderRoute: typeof ServicesMailingAddressRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/services/gst-registration': {
+      id: '/services/gst-registration'
+      path: '/services/gst-registration'
+      fullPath: '/services/gst-registration'
+      preLoaderRoute: typeof ServicesGstRegistrationRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/services/ecommerce-apob-vpob': {
+      id: '/services/ecommerce-apob-vpob'
+      path: '/services/ecommerce-apob-vpob'
+      fullPath: '/services/ecommerce-apob-vpob'
+      preLoaderRoute: typeof ServicesEcommerceApobVpobRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/services/business-registration': {
+      id: '/services/business-registration'
+      path: '/services/business-registration'
+      fullPath: '/services/business-registration'
+      preLoaderRoute: typeof ServicesBusinessRegistrationRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/locations/$state': {
+      id: '/locations/$state'
+      path: '/locations/$state'
+      fullPath: '/locations/$state'
+      preLoaderRoute: typeof LocationsStateRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/booking/$officeId': {
+      id: '/booking/$officeId'
+      path: '/booking/$officeId'
+      fullPath: '/booking/$officeId'
+      preLoaderRoute: typeof BookingOfficeIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/blogs/$slug': {
+      id: '/blogs/$slug'
+      path: '/$slug'
+      fullPath: '/blogs/$slug'
+      preLoaderRoute: typeof BlogsSlugRouteImport
+      parentRoute: typeof BlogsRoute
+    }
+    '/locations/$state/$city': {
+      id: '/locations/$state/$city'
+      path: '/$city'
+      fullPath: '/locations/$state/$city'
+      preLoaderRoute: typeof LocationsStateCityRouteImport
+      parentRoute: typeof LocationsStateRoute
+    }
   }
 }
 
+interface BlogsRouteChildren {
+  BlogsSlugRoute: typeof BlogsSlugRoute
+}
+
+const BlogsRouteChildren: BlogsRouteChildren = {
+  BlogsSlugRoute: BlogsSlugRoute,
+}
+
+const BlogsRouteWithChildren = BlogsRoute._addFileChildren(BlogsRouteChildren)
+
+interface VirtualOfficesRouteChildren {
+  VirtualOfficesIdRoute: typeof VirtualOfficesIdRoute
+}
+
+const VirtualOfficesRouteChildren: VirtualOfficesRouteChildren = {
+  VirtualOfficesIdRoute: VirtualOfficesIdRoute,
+}
+
+const VirtualOfficesRouteWithChildren = VirtualOfficesRoute._addFileChildren(
+  VirtualOfficesRouteChildren,
+)
+
+interface LocationsStateRouteChildren {
+  LocationsStateCityRoute: typeof LocationsStateCityRoute
+}
+
+const LocationsStateRouteChildren: LocationsStateRouteChildren = {
+  LocationsStateCityRoute: LocationsStateCityRoute,
+}
+
+const LocationsStateRouteWithChildren = LocationsStateRoute._addFileChildren(
+  LocationsStateRouteChildren,
+)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AboutRoute: AboutRoute,
+  AdminRoute: AdminRoute,
+  BlogsRoute: BlogsRouteWithChildren,
+  BookingStatusRoute: BookingStatusRoute,
+  VirtualOfficesRoute: VirtualOfficesRouteWithChildren,
+  BookingOfficeIdRoute: BookingOfficeIdRoute,
+  LocationsStateRoute: LocationsStateRouteWithChildren,
+  ServicesBusinessRegistrationRoute: ServicesBusinessRegistrationRoute,
+  ServicesEcommerceApobVpobRoute: ServicesEcommerceApobVpobRoute,
+  ServicesGstRegistrationRoute: ServicesGstRegistrationRoute,
+  ServicesMailingAddressRoute: ServicesMailingAddressRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { startInstance } from './start.ts'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-    config: Awaited<ReturnType<typeof startInstance.getOptions>>
-  }
-}
