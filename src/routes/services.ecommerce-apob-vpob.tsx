@@ -3,7 +3,7 @@ import { ShoppingBag, Truck, Shield, MapPin } from "lucide-react";
 import { ServicePage } from "@/components/ServicePage";
 
 export const Route = createFileRoute("/services/ecommerce-apob-vpob")({
-  head: () => ({ meta: [{ title: "Ecommerce APoB / VPoB — OfficeNest" }, { name: "description", content: "Additional / Virtual Place of Business for Amazon, Flipkart, Meesho sellers — with GST-ready addresses." }] }),
+  head: () => ({ meta: [{ title: "Ecommerce APoB / VPoB — OfficeMate" }, { name: "description", content: "Additional / Virtual Place of Business for Amazon, Flipkart, Meesho sellers — with GST-ready addresses." }] }),
   component: () => (
     <ServicePage
       slug="ecommerce-apob-vpob"

@@ -14,7 +14,7 @@ export function Footer() {
         <div className="lg:col-span-2 space-y-4">
           <div className="[&_span]:!text-white"><Logo /></div>
           <p className="max-w-sm text-sm text-white/70">
-            {BRAND.tagline}. OfficeNest helps founders, sellers and consultants set up compliant business addresses across India — faster, cheaper and simpler.
+            {BRAND.tagline}. OfficeMate helps founders, sellers and consultants set up compliant business addresses across India — faster, cheaper and simpler.
           </p>
           <div className="space-y-2 text-sm text-white/70">
             <div className="flex items-center gap-2"><Phone className="h-4 w-4" /> {BRAND.phone}</div>
@@ -48,7 +48,7 @@ export function Footer() {
       <div className="border-t border-white/10">
         <div className="container-x flex flex-col gap-4 py-6 md:flex-row md:items-center md:justify-between">
           <form
-            onSubmit={(e) => { e.preventDefault(); toast.success("Subscribed to the OfficeNest newsletter"); (e.target as HTMLFormElement).reset(); }}
+            onSubmit={(e) => { e.preventDefault(); toast.success("Subscribed to the OfficeMate newsletter"); (e.target as HTMLFormElement).reset(); }}
             className="flex w-full max-w-md items-center gap-2"
           >
             <Input required type="email" placeholder="Your email" className="bg-white/10 border-white/20 text-white placeholder:text-white/50" />

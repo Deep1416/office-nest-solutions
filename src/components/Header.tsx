@@ -135,7 +135,7 @@ export function MobileStickyBar() {
       <a href={`tel:${BRAND.phone}`} className="flex items-center justify-center gap-2 py-3 text-sm font-semibold text-navy">
         <Phone className="h-4 w-4" /> Call
       </a>
-      <a href={whatsappUrl("Hello OfficeNest, I'd like to know more about your virtual office services.")} target="_blank" rel="noreferrer" className="flex items-center justify-center gap-2 bg-success py-3 text-sm font-semibold text-success-foreground">
+      <a href={whatsappUrl("Hello OfficeMate, I'd like to know more about your virtual office services.")} target="_blank" rel="noreferrer" className="flex items-center justify-center gap-2 bg-success py-3 text-sm font-semibold text-success-foreground">
         WhatsApp
       </a>
     </div>

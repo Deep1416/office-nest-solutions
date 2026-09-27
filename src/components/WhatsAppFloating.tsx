@@ -2,7 +2,7 @@ import { MessageCircle } from "lucide-react";
 import { whatsappUrl } from "@/lib/config";
 
 export function WhatsAppFloating({ message }: { message?: string }) {
-  const msg = message ?? "Hello OfficeNest, I am interested in a virtual office. Please share more details.";
+  const msg = message ?? "Hello OfficeMate, I am interested in a virtual office. Please share more details.";
   return (
     <a
       href={whatsappUrl(msg)}

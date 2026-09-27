@@ -6,7 +6,7 @@ import { Badge } from "@/components/ui/badge";
 import { BLOGS } from "@/lib/mock-data";
 
 export const Route = createFileRoute("/blogs")({
-  head: () => ({ meta: [{ title: "OfficeNest Blog — Guides on Virtual Offices, GST & Registration" }, { name: "description", content: "Practical guides for Indian founders on virtual offices, GST, company registration and ecommerce expansion." }] }),
+  head: () => ({ meta: [{ title: "OfficeMate Blog — Guides on Virtual Offices, GST & Registration" }, { name: "description", content: "Practical guides for Indian founders on virtual offices, GST, company registration and ecommerce expansion." }] }),
   component: Blogs,
 });
 

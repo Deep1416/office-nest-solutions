@@ -1,4 +1,4 @@
-// DEMO DATA — realistic-looking sample content for the OfficeNest demo. Not real listings.
+// DEMO DATA — realistic-looking sample content for the OfficeMate demo. Not real listings.
 
 export type ServiceType = "business-registration" | "gst-registration" | "mailing-address";
 
@@ -116,7 +116,7 @@ export const SERVICES = [
 ];
 
 export const TESTIMONIALS = [
-  { name: "Ananya Rao", company: "Kite Analytics", initials: "AR", rating: 5, feedback: "OfficeNest set up our GST address in three cities in under a week. Documentation was flawless." },
+  { name: "Ananya Rao", company: "Kite Analytics", initials: "AR", rating: 5, feedback: "OfficeMate set up our GST address in three cities in under a week. Documentation was flawless." },
   { name: "Rohit Menon", company: "Foldcart Retail", initials: "RM", rating: 5, feedback: "Perfect for our ecommerce APOB needs. Their team walked us through every step of Amazon onboarding." },
   { name: "Priya Shankar", company: "LumenLabs", initials: "PS", rating: 5, feedback: "Registered our private limited company at their Bengaluru address — smooth and professional." },
   { name: "Vikram Singh", company: "Bluewave Consulting", initials: "VS", rating: 5, feedback: "The dedicated account manager made everything easy. Courier handling has been reliable for months." },

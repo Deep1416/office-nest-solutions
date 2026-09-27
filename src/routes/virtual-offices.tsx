@@ -13,7 +13,7 @@ import { OfficeCard } from "@/components/OfficeCard";
 export const Route = createFileRoute("/virtual-offices")({
   head: () => ({
     meta: [
-      { title: "Virtual Offices Across India — OfficeNest" },
+      { title: "Virtual Offices Across India — OfficeMate" },
       { name: "description", content: "Search, compare and book verified virtual offices for GST, business registration and mailing across Indian cities." },
     ],
   }),

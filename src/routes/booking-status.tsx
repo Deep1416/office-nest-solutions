@@ -9,7 +9,7 @@ import { bookingsStore, type Booking } from "@/lib/storage";
 import { inr } from "@/lib/mock-data";
 
 export const Route = createFileRoute("/booking-status")({
-  head: () => ({ meta: [{ title: "Check Booking Status — OfficeNest" }, { name: "description", content: "Track your OfficeNest virtual office booking with your reference number." }] }),
+  head: () => ({ meta: [{ title: "Check Booking Status — OfficeMate" }, { name: "description", content: "Track your OfficeMate virtual office booking with your reference number." }] }),
   component: Page,
 });
 

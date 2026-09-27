@@ -3,7 +3,7 @@ import { FileText, Shield, Zap, Users } from "lucide-react";
 import { ServicePage } from "@/components/ServicePage";
 
 export const Route = createFileRoute("/services/business-registration")({
-  head: () => ({ meta: [{ title: "Business Registration Services — OfficeNest" }, { name: "description", content: "Register your Pvt Ltd, LLP or OPC at a verified OfficeNest address across India." }] }),
+  head: () => ({ meta: [{ title: "Business Registration Services — OfficeMate" }, { name: "description", content: "Register your Pvt Ltd, LLP or OPC at a verified OfficeMate address across India." }] }),
   component: () => (
     <ServicePage
       slug="business-registration"

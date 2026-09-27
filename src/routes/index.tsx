@@ -133,7 +133,7 @@ function Home() {
       </Section>
 
       {/* HOW IT WORKS */}
-      <Section title="How OfficeNest works" sub="Get your business address live in five simple steps.">
+      <Section title="How OfficeMate works" sub="Get your business address live in five simple steps.">
         <ol className="grid gap-6 lg:grid-cols-5">
           {[
             ["Select location", "Pick from 50+ cities"],
@@ -157,7 +157,7 @@ function Home() {
       </Section>
 
       {/* WHY US */}
-      <Section title="Why choose OfficeNest" muted>
+      <Section title="Why choose OfficeMate" muted>
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {[
             [Sparkles, "Quick address setup", "Live in 24–72 hours across most cities."],

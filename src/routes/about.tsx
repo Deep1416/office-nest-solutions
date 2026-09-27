@@ -3,7 +3,7 @@ import { Target, Eye, Heart, MapPin, Users, TrendingUp } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 export const Route = createFileRoute("/about")({
-  head: () => ({ meta: [{ title: "About OfficeNest — Virtual Offices Across India" }, { name: "description", content: "OfficeNest helps founders, freelancers and sellers set up compliant business addresses in 50+ Indian cities." }] }),
+  head: () => ({ meta: [{ title: "About OfficeMate — Virtual Offices Across India" }, { name: "description", content: "OfficeMate helps founders, freelancers and sellers set up compliant business addresses in 50+ Indian cities." }] }),
   component: About,
 });
 
@@ -14,7 +14,7 @@ function About() {
         <div className="container-x py-16 max-w-3xl">
           <h1 className="text-4xl font-extrabold sm:text-5xl">Making pan-India business simple.</h1>
           <p className="mt-4 text-lg text-muted-foreground">
-            OfficeNest is a demo virtual-office marketplace connecting founders, freelancers, ecommerce sellers and consultants with verified business addresses across India. Register companies, get GST-ready and manage mail without leasing physical space.
+            OfficeMate is a demo virtual-office marketplace connecting founders, freelancers, ecommerce sellers and consultants with verified business addresses across India. Register companies, get GST-ready and manage mail without leasing physical space.
           </p>
         </div>
       </section>

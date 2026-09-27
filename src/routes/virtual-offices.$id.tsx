@@ -16,7 +16,7 @@ export const Route = createFileRoute("/virtual-offices/$id")({
   },
   head: ({ loaderData }) => ({
     meta: [
-      { title: `${loaderData?.office.name ?? "Office"} — OfficeNest` },
+      { title: `${loaderData?.office.name ?? "Office"} — OfficeMate` },
       { name: "description", content: loaderData?.office.description.slice(0, 160) ?? "" },
     ],
   }),

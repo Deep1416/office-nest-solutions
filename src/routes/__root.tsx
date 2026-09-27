@@ -55,12 +55,12 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "OfficeNest — Virtual Offices & Business Addresses Across India" },
+      { title: "OfficeMate — Virtual Offices & Business Addresses Across India" },
       { name: "description", content: "Book virtual offices, GST registration and business addresses across 50+ Indian cities. Transparent pricing, verified documentation, dedicated support." },
-      { property: "og:title", content: "OfficeNest — Virtual Offices Across India" },
+      { property: "og:title", content: "OfficeMate — Virtual Offices Across India" },
       { property: "og:description", content: "Your business address, anywhere in India. Virtual offices for GST, company registration and mailing." },
       { property: "og:type", content: "website" },
-      { property: "og:site_name", content: "OfficeNest" },
+      { property: "og:site_name", content: "OfficeMate" },
       { name: "twitter:card", content: "summary_large_image" },
     ],
     links: [

@@ -3,7 +3,7 @@ import { Mail, Package, Building2, Shield } from "lucide-react";
 import { ServicePage } from "@/components/ServicePage";
 
 export const Route = createFileRoute("/services/mailing-address")({
-  head: () => ({ meta: [{ title: "Professional Mailing Address — OfficeNest" }, { name: "description", content: "A trustworthy business mailing address with courier handling and reception support." }] }),
+  head: () => ({ meta: [{ title: "Professional Mailing Address — OfficeMate" }, { name: "description", content: "A trustworthy business mailing address with courier handling and reception support." }] }),
   component: () => (
     <ServicePage
       slug="mailing-address"

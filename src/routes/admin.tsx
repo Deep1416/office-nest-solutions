@@ -11,7 +11,7 @@ import { OFFICES, inr } from "@/lib/mock-data";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
 export const Route = createFileRoute("/admin")({
-  head: () => ({ meta: [{ title: "Admin — OfficeNest" }, { name: "robots", content: "noindex" }] }),
+  head: () => ({ meta: [{ title: "Admin — OfficeMate" }, { name: "robots", content: "noindex" }] }),
   component: Admin,
 });
 
@@ -87,7 +87,7 @@ function Login({ onLogin }: { onLogin: () => void }) {
         <h1 className="mt-4 text-xl font-bold">Admin Login</h1>
         <p className="text-xs text-muted-foreground">Demo — any credentials will work.</p>
         <div className="mt-4 grid gap-3">
-          <div className="grid gap-1.5"><Label>Email</Label><Input type="email" defaultValue="admin@officenest.in" /></div>
+          <div className="grid gap-1.5"><Label>Email</Label><Input type="email" defaultValue="admin@officemate.in" /></div>
           <div className="grid gap-1.5"><Label>Password</Label><Input type="password" defaultValue="demo1234" /></div>
           <Button type="submit" className="bg-primary">Sign in</Button>
         </div>

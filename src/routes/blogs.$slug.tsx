@@ -10,7 +10,7 @@ export const Route = createFileRoute("/blogs/$slug")({
   },
   head: ({ loaderData }) => ({
     meta: [
-      { title: `${loaderData?.post.title ?? "Blog"} — OfficeNest` },
+      { title: `${loaderData?.post.title ?? "Blog"} — OfficeMate` },
       { name: "description", content: loaderData?.post.excerpt ?? "" },
       { property: "og:title", content: loaderData?.post.title ?? "" },
       { property: "og:image", content: loaderData?.post.image ?? "" },

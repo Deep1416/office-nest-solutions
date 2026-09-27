@@ -12,7 +12,7 @@ export const Route = createFileRoute("/locations/$state")({
   },
   head: ({ params }) => ({
     meta: [
-      { title: `Virtual Offices in ${params.state.replace(/-/g, " ")} — OfficeNest` },
+      { title: `Virtual Offices in ${params.state.replace(/-/g, " ")} — OfficeMate` },
       { name: "description", content: `Explore virtual office locations across ${params.state.replace(/-/g, " ")}.` },
     ],
   }),

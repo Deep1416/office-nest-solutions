@@ -13,9 +13,9 @@ export const Route = createFileRoute("/locations/$state/$city")({
   },
   head: ({ loaderData, params }) => ({
     meta: [
-      { title: `Virtual Office in ${loaderData?.city.name ?? params.city} — OfficeNest` },
+      { title: `Virtual Office in ${loaderData?.city.name ?? params.city} — OfficeMate` },
       { name: "description", content: `Book a verified virtual office in ${loaderData?.city.name ?? params.city}. GST, business registration & mailing addresses starting at ${inr(loaderData?.city.startingPrice ?? 999)}.` },
-      { property: "og:title", content: `Virtual Office in ${loaderData?.city.name ?? ""} — OfficeNest` },
+      { property: "og:title", content: `Virtual Office in ${loaderData?.city.name ?? ""} — OfficeMate` },
     ],
     links: [{ rel: "canonical", href: `/locations/${params.state}/${params.city}` }],
     scripts: loaderData ? [{
@@ -23,7 +23,7 @@ export const Route = createFileRoute("/locations/$state/$city")({
       children: JSON.stringify({
         "@context": "https://schema.org",
         "@type": "LocalBusiness",
-        name: `OfficeNest ${loaderData.city.name}`,
+        name: `OfficeMate ${loaderData.city.name}`,
         address: { "@type": "PostalAddress", addressLocality: loaderData.city.name, addressRegion: loaderData.city.state, addressCountry: "IN" },
       }),
     }] : [],
