@@ -3,8 +3,7 @@ import { useState } from "react";
 import { Search, MapPin, Building2, ArrowRight, Shield, Sparkles, Wallet, Users, FileText, Receipt, Mail, ShoppingBag, ClipboardList, Award, RefreshCcw, HeadphonesIcon, BadgeCheck } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { CITIES, STATES, SERVICES, PURPOSES, inr } from "@/lib/mock-data";
+import { CITIES, SERVICES, inr } from "@/lib/mock-data";
 import { PricingTable } from "@/components/PricingTable";
 import { KycTabs } from "@/components/KycTabs";
 import { TestimonialsCarousel } from "@/components/TestimonialsCarousel";
@@ -20,67 +19,45 @@ const ICONS = { Building2, FileText, Receipt, Mail, ShoppingBag, Users };
 
 function Home() {
   const [state, setState] = useState("");
-  const [city, setCity] = useState("");
-  const [purpose, setPurpose] = useState("");
-  const cityOptions = state ? CITIES.filter(c => c.stateSlug === state) : CITIES;
 
   return (
     <>
       {/* HERO */}
       <section className="relative overflow-hidden bg-gradient-to-b from-surface to-background">
-        <div className="container-x grid gap-10 py-14 lg:grid-cols-2 lg:py-20">
-          <div>
-            <Badge variant="secondary" className="rounded-full bg-primary/10 text-primary hover:bg-primary/10"><Sparkles className="mr-1.5 h-3 w-3" /> PAN-India Virtual Office Solutions</Badge>
-            <h1 className="mt-4 text-4xl font-extrabold leading-[1.1] tracking-tight sm:text-5xl lg:text-6xl">
-              Build Your Business Presence <span className="text-primary">Across India</span>
-            </h1>
-            <p className="mt-4 max-w-xl text-base text-muted-foreground">
-              Professional business addresses in 50+ cities. Get GST-ready, register your company, and manage mail — all without leasing physical space.
-            </p>
-            <div className="mt-6 flex flex-wrap gap-3">
-              <Button asChild size="lg" className="bg-primary"><Link to="/virtual-offices">Find Virtual Office <ArrowRight className="ml-1 h-4 w-4" /></Link></Button>
-              <CallbackTrigger>
-                <Button size="lg" variant="outline">Request Free Consultation</Button>
-              </CallbackTrigger>
-            </div>
-            <div className="mt-8 grid grid-cols-2 gap-4 sm:grid-cols-4">
-              {[
-                ["50+", "Cities"], ["24-72h", "Setup"], ["Dedicated", "Support"], ["Transparent", "Pricing"],
-              ].map(([a, b]) => (
-                <div key={a}><div className="text-lg font-extrabold text-navy">{a}</div><div className="text-xs text-muted-foreground">{b}</div></div>
-              ))}
-            </div>
+        <div className="container-x flex flex-col items-center py-16 text-center lg:py-24">
+          <Badge variant="secondary" className="rounded-full bg-primary/10 text-primary hover:bg-primary/10"><Sparkles className="mr-1.5 h-3 w-3" /> PAN-India Virtual Office Solutions</Badge>
+          <h1 className="mt-4 max-w-3xl text-4xl font-extrabold leading-[1.1] tracking-tight sm:text-5xl lg:text-6xl">
+            Build Your Business Presence <span className="text-primary">Across India</span>
+          </h1>
+          <p className="mt-4 max-w-xl text-base text-muted-foreground">
+            Professional business addresses in 50+ cities. Get GST-ready, register your company, and manage mail — all without leasing physical space.
+          </p>
+          <div className="mt-6 flex flex-wrap justify-center gap-3">
+            <Button asChild size="lg" className="bg-primary"><Link to="/virtual-offices">Find Virtual Office <ArrowRight className="ml-1 h-4 w-4" /></Link></Button>
+            <CallbackTrigger>
+              <Button size="lg" variant="outline">Request Free Consultation</Button>
+            </CallbackTrigger>
           </div>
-          <div className="relative">
-            <div className="absolute -inset-6 -z-10 rounded-3xl bg-gradient-to-br from-primary/10 to-orange/10 blur-2xl" />
-            <img src="https://images.unsplash.com/photo-1497215842964-222b430dc094?w=1200&auto=format&fit=crop&q=60" alt="Modern office" className="w-full rounded-2xl object-cover shadow-elevated" />
-          </div>
-        </div>
 
-        {/* Search panel */}
-        <div className="container-x -mt-6 pb-10">
-          <div className="card-soft grid gap-3 p-4 sm:p-6 lg:grid-cols-[1fr_1fr_1fr_auto]">
-            <Field label="State">
-              <Select value={state} onValueChange={(v) => { setState(v); setCity(""); }}>
-                <SelectTrigger><SelectValue placeholder="Choose state" /></SelectTrigger>
-                <SelectContent>{STATES.map(s => <SelectItem key={s.slug} value={s.slug}>{s.name}</SelectItem>)}</SelectContent>
-              </Select>
-            </Field>
-            <Field label="City">
-              <Select value={city} onValueChange={setCity}>
-                <SelectTrigger><SelectValue placeholder="Choose city" /></SelectTrigger>
-                <SelectContent>{cityOptions.map(c => <SelectItem key={c.slug} value={c.slug}>{c.name}</SelectItem>)}</SelectContent>
-              </Select>
-            </Field>
-            <Field label="Purpose">
-              <Select value={purpose} onValueChange={setPurpose}>
-                <SelectTrigger><SelectValue placeholder="What do you need?" /></SelectTrigger>
-                <SelectContent>{PURPOSES.map(p => <SelectItem key={p.value} value={p.value}>{p.label}</SelectItem>)}</SelectContent>
-              </Select>
-            </Field>
-            <Button asChild size="lg" className="bg-orange text-orange-foreground hover:bg-orange/90">
-              <Link to="/virtual-offices" search={{}}><Search className="mr-1 h-4 w-4" /> Search</Link>
+          {/* Centered search bar */}
+          <div className="mt-10 flex w-full max-w-xl items-center gap-2 rounded-full border bg-white p-2 shadow-elevated">
+            <input
+              value={state}
+              onChange={(e) => setState(e.target.value)}
+              placeholder="Search state"
+              className="h-11 flex-1 rounded-full bg-transparent px-4 text-sm outline-none placeholder:text-muted-foreground"
+            />
+            <Button asChild size="icon" className="h-11 w-11 shrink-0 rounded-full bg-orange text-orange-foreground hover:bg-orange/90">
+              <Link to="/virtual-offices" search={{}}><Search className="h-5 w-5" /></Link>
             </Button>
+          </div>
+
+          <div className="mt-10 grid grid-cols-2 gap-8 sm:grid-cols-4">
+            {[
+              ["50+", "Cities"], ["24-72h", "Setup"], ["Dedicated", "Support"], ["Transparent", "Pricing"],
+            ].map(([a, b]) => (
+              <div key={a}><div className="text-lg font-extrabold text-navy">{a}</div><div className="text-xs text-muted-foreground">{b}</div></div>
+            ))}
           </div>
         </div>
       </section>
@@ -232,14 +209,5 @@ function Section({ title, sub, muted, children }: { title: string; sub?: string;
         {children}
       </div>
     </section>
-  );
-}
-
-function Field({ label, children }: { label: string; children: React.ReactNode }) {
-  return (
-    <div className="grid gap-1.5">
-      <label className="text-xs font-medium text-navy/70">{label}</label>
-      {children}
-    </div>
   );
 }
