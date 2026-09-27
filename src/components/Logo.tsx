@@ -8,7 +8,7 @@ export function Logo({ className = "" }: { className?: string }) {
         <Building2 className="h-5 w-5" />
       </span>
       <span className="font-display text-xl font-extrabold tracking-tight text-navy">
-        Office<span className="text-primary">Nest</span>
+        Office<span className="text-primary">Mate</span>
       </span>
     </Link>
   );
