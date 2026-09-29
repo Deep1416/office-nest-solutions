@@ -8,6 +8,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { CITIES, SERVICES, TESTIMONIALS, inr } from "@/lib/mock-data";
+import { INDIA_OUTLINE_PATH, INDIA_OUTLINE_VIEWBOX } from "@/lib/india-outline";
 import { FaqAccordion } from "@/components/FaqAccordion";
 import { QuoteForm } from "@/components/QuoteForm";
 import { CallbackTrigger } from "@/components/CallbackModal";
@@ -28,13 +29,21 @@ const SERVICE_COLORS = [
   "bg-sky-500/10 text-sky-600",
 ];
 
+const MAP_VIEW_W = 666.66669;
+const MAP_VIEW_H = 777.33331;
+
 const MAP_CITIES = [
-  { slug: "delhi", top: "8%", left: "40%" },
-  { slug: "noida", top: "24%", left: "68%" },
-  { slug: "mumbai", top: "50%", left: "12%" },
-  { slug: "kolkata", top: "38%", left: "88%" },
-  { slug: "hyderabad", top: "70%", left: "60%" },
-  { slug: "bengaluru", top: "90%", left: "30%" },
+  { slug: "delhi", x: 235, y: 190 },
+  { slug: "noida", x: 335, y: 260 },
+  { slug: "kolkata", x: 455, y: 300 },
+  { slug: "mumbai", x: 78, y: 430 },
+  { slug: "hyderabad", x: 390, y: 480 },
+  { slug: "bengaluru", x: 345, y: 585 },
+];
+
+const MAP_TICKS = [
+  [200, 150], [150, 260], [350, 260], [110, 360], [420, 360],
+  [150, 460], [400, 450], [200, 550], [330, 560], [230, 650],
 ];
 
 const STEPS = [
@@ -79,23 +88,40 @@ const KYC_DOCS = [
 const LOGOS = ["TechGrow", "Bhush & Co.", "Verma Exports", "NeoEdge", "MedLife"];
 
 function Home() {
-  const [state, setState] = useState("");
   const [locationQuery, setLocationQuery] = useState("");
   const [yearly, setYearly] = useState(false);
 
   return (
     <>
       {/* 1. HERO */}
-      <section className="relative overflow-hidden bg-gradient-to-b from-surface to-background">
-        <div className="container-x grid gap-10 py-16 lg:grid-cols-2 lg:items-center lg:py-24">
-          <div>
-            <Badge variant="secondary" className="rounded-full bg-primary/10 text-primary hover:bg-primary/10">
+      <section className="relative overflow-hidden">
+        <div className="absolute inset-0">
+          <img
+            src="https://images.unsplash.com/photo-1741682740026-4147b4197806?w=1600&auto=format&fit=crop&q=60"
+            alt="Modern office overlooking a city skyline"
+            className="h-full w-full object-cover"
+          />
+          <div className="absolute inset-0 bg-gradient-to-r from-background from-5% via-background/75 via-32% to-transparent to-58%" />
+        </div>
+
+        <div className="container-x relative py-16 lg:py-24">
+          <div className="max-w-2xl">
+            <Badge variant="secondary" className="rounded-full bg-orange/10 text-orange hover:bg-orange/10">
               <Sparkles className="mr-1.5 h-3 w-3" /> Virtual Office Solutions Across India
             </Badge>
-            <h1 className="mt-4 max-w-xl text-4xl font-extrabold leading-[1.1] tracking-tight sm:text-5xl">
-              Your Business Everywhere <span className="text-primary">in India.</span>
-            </h1>
-            <p className="mt-4 max-w-xl text-base text-muted-foreground">
+            <div className="relative">
+              <h1 className="mt-4 max-w-md text-4xl font-extrabold leading-[1.1] tracking-tight sm:text-5xl">
+                Your Business Everywhere <span className="text-primary">in India.</span>
+              </h1>
+              <Annotation
+                text="Work Without Boundaries"
+                className="absolute -top-4 left-full ml-2 w-32"
+                rotate={-6}
+                textClassName="text-navy/90"
+                arrowClassName="text-orange"
+              />
+            </div>
+            <p className="mt-4 max-w-md text-base text-muted-foreground">
               Get a prestigious business address, GST registration support, and complete virtual office solutions in 50+ cities.
             </p>
             <div className="mt-6 flex flex-wrap gap-3">
@@ -103,20 +129,8 @@ function Home() {
                 <Link to="/virtual-offices">Find Your Location <ArrowRight className="ml-1 h-4 w-4" /></Link>
               </Button>
               <CallbackTrigger>
-                <Button size="lg" variant="outline">Get a Free Quote</Button>
+                <Button size="lg" variant="outline" className="bg-white/70 backdrop-blur">Get a Free Quote</Button>
               </CallbackTrigger>
-            </div>
-
-            <div className="mt-8 flex w-full max-w-md items-center gap-2 rounded-full border bg-white p-2 shadow-elevated">
-              <input
-                value={state}
-                onChange={(e) => setState(e.target.value)}
-                placeholder="Search city (e.g. Delhi, Mumbai, Pune)"
-                className="h-11 flex-1 rounded-full bg-transparent px-4 text-sm outline-none placeholder:text-muted-foreground"
-              />
-              <Button asChild size="icon" className="h-11 w-11 shrink-0 rounded-full bg-primary">
-                <Link to="/virtual-offices" search={{}}><Search className="h-5 w-5" /></Link>
-              </Button>
             </div>
 
             <div className="mt-10 grid grid-cols-2 gap-6 sm:grid-cols-4">
@@ -128,8 +142,8 @@ function Home() {
               ].map(([Icon, a, b]) => {
                 const I = Icon as any;
                 return (
-                  <div key={b as string} className="flex items-start gap-2">
-                    <I className="mt-0.5 h-4 w-4 text-primary" />
+                  <div key={b as string} className="flex items-center gap-2">
+                    <span className="grid h-9 w-9 flex-shrink-0 place-items-center rounded-full bg-primary/10 text-primary"><I className="h-4 w-4" /></span>
                     <div>
                       <div className="text-sm font-extrabold text-navy leading-tight">{a as string}</div>
                       <div className="text-xs text-muted-foreground">{b as string}</div>
@@ -137,17 +151,6 @@ function Home() {
                   </div>
                 );
               })}
-            </div>
-          </div>
-
-          <div className="flex flex-col items-end">
-            <Annotation text="Work Without Boundaries" className="mb-3 mr-6" rotate={-6} />
-            <div className="w-full overflow-hidden rounded-3xl shadow-elevated">
-              <img
-                src="https://images.unsplash.com/photo-1497366754035-f200968a6e72?w=1200&auto=format&fit=crop&q=60"
-                alt="Modern office space"
-                className="aspect-[4/3] w-full object-cover"
-              />
             </div>
           </div>
         </div>
@@ -187,9 +190,16 @@ function Home() {
             </div>
           </div>
 
-          <div className="dot-grid relative aspect-square w-full max-w-md justify-self-center rounded-3xl bg-primary/5 [background-size:18px_18px]">
-            <div className="absolute inset-6 rounded-full bg-primary/5 blur-2xl" />
-            {MAP_CITIES.map((m) => {
+          <div className="relative aspect-[667/777] w-full max-w-lg justify-self-center">
+            <svg viewBox={INDIA_OUTLINE_VIEWBOX} className="absolute inset-0 h-full w-full overflow-visible">
+              <path d={INDIA_OUTLINE_PATH} className="fill-primary/[0.06]" />
+              <path d={INDIA_OUTLINE_PATH} fill="none" strokeDasharray="7 8" strokeWidth="3" className="stroke-primary/35" />
+              {MAP_TICKS.map(([x, y], i) => (
+                <rect key={i} x={x - 6} y={y - 6} width="12" height="12" rx="2" transform={`rotate(45 ${x} ${y})`} className="fill-primary/20" />
+              ))}
+            </svg>
+
+            {MAP_CITIES.map((m, i) => {
               const city = CITIES.find((c) => c.slug === m.slug)!;
               return (
                 <Link
@@ -197,10 +207,15 @@ function Home() {
                   to="/locations/$state/$city"
                   params={{ state: city.stateSlug, city: city.slug }}
                   className="group absolute -translate-x-1/2 -translate-y-1/2"
-                  style={{ top: m.top, left: m.left }}
+                  style={{ top: `${(m.y / MAP_VIEW_H) * 100}%`, left: `${(m.x / MAP_VIEW_W) * 100}%` }}
                 >
-                  <div className="overflow-hidden rounded-xl border-2 border-white shadow-elevated transition-transform group-hover:-translate-y-1">
-                    <img src={city.image} alt={city.name} className="h-14 w-20 object-cover" loading="lazy" />
+                  <div className="relative transition-transform group-hover:-translate-y-1">
+                    <div className="overflow-hidden rounded-xl border-2 border-white shadow-elevated">
+                      <img src={city.image} alt={city.name} className="h-11 w-16 object-cover" loading="lazy" />
+                    </div>
+                    <span className="absolute -left-1.5 -top-1.5 grid h-4 w-4 place-items-center rounded-full bg-primary text-[9px] font-bold text-primary-foreground ring-2 ring-white">
+                      {i + 1}
+                    </span>
                   </div>
                   <div className="mt-1 whitespace-nowrap rounded-full bg-white px-2 py-0.5 text-center text-[11px] font-semibold text-navy shadow-card">{city.name}</div>
                 </Link>

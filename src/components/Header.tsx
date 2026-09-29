@@ -29,7 +29,6 @@ export function Header() {
             <NavigationMenuList className="gap-1">
               <NavItem to="/" label="Home" />
               <NavItem to="/virtual-offices" label="Virtual Office" />
-              <NavItem to="/booking-status" label="Book Virtual Office" />
 
               <NavigationMenuItem>
                 <NavigationMenuTrigger className="h-9 bg-transparent px-3 text-sm font-medium">Services</NavigationMenuTrigger>
@@ -86,7 +85,6 @@ export function Header() {
               {[
                 ["/", "Home"],
                 ["/virtual-offices", "Virtual Office"],
-                ["/booking-status", "Book Virtual Office"],
                 ["/services/business-registration", "Business Registration"],
                 ["/services/gst-registration", "GST Registration"],
                 ["/services/mailing-address", "Mailing Address"],
