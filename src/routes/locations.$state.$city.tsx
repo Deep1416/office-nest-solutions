@@ -1,15 +1,17 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { Check } from "lucide-react";
-import { CITIES, OFFICES, inr } from "@/lib/mock-data";
+import { CITIES, inr } from "@/lib/mock-data";
+import { officesQueryOptions } from "@/lib/queries/offices";
 import { OfficeCard } from "@/components/OfficeCard";
 import { QuoteForm } from "@/components/QuoteForm";
 import { FaqAccordion } from "@/components/FaqAccordion";
 
 export const Route = createFileRoute("/locations/$state/$city")({
-  loader: ({ params }) => {
+  loader: async ({ params, context }) => {
     const city = CITIES.find(c => c.slug === params.city && c.stateSlug === params.state);
     if (!city) throw notFound();
-    return { city };
+    const offices = await context.queryClient.ensureQueryData(officesQueryOptions());
+    return { city, offices };
   },
   head: ({ loaderData, params }) => ({
     meta: [
@@ -32,8 +34,8 @@ export const Route = createFileRoute("/locations/$state/$city")({
 });
 
 function CityPage() {
-  const { city } = Route.useLoaderData() as { city: import("@/lib/mock-data").City };
-  const offices = OFFICES.filter(o => o.citySlug === city.slug);
+  const { city, offices: allOffices } = Route.useLoaderData();
+  const offices = allOffices.filter(o => o.citySlug === city.slug);
 
   return (
     <div>

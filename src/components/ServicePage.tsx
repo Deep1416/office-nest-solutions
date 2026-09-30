@@ -1,9 +1,12 @@
 import { Link } from "@tanstack/react-router";
-import { Check, ArrowRight } from "lucide-react";
+import { Check, ArrowRight, Building2, FileText, Mail, MapPin, Package, Receipt, Shield, ShoppingBag, Truck, Users, Zap, type LucideIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { QuoteForm } from "@/components/QuoteForm";
 import { FaqAccordion } from "@/components/FaqAccordion";
-import type { LucideIcon } from "lucide-react";
+
+const BENEFIT_ICONS: Record<string, LucideIcon> = {
+  Building2, FileText, Mail, MapPin, Package, Receipt, Shield, ShoppingBag, Truck, Users, Zap,
+};
 
 export interface ServicePageProps {
   slug: string;
@@ -11,7 +14,7 @@ export interface ServicePageProps {
   tagline: string;
   hero: string;
   whoNeeds: string[];
-  benefits: { title: string; body: string; icon: LucideIcon }[];
+  benefits: { title: string; body: string; icon: string }[];
   documents: string[];
   process: { step: string; body: string }[];
   faqs: { q: string; a: string }[];
@@ -57,13 +60,16 @@ export function ServicePage(p: ServicePageProps) {
         <div className="container-x">
           <h2 className="text-2xl font-bold">Key benefits</h2>
           <div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            {p.benefits.map(b => (
-              <div key={b.title} className="card-soft p-5">
-                <span className="grid h-10 w-10 place-items-center rounded-lg bg-primary/10 text-primary"><b.icon className="h-5 w-5" /></span>
-                <div className="mt-3 font-semibold text-navy">{b.title}</div>
-                <p className="mt-1 text-sm text-muted-foreground">{b.body}</p>
-              </div>
-            ))}
+            {p.benefits.map(b => {
+              const Icon = BENEFIT_ICONS[b.icon] ?? Shield;
+              return (
+                <div key={b.title} className="card-soft p-5">
+                  <span className="grid h-10 w-10 place-items-center rounded-lg bg-primary/10 text-primary"><Icon className="h-5 w-5" /></span>
+                  <div className="mt-3 font-semibold text-navy">{b.title}</div>
+                  <p className="mt-1 text-sm text-muted-foreground">{b.body}</p>
+                </div>
+              );
+            })}
           </div>
         </div>
       </section>

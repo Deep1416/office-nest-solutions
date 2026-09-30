@@ -4,9 +4,9 @@ import { toast } from "sonner";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
-import { Label } from "@/components/ui/label";
+import { FormField } from "@/components/ui/form-field";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { leadsStore } from "@/lib/storage";
+import { useCreateLead } from "@/lib/queries/leads";
 import { CITIES, PURPOSES } from "@/lib/mock-data";
 
 const schema = z.object({
@@ -21,14 +21,15 @@ const schema = z.object({
 export function QuoteForm({ compact = false, defaultCity }: { compact?: boolean; defaultCity?: string }) {
   const [city, setCity] = useState(defaultCity ?? "");
   const [purpose, setPurpose] = useState("");
-  const [busy, setBusy] = useState(false);
+  const createLead = useCreateLead();
 
   return (
     <form
       className={compact ? "grid gap-3" : "grid gap-4 sm:grid-cols-2"}
       onSubmit={(e) => {
         e.preventDefault();
-        const fd = new FormData(e.currentTarget);
+        const form = e.currentTarget;
+        const fd = new FormData(form);
         const payload = {
           name: String(fd.get("name") ?? "").trim(),
           phone: String(fd.get("phone") ?? "").trim(),
@@ -38,45 +39,41 @@ export function QuoteForm({ compact = false, defaultCity }: { compact?: boolean;
         };
         const parsed = schema.safeParse(payload);
         if (!parsed.success) { toast.error(parsed.error.issues[0].message); return; }
-        setBusy(true);
-        setTimeout(() => {
-          leadsStore.add(parsed.data);
-          toast.success("Thanks! Our team will reach out within a few hours.");
-          (e.target as HTMLFormElement).reset();
-          setCity(""); setPurpose(""); setBusy(false);
-        }, 300);
+        createLead.mutate(parsed.data, {
+          onSuccess: () => {
+            toast.success("Thanks! Our team will reach out within a few hours.");
+            form.reset();
+            setCity(""); setPurpose("");
+          },
+          onError: () => toast.error("Something went wrong submitting your request."),
+        });
       }}
     >
-      <Field label="Full name"><Input name="name" required maxLength={80} placeholder="Your full name" /></Field>
-      <Field label="Phone"><Input name="phone" required maxLength={15} placeholder="+91 ..." /></Field>
-      <Field label="Email"><Input type="email" name="email" required maxLength={255} placeholder="you@company.com" /></Field>
-      <Field label="Preferred city">
-        <Select value={city} onValueChange={setCity}>
-          <SelectTrigger><SelectValue placeholder="Select city" /></SelectTrigger>
-          <SelectContent>{CITIES.map(c => <SelectItem key={c.slug} value={c.slug}>{c.name}</SelectItem>)}</SelectContent>
-        </Select>
-      </Field>
-      <Field label="Service purpose" className={compact ? "" : "sm:col-span-2"}>
-        <Select value={purpose} onValueChange={setPurpose}>
-          <SelectTrigger><SelectValue placeholder="What do you need?" /></SelectTrigger>
-          <SelectContent>{PURPOSES.map(p => <SelectItem key={p.value} value={p.value}>{p.label}</SelectItem>)}</SelectContent>
-        </Select>
-      </Field>
-      <Field label="Message (optional)" className={compact ? "" : "sm:col-span-2"}>
-        <Textarea name="message" rows={3} maxLength={500} placeholder="Tell us a bit about your requirement" />
-      </Field>
+      <FormField label="Full name">{(id) => <Input id={id} name="name" required maxLength={80} placeholder="Your full name" />}</FormField>
+      <FormField label="Phone">{(id) => <Input id={id} name="phone" required maxLength={15} placeholder="+91 ..." />}</FormField>
+      <FormField label="Email">{(id) => <Input id={id} type="email" name="email" required maxLength={255} placeholder="you@company.com" />}</FormField>
+      <FormField label="Preferred city">
+        {(id) => (
+          <Select value={city} onValueChange={setCity}>
+            <SelectTrigger id={id}><SelectValue placeholder="Select city" /></SelectTrigger>
+            <SelectContent>{CITIES.map(c => <SelectItem key={c.slug} value={c.slug}>{c.name}</SelectItem>)}</SelectContent>
+          </Select>
+        )}
+      </FormField>
+      <FormField label="Service purpose" className={compact ? "" : "sm:col-span-2"}>
+        {(id) => (
+          <Select value={purpose} onValueChange={setPurpose}>
+            <SelectTrigger id={id}><SelectValue placeholder="What do you need?" /></SelectTrigger>
+            <SelectContent>{PURPOSES.map(p => <SelectItem key={p.value} value={p.value}>{p.label}</SelectItem>)}</SelectContent>
+          </Select>
+        )}
+      </FormField>
+      <FormField label="Message (optional)" className={compact ? "" : "sm:col-span-2"}>
+        {(id) => <Textarea id={id} name="message" rows={3} maxLength={500} placeholder="Tell us a bit about your requirement" />}
+      </FormField>
       <div className={compact ? "" : "sm:col-span-2"}>
-        <Button type="submit" disabled={busy} className="w-full bg-primary sm:w-auto">{busy ? "Submitting..." : "Get Free Quote"}</Button>
+        <Button type="submit" disabled={createLead.isPending} className="w-full bg-primary sm:w-auto">{createLead.isPending ? "Submitting..." : "Get Free Quote"}</Button>
       </div>
     </form>
-  );
-}
-
-function Field({ label, children, className = "" }: { label: string; children: React.ReactNode; className?: string }) {
-  return (
-    <div className={`grid gap-1.5 ${className}`}>
-      <Label className="text-xs font-medium text-navy/70">{label}</Label>
-      {children}
-    </div>
   );
 }
