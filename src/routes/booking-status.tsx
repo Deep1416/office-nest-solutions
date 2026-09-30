@@ -5,7 +5,8 @@ import { Search, CheckCircle2, Circle } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
-import { bookingsStore, type Booking } from "@/lib/storage";
+import { useFindBooking } from "@/lib/queries/bookings";
+import type { Booking } from "@/lib/storage";
 import { inr } from "@/lib/mock-data";
 
 export const Route = createFileRoute("/booking-status")({
@@ -27,6 +28,7 @@ function Page() {
   const [phone, setPhone] = useState("");
   const [booking, setBooking] = useState<Booking | null>(null);
   const [searched, setSearched] = useState(false);
+  const findBooking = useFindBooking();
 
   const idx = booking ? TIMELINE.findIndex(([s]) => s === booking.status) : -1;
 
@@ -38,10 +40,16 @@ function Page() {
 
         <form className="card-soft mt-6 grid gap-4 p-6 sm:grid-cols-[1fr_1fr_auto]" onSubmit={(e) => {
           e.preventDefault();
-          setSearched(true);
-          const b = bookingsStore.find(ref.trim(), phone.trim());
-          setBooking(b ?? null);
-          if (!b) toast.error("No booking found. Check your reference and phone.");
+          findBooking.mutate(
+            { reference: ref.trim(), phone: phone.trim() },
+            {
+              onSuccess: (b) => {
+                setSearched(true);
+                setBooking(b);
+                if (!b) toast.error("No booking found. Check your reference and phone.");
+              },
+            },
+          );
         }}>
           <div className="grid gap-1.5">
             <Label>Booking reference</Label>

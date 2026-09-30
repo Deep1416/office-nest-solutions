@@ -1,11 +1,18 @@
 import { Link } from "@tanstack/react-router";
-import { Mail, Phone, MapPin, Linkedin, Twitter, Facebook, Instagram } from "lucide-react";
+import { Mail, Phone, MapPin, Linkedin, Twitter, Facebook, Instagram, type LucideIcon } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Logo } from "./Logo";
 import { BRAND } from "@/lib/config";
 import { toast } from "sonner";
 import { CITIES } from "@/lib/mock-data";
+
+const SOCIAL_LINKS: { icon: LucideIcon; platform: string }[] = [
+  { icon: Linkedin, platform: "LinkedIn" },
+  { icon: Twitter, platform: "Twitter" },
+  { icon: Facebook, platform: "Facebook" },
+  { icon: Instagram, platform: "Instagram" },
+];
 
 export function Footer() {
   return (
@@ -22,9 +29,9 @@ export function Footer() {
             <div className="flex items-center gap-2"><MapPin className="h-4 w-4" /> {BRAND.address}</div>
           </div>
           <div className="flex gap-3 pt-2">
-            {[Linkedin, Twitter, Facebook, Instagram].map((I, i) => (
-              <a key={i} href="#" aria-label="social" className="grid h-9 w-9 place-items-center rounded-md bg-white/10 hover:bg-white/20">
-                <I className="h-4 w-4" />
+            {SOCIAL_LINKS.map(({ icon: Icon, platform }) => (
+              <a key={platform} href="#" aria-label={`OfficeMate on ${platform}`} className="grid h-9 w-9 place-items-center rounded-md bg-white/10 hover:bg-white/20">
+                <Icon className="h-4 w-4" />
               </a>
             ))}
           </div>
@@ -51,7 +58,7 @@ export function Footer() {
             onSubmit={(e) => { e.preventDefault(); toast.success("Subscribed to the OfficeMate newsletter"); (e.target as HTMLFormElement).reset(); }}
             className="flex w-full max-w-md items-center gap-2"
           >
-            <Input required type="email" placeholder="Your email" className="bg-white/10 border-white/20 text-white placeholder:text-white/50" />
+            <Input required type="email" aria-label="Email address" placeholder="Your email" className="bg-white/10 border-white/20 text-white placeholder:text-white/50" />
             <Button type="submit" className="bg-orange text-orange-foreground hover:bg-orange/90">Subscribe</Button>
           </form>
           <div className="flex flex-wrap gap-x-4 gap-y-2 text-xs text-white/60">

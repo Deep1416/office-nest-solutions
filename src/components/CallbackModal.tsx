@@ -4,10 +4,11 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
+import { FormField } from "@/components/ui/form-field";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { toast } from "sonner";
 import { z } from "zod";
-import { callbacksStore } from "@/lib/storage";
+import { useCreateCallback } from "@/lib/queries/callbacks";
 
 const schema = z.object({
   name: z.string().trim().min(2, "Name is required").max(80),
@@ -20,6 +21,7 @@ export function CallbackTrigger({ children }: { children: ReactNode }) {
   const [open, setOpen] = useState(false);
   const [when, setWhen] = useState("now");
   const [customTime, setCustomTime] = useState("");
+  const createCallback = useCreateCallback();
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
@@ -41,22 +43,20 @@ export function CallbackTrigger({ children }: { children: ReactNode }) {
             };
             const parsed = schema.safeParse(payload);
             if (!parsed.success) { toast.error(parsed.error.issues[0].message); return; }
-            callbacksStore.add(parsed.data);
-            toast.success("Callback scheduled — our team will call you soon");
-            setOpen(false);
+            createCallback.mutate(parsed.data, {
+              onSuccess: () => {
+                toast.success("Callback scheduled — our team will call you soon");
+                setOpen(false);
+              },
+              onError: () => toast.error("Something went wrong scheduling your callback."),
+            });
           }}
         >
+          <FormField label="Full name">{(id) => <Input id={id} name="name" required maxLength={80} />}</FormField>
+          <FormField label="Phone">{(id) => <Input id={id} name="phone" required maxLength={15} placeholder="+91 ..." />}</FormField>
           <div className="grid gap-2">
-            <Label htmlFor="cb-name">Full name</Label>
-            <Input id="cb-name" name="name" required maxLength={80} />
-          </div>
-          <div className="grid gap-2">
-            <Label htmlFor="cb-phone">Phone</Label>
-            <Input id="cb-phone" name="phone" required maxLength={15} placeholder="+91 ..." />
-          </div>
-          <div className="grid gap-2">
-            <Label>Preferred time</Label>
-            <RadioGroup value={when} onValueChange={setWhen} className="grid grid-cols-2 gap-2">
+            <Label id="cb-when-label">Preferred time</Label>
+            <RadioGroup aria-labelledby="cb-when-label" value={when} onValueChange={setWhen} className="grid grid-cols-2 gap-2">
               {[
                 ["now", "Call now"],
                 ["15min", "In 15 minutes"],
@@ -69,13 +69,10 @@ export function CallbackTrigger({ children }: { children: ReactNode }) {
               ))}
             </RadioGroup>
             {when === "custom" && (
-              <Input type="datetime-local" value={customTime} onChange={(e) => setCustomTime(e.target.value)} />
+              <Input type="datetime-local" aria-label="Custom callback time" value={customTime} onChange={(e) => setCustomTime(e.target.value)} />
             )}
           </div>
-          <div className="grid gap-2">
-            <Label htmlFor="cb-msg">Message (optional)</Label>
-            <Textarea id="cb-msg" name="message" rows={3} maxLength={500} />
-          </div>
+          <FormField label="Message (optional)">{(id) => <Textarea id={id} name="message" rows={3} maxLength={500} />}</FormField>
           <Button type="submit" className="w-full bg-primary">Schedule Callback</Button>
         </form>
       </DialogContent>

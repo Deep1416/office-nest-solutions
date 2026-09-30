@@ -115,13 +115,130 @@ export const SERVICES = [
   { slug: "meeting-room-access", title: "Meeting Room Access", icon: "Users", short: "On-demand meeting rooms across our network.", benefits: ["Pay-per-use", "Video-conferencing", "Pan-India access"] },
 ];
 
+export interface ServiceContent {
+  title: string;
+  tagline: string;
+  hero: string;
+  image: string;
+  whoNeeds: string[];
+  documents: string[];
+  benefits: { title: string; body: string; icon: string }[];
+  process: { step: string; body: string }[];
+  faqs: { q: string; a: string }[];
+}
+
+export const SERVICE_CONTENT: Record<string, ServiceContent> = {
+  "business-registration": {
+    title: "Business Registration Made Simple",
+    tagline: "MCA-compliant address for company registration",
+    hero: "Register your Private Limited, LLP, or OPC at a verified professional address — with all documentation handled by our experts.",
+    image: "https://images.unsplash.com/photo-1573497491765-dccce02b29df?w=1000&auto=format&fit=crop&q=60",
+    whoNeeds: [
+      "Founders launching a new company",
+      "Bootstrapped teams without a physical office",
+      "Consultants operating from home",
+      "Businesses expanding to new states",
+    ],
+    documents: ["PAN card of directors", "Aadhaar / passport", "Passport-size photograph", "Utility bill (recent)", "Board resolution (if applicable)", "Cancelled cheque"],
+    benefits: [
+      { title: "MCA-compliant", body: "Every address passes MCA scrutiny. No rejections.", icon: "Shield" },
+      { title: "Fast turnaround", body: "Documents delivered in 24–72 hours.", icon: "Zap" },
+      { title: "Dedicated support", body: "One account manager, end-to-end.", icon: "Users" },
+      { title: "Complete kit", body: "Rent agreement, NOC and utility bill included.", icon: "FileText" },
+    ],
+    process: [
+      { step: "Choose city", body: "Pick your business city from our network." },
+      { step: "Submit KYC", body: "Simple document checklist online." },
+      { step: "Verification", body: "Our compliance team validates everything." },
+      { step: "Get documents", body: "Receive signed docs and start filing." },
+    ],
+    faqs: [
+      { q: "Can I register a Pvt Ltd here?", a: "Yes, all our addresses are MCA-compliant for Pvt Ltd, LLP, OPC and Partnerships." },
+      { q: "Do I need to visit the office?", a: "No visit needed. Everything is handled online with couriered originals." },
+      { q: "How long does the process take?", a: "Documents are typically delivered in 2–4 working days." },
+    ],
+  },
+  "gst-registration": {
+    title: "GST Registration Across India",
+    tagline: "Multi-state GST addresses",
+    hero: "Register for GST in any state with an OfficeMate address. Perfect for sellers, SaaS companies, and consultants expanding pan-India.",
+    image: "https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=1000&auto=format&fit=crop&q=60",
+    whoNeeds: ["Ecommerce sellers on Amazon / Flipkart", "SaaS and service businesses billing across states", "Manufacturers with warehouses in new states", "Startups scaling nationally"],
+    documents: ["PAN card of business", "PAN + Aadhaar of authorised signatory", "Constitution documents", "Bank statement / cancelled cheque", "Photograph"],
+    benefits: [
+      { title: "GST officer approved", body: "Full documentation kit accepted across states.", icon: "Shield" },
+      { title: "Multi-state ready", body: "Register in 10 states from one dashboard.", icon: "MapPin" },
+      { title: "Fast setup", body: "Address activation in 24–48 hours.", icon: "Zap" },
+      { title: "Ongoing support", body: "GSTIN help, address transfer, renewals.", icon: "Receipt" },
+    ],
+    process: [
+      { step: "Pick state", body: "Choose the state where you need GST." },
+      { step: "Submit details", body: "Basic business + KYC info." },
+      { step: "Get docs", body: "Rent agreement, NOC, utility bill." },
+      { step: "File GST", body: "Use the docs to file GST — we help." },
+    ],
+    faqs: [
+      { q: "Is the address usable for GST?", a: "Yes, every OfficeMate address is verified and GST-officer accepted." },
+      { q: "Can I get APOB for Amazon?", a: "Yes, we specialize in APOB/VPOB for online sellers." },
+      { q: "What if my GST gets rejected?", a: "We assist with re-submission and offer refund per our terms." },
+    ],
+  },
+  "mailing-address": {
+    title: "A Professional Mailing Address",
+    tagline: "Ditch the home address",
+    hero: "Get a credible business address for banking, client mail and correspondence — with courier and reception support included.",
+    image: "https://images.unsplash.com/photo-1587614382346-4ec70e388b28?w=1000&auto=format&fit=crop&q=60",
+    whoNeeds: ["Freelancers and consultants", "Remote-first startups", "Overseas founders operating in India", "Anyone protecting their home address"],
+    documents: ["PAN card", "Aadhaar / passport", "Business proof (if company)"],
+    benefits: [
+      { title: "Prestigious address", body: "Look established from day one.", icon: "Building2" },
+      { title: "Courier handling", body: "We receive, log and forward.", icon: "Package" },
+      { title: "Reception support", body: "Real humans greet your mail.", icon: "Mail" },
+      { title: "Privacy", body: "Keep your home address private.", icon: "Shield" },
+    ],
+    process: [
+      { step: "Choose location", body: "Pick your preferred city." },
+      { step: "Submit KYC", body: "Simple identity verification." },
+      { step: "Go live", body: "Address active in 24 hours." },
+      { step: "Get mail", body: "Notifications for every courier." },
+    ],
+    faqs: [
+      { q: "Can I use this for banking?", a: "Yes, ideal for opening a current account." },
+      { q: "How do I get my mail?", a: "Scan & forward, or physical dispatch." },
+      { q: "Any signage on the address?", a: "Signage available on select plans." },
+    ],
+  },
+  "ecommerce-apob-vpob": {
+    title: "APoB & VPoB for Online Sellers",
+    tagline: "Ecommerce compliance, simplified",
+    hero: "Additional and Virtual Place of Business addresses for Amazon, Flipkart, Meesho and Shopify sellers scaling across Indian states.",
+    image: "https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=1000&auto=format&fit=crop&q=60",
+    whoNeeds: ["Amazon FBA sellers", "Flipkart, Meesho, Myntra sellers", "D2C brands with regional warehouses", "Aggregators expanding across states"],
+    documents: ["Business PAN", "Director PAN + Aadhaar", "GST certificate", "Warehouse agreement (if separate)"],
+    benefits: [
+      { title: "Amazon-ready", body: "APOB templates accepted by all major marketplaces.", icon: "ShoppingBag" },
+      { title: "Multi-state GST", body: "Compliant addresses in 20+ states.", icon: "MapPin" },
+      { title: "Signage", body: "Physical signage where required.", icon: "Shield" },
+      { title: "Warehouse coordination", body: "Sync your warehouse APOB filings.", icon: "Truck" },
+    ],
+    process: [
+      { step: "State selection", body: "List the states you sell into." },
+      { step: "Documentation", body: "APOB kit prepared per state." },
+      { step: "Filing", body: "We assist with GST portal filing." },
+      { step: "Go live", body: "Start selling compliantly." },
+    ],
+    faqs: [
+      { q: "Is APOB different from VPOB?", a: "APOB is an Additional PoB (extra location). VPOB is Virtual PoB — a service address for GST." },
+      { q: "Which marketplaces are supported?", a: "Amazon, Flipkart, Meesho, Myntra, Ajio, and D2C stores." },
+      { q: "Do I need a real warehouse?", a: "Only if you're storing goods. Our APOB serves compliance, not storage." },
+    ],
+  },
+};
+
 export const TESTIMONIALS = [
-  { name: "Ananya Rao", company: "Kite Analytics", initials: "AR", rating: 5, feedback: "OfficeMate set up our GST address in three cities in under a week. Documentation was flawless." },
-  { name: "Rohit Menon", company: "Foldcart Retail", initials: "RM", rating: 5, feedback: "Perfect for our ecommerce APOB needs. Their team walked us through every step of Amazon onboarding." },
-  { name: "Priya Shankar", company: "LumenLabs", initials: "PS", rating: 5, feedback: "Registered our private limited company at their Bengaluru address — smooth and professional." },
-  { name: "Vikram Singh", company: "Bluewave Consulting", initials: "VS", rating: 5, feedback: "The dedicated account manager made everything easy. Courier handling has been reliable for months." },
-  { name: "Neha Kulkarni", company: "Craftly", initials: "NK", rating: 5, feedback: "Transparent pricing, no hidden fees. Highly recommended for early-stage founders." },
-  { name: "Arjun Iyer", company: "Northlane Tech", initials: "AI", rating: 5, feedback: "We expanded into 5 states without opening a single physical office. Game-changing for our SaaS." },
+  { name: "Rahul Sharma", company: "Founder, TechGrow", initials: "RS", rating: 5, feedback: "Setting up our business address with OfficeMate was seamless. Great support!", image: "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=300&auto=format&fit=crop&q=60" },
+  { name: "Priya Mehta", company: "Co-Founder, Blush & Co.", initials: "PM", rating: 5, feedback: "Quick GST registration and professional service across multiple locations.", image: "https://images.unsplash.com/photo-1580489944761-15a19d654956?w=300&auto=format&fit=crop&q=60" },
+  { name: "Amit Verma", company: "Director, Verma Exports", initials: "AV", rating: 5, feedback: "Reliable, transparent and excellent support throughout our journey.", image: "https://images.unsplash.com/photo-1560250097-0b93528c311a?w=300&auto=format&fit=crop&q=60" },
 ];
 
 export const FAQS = [

@@ -1,11 +1,25 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { Target, Eye, Heart, MapPin, Users, TrendingUp } from "lucide-react";
+import { Target, Eye, Heart, MapPin, Users, TrendingUp, type LucideIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 export const Route = createFileRoute("/about")({
   head: () => ({ meta: [{ title: "About OfficeMate — Virtual Offices Across India" }, { name: "description", content: "OfficeMate helps founders, freelancers and sellers set up compliant business addresses in 50+ Indian cities." }] }),
   component: About,
 });
+
+type IconCard = { icon: LucideIcon; title: string; body: string };
+
+const MISSION_VISION_VALUES: IconCard[] = [
+  { icon: Target, title: "Mission", body: "Democratize business infrastructure so any founder can operate in any Indian state, from anywhere." },
+  { icon: Eye, title: "Vision", body: "A world where physical geography never limits how a business grows." },
+  { icon: Heart, title: "Values", body: "Transparency, empathy, obsessive support and doing what we said we would." },
+];
+
+const APPROACH: IconCard[] = [
+  { icon: MapPin, title: "Pan-India coverage", body: "50+ cities. Every metro plus emerging Tier-2 hubs." },
+  { icon: Users, title: "Customer-first", body: "Real humans, real answers, real accountability." },
+  { icon: TrendingUp, title: "Built to scale", body: "From your first company to your tenth GST filing." },
+];
 
 function About() {
   return (
@@ -21,15 +35,11 @@ function About() {
 
       <section className="section-y">
         <div className="container-x grid gap-6 lg:grid-cols-3">
-          {[
-            [Target, "Mission", "Democratize business infrastructure so any founder can operate in any Indian state, from anywhere."],
-            [Eye, "Vision", "A world where physical geography never limits how a business grows."],
-            [Heart, "Values", "Transparency, empathy, obsessive support and doing what we said we would."],
-          ].map(([I, t, d]: any) => (
-            <div key={t} className="card-soft p-6">
-              <span className="grid h-10 w-10 place-items-center rounded-lg bg-primary/10 text-primary"><I className="h-5 w-5" /></span>
-              <div className="mt-3 text-lg font-bold">{t}</div>
-              <p className="mt-1 text-sm text-muted-foreground">{d}</p>
+          {MISSION_VISION_VALUES.map(({ icon: Icon, title, body }) => (
+            <div key={title} className="card-soft p-6">
+              <span className="grid h-10 w-10 place-items-center rounded-lg bg-primary/10 text-primary"><Icon className="h-5 w-5" /></span>
+              <div className="mt-3 text-lg font-bold">{title}</div>
+              <p className="mt-1 text-sm text-muted-foreground">{body}</p>
             </div>
           ))}
         </div>
@@ -50,13 +60,11 @@ function About() {
         <div className="container-x">
           <h2 className="text-2xl font-bold">Our approach</h2>
           <div className="mt-6 grid gap-4 sm:grid-cols-3">
-            {[[MapPin, "Pan-India coverage", "50+ cities. Every metro plus emerging Tier-2 hubs."],
-              [Users, "Customer-first", "Real humans, real answers, real accountability."],
-              [TrendingUp, "Built to scale", "From your first company to your tenth GST filing."]].map(([I, t, d]: any) => (
-              <div key={t} className="card-soft p-5">
-                <span className="grid h-10 w-10 place-items-center rounded-lg bg-orange/10 text-orange"><I className="h-5 w-5" /></span>
-                <div className="mt-3 font-semibold text-navy">{t}</div>
-                <p className="mt-1 text-sm text-muted-foreground">{d}</p>
+            {APPROACH.map(({ icon: Icon, title, body }) => (
+              <div key={title} className="card-soft p-5">
+                <span className="grid h-10 w-10 place-items-center rounded-lg bg-orange/10 text-orange"><Icon className="h-5 w-5" /></span>
+                <div className="mt-3 font-semibold text-navy">{title}</div>
+                <p className="mt-1 text-sm text-muted-foreground">{body}</p>
               </div>
             ))}
           </div>

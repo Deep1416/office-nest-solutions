@@ -15,6 +15,8 @@ import { Route as BlogsRouteImport } from './routes/blogs'
 import { Route as AdminRouteImport } from './routes/admin'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as VirtualOfficesIndexRouteImport } from './routes/virtual-offices.index'
+import { Route as BlogsIndexRouteImport } from './routes/blogs.index'
 import { Route as VirtualOfficesIdRouteImport } from './routes/virtual-offices.$id'
 import { Route as ServicesMailingAddressRouteImport } from './routes/services.mailing-address'
 import { Route as ServicesGstRegistrationRouteImport } from './routes/services.gst-registration'
@@ -23,6 +25,7 @@ import { Route as ServicesBusinessRegistrationRouteImport } from './routes/servi
 import { Route as LocationsStateRouteImport } from './routes/locations.$state'
 import { Route as BookingOfficeIdRouteImport } from './routes/booking.$officeId'
 import { Route as BlogsSlugRouteImport } from './routes/blogs.$slug'
+import { Route as LocationsStateIndexRouteImport } from './routes/locations.$state.index'
 import { Route as LocationsStateCityRouteImport } from './routes/locations.$state.$city'
 
 const VirtualOfficesRoute = VirtualOfficesRouteImport.update({
@@ -54,6 +57,16 @@ const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
+} as any)
+const VirtualOfficesIndexRoute = VirtualOfficesIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => VirtualOfficesRoute,
+} as any)
+const BlogsIndexRoute = BlogsIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => BlogsRoute,
 } as any)
 const VirtualOfficesIdRoute = VirtualOfficesIdRouteImport.update({
   id: '/$id',
@@ -97,6 +110,11 @@ const BlogsSlugRoute = BlogsSlugRouteImport.update({
   path: '/$slug',
   getParentRoute: () => BlogsRoute,
 } as any)
+const LocationsStateIndexRoute = LocationsStateIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => LocationsStateRoute,
+} as any)
 const LocationsStateCityRoute = LocationsStateCityRouteImport.update({
   id: '/$city',
   path: '/$city',
@@ -118,24 +136,27 @@ export interface FileRoutesByFullPath {
   '/services/gst-registration': typeof ServicesGstRegistrationRoute
   '/services/mailing-address': typeof ServicesMailingAddressRoute
   '/virtual-offices/$id': typeof VirtualOfficesIdRoute
+  '/blogs/': typeof BlogsIndexRoute
+  '/virtual-offices/': typeof VirtualOfficesIndexRoute
   '/locations/$state/$city': typeof LocationsStateCityRoute
+  '/locations/$state/': typeof LocationsStateIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/admin': typeof AdminRoute
-  '/blogs': typeof BlogsRouteWithChildren
   '/booking-status': typeof BookingStatusRoute
-  '/virtual-offices': typeof VirtualOfficesRouteWithChildren
   '/blogs/$slug': typeof BlogsSlugRoute
   '/booking/$officeId': typeof BookingOfficeIdRoute
-  '/locations/$state': typeof LocationsStateRouteWithChildren
   '/services/business-registration': typeof ServicesBusinessRegistrationRoute
   '/services/ecommerce-apob-vpob': typeof ServicesEcommerceApobVpobRoute
   '/services/gst-registration': typeof ServicesGstRegistrationRoute
   '/services/mailing-address': typeof ServicesMailingAddressRoute
   '/virtual-offices/$id': typeof VirtualOfficesIdRoute
+  '/blogs': typeof BlogsIndexRoute
+  '/virtual-offices': typeof VirtualOfficesIndexRoute
   '/locations/$state/$city': typeof LocationsStateCityRoute
+  '/locations/$state': typeof LocationsStateIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -153,7 +174,10 @@ export interface FileRoutesById {
   '/services/gst-registration': typeof ServicesGstRegistrationRoute
   '/services/mailing-address': typeof ServicesMailingAddressRoute
   '/virtual-offices/$id': typeof VirtualOfficesIdRoute
+  '/blogs/': typeof BlogsIndexRoute
+  '/virtual-offices/': typeof VirtualOfficesIndexRoute
   '/locations/$state/$city': typeof LocationsStateCityRoute
+  '/locations/$state/': typeof LocationsStateIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -172,24 +196,27 @@ export interface FileRouteTypes {
     | '/services/gst-registration'
     | '/services/mailing-address'
     | '/virtual-offices/$id'
+    | '/blogs/'
+    | '/virtual-offices/'
     | '/locations/$state/$city'
+    | '/locations/$state/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/about'
     | '/admin'
-    | '/blogs'
     | '/booking-status'
-    | '/virtual-offices'
     | '/blogs/$slug'
     | '/booking/$officeId'
-    | '/locations/$state'
     | '/services/business-registration'
     | '/services/ecommerce-apob-vpob'
     | '/services/gst-registration'
     | '/services/mailing-address'
     | '/virtual-offices/$id'
+    | '/blogs'
+    | '/virtual-offices'
     | '/locations/$state/$city'
+    | '/locations/$state'
   id:
     | '__root__'
     | '/'
@@ -206,7 +233,10 @@ export interface FileRouteTypes {
     | '/services/gst-registration'
     | '/services/mailing-address'
     | '/virtual-offices/$id'
+    | '/blogs/'
+    | '/virtual-offices/'
     | '/locations/$state/$city'
+    | '/locations/$state/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -268,6 +298,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/virtual-offices/': {
+      id: '/virtual-offices/'
+      path: '/'
+      fullPath: '/virtual-offices/'
+      preLoaderRoute: typeof VirtualOfficesIndexRouteImport
+      parentRoute: typeof VirtualOfficesRoute
+    }
+    '/blogs/': {
+      id: '/blogs/'
+      path: '/'
+      fullPath: '/blogs/'
+      preLoaderRoute: typeof BlogsIndexRouteImport
+      parentRoute: typeof BlogsRoute
+    }
     '/virtual-offices/$id': {
       id: '/virtual-offices/$id'
       path: '/$id'
@@ -324,6 +368,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof BlogsSlugRouteImport
       parentRoute: typeof BlogsRoute
     }
+    '/locations/$state/': {
+      id: '/locations/$state/'
+      path: '/'
+      fullPath: '/locations/$state/'
+      preLoaderRoute: typeof LocationsStateIndexRouteImport
+      parentRoute: typeof LocationsStateRoute
+    }
     '/locations/$state/$city': {
       id: '/locations/$state/$city'
       path: '/$city'
@@ -336,20 +387,24 @@ declare module '@tanstack/react-router' {
 
 interface BlogsRouteChildren {
   BlogsSlugRoute: typeof BlogsSlugRoute
+  BlogsIndexRoute: typeof BlogsIndexRoute
 }
 
 const BlogsRouteChildren: BlogsRouteChildren = {
   BlogsSlugRoute: BlogsSlugRoute,
+  BlogsIndexRoute: BlogsIndexRoute,
 }
 
 const BlogsRouteWithChildren = BlogsRoute._addFileChildren(BlogsRouteChildren)
 
 interface VirtualOfficesRouteChildren {
   VirtualOfficesIdRoute: typeof VirtualOfficesIdRoute
+  VirtualOfficesIndexRoute: typeof VirtualOfficesIndexRoute
 }
 
 const VirtualOfficesRouteChildren: VirtualOfficesRouteChildren = {
   VirtualOfficesIdRoute: VirtualOfficesIdRoute,
+  VirtualOfficesIndexRoute: VirtualOfficesIndexRoute,
 }
 
 const VirtualOfficesRouteWithChildren = VirtualOfficesRoute._addFileChildren(
@@ -358,10 +413,12 @@ const VirtualOfficesRouteWithChildren = VirtualOfficesRoute._addFileChildren(
 
 interface LocationsStateRouteChildren {
   LocationsStateCityRoute: typeof LocationsStateCityRoute
+  LocationsStateIndexRoute: typeof LocationsStateIndexRoute
 }
 
 const LocationsStateRouteChildren: LocationsStateRouteChildren = {
   LocationsStateCityRoute: LocationsStateCityRoute,
+  LocationsStateIndexRoute: LocationsStateIndexRoute,
 }
 
 const LocationsStateRouteWithChildren = LocationsStateRoute._addFileChildren(

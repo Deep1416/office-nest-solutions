@@ -3,16 +3,20 @@ import { useState } from "react";
 import { Star, MapPin, Check, Shield, ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { OFFICES, SERVICE_LABEL, inr, type ServiceType } from "@/lib/mock-data";
+import { SERVICE_LABEL, inr, type ServiceType } from "@/lib/mock-data";
+import { officeQueryOptions, officesQueryOptions } from "@/lib/queries/offices";
 import { OfficeCard } from "@/components/OfficeCard";
 import { FaqAccordion } from "@/components/FaqAccordion";
 import { CallbackTrigger } from "@/components/CallbackModal";
 
 export const Route = createFileRoute("/virtual-offices/$id")({
-  loader: ({ params }) => {
-    const office = OFFICES.find(o => o.id === params.id);
+  loader: async ({ params, context }) => {
+    const [office, offices] = await Promise.all([
+      context.queryClient.ensureQueryData(officeQueryOptions(params.id)),
+      context.queryClient.ensureQueryData(officesQueryOptions()),
+    ]);
     if (!office) throw notFound();
-    return { office };
+    return { office, offices };
   },
   head: ({ loaderData }) => ({
     meta: [
@@ -24,13 +28,13 @@ export const Route = createFileRoute("/virtual-offices/$id")({
 });
 
 function Details() {
-  const { office } = Route.useLoaderData() as { office: import("@/lib/mock-data").OfficeListing };
+  const { office, offices } = Route.useLoaderData();
   const [service, setService] = useState<ServiceType>(office.services[0]);
   const [duration, setDuration] = useState<"1y" | "2y">("1y");
   const basePrice = office.pricing[service] ?? 999;
   const price = duration === "1y" ? basePrice : Math.round(basePrice * 1.8);
 
-  const similar = OFFICES.filter(o => o.id !== office.id && o.citySlug === office.citySlug).slice(0, 3);
+  const similar = offices.filter(o => o.id !== office.id && o.citySlug === office.citySlug).slice(0, 3);
 
   return (
     <div className="bg-background">
@@ -138,7 +142,7 @@ function Details() {
               </div>
               <div className="mt-4 grid gap-2">
                 <Button asChild className="bg-primary">
-                  <Link to="/booking/$officeId" params={{ officeId: office.id }} search={{ plan: service, duration } as any}>
+                  <Link to="/booking/$officeId" params={{ officeId: office.id }} search={{ plan: service, duration }}>
                     Proceed to Book <ArrowRight className="ml-1 h-4 w-4" />
                   </Link>
                 </Button>
