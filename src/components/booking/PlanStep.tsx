@@ -29,7 +29,7 @@ export function PlanStep({
         <Label>Duration</Label>
         <RadioGroup value={duration} onValueChange={(v) => onDurationChange(v as "1y" | "2y")} className="mt-2 grid grid-cols-2 gap-2">
           {([["1y", "1 year"], ["2y", "2 years (10% off)"]] as const).map(([v, l]) => (
-            <label key={v} className="flex cursor-pointer items-center gap-2 rounded-md border p-3 text-sm hover:bg-accent"><RadioGroupItem value={v} /> {l}</label>
+            <label key={v} className="flex cursor-pointer items-center gap-2 rounded-md border p-3 text-sm"><RadioGroupItem value={v} /> {l}</label>
           ))}
         </RadioGroup>
       </div>

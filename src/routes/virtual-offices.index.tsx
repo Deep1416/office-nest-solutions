@@ -130,12 +130,12 @@ function List() {
 
   return (
     <div className="bg-surface">
-      <div className="container-x py-10">
+      <div className="container-x">
         <h1 className="text-3xl font-extrabold sm:text-4xl">Virtual Offices Across India</h1>
         <p className="mt-2 max-w-2xl text-muted-foreground">Compare verified workspaces in {CITIES.length}+ cities. Filter by state, service and amenities.</p>
 
         <div className="mt-6 flex flex-wrap items-center gap-3">
-          <div className="relative flex-1 min-w-[220px]">
+          <div className="relative flex-1 min-w-55">
             <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
             <Input value={q} onChange={(e) => updateFilters({ q: e.target.value })} placeholder="Search by name, area or city" className="pl-9" />
           </div>

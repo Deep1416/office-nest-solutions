@@ -63,7 +63,7 @@ export function CallbackTrigger({ children }: { children: ReactNode }) {
                 ["1hr", "In one hour"],
                 ["custom", "Custom time"],
               ].map(([v, l]) => (
-                <label key={v} className="flex cursor-pointer items-center gap-2 rounded-md border p-2 text-sm hover:bg-accent">
+                <label key={v} className="flex cursor-pointer items-center gap-2 rounded-md border p-2 text-sm">
                   <RadioGroupItem value={v} /> {l}
                 </label>
               ))}

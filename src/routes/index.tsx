@@ -3,7 +3,6 @@ import { Hero } from "@/components/home/Hero";
 import { Locations } from "@/components/home/Locations";
 import { Services } from "@/components/home/Services";
 import { HowItWorks } from "@/components/home/HowItWorks";
-import { Pricing } from "@/components/home/Pricing";
 import { Kyc } from "@/components/home/Kyc";
 import { Testimonials } from "@/components/home/Testimonials";
 import { Faq } from "@/components/home/Faq";
@@ -57,7 +56,6 @@ function Home() {
       <Locations />
       <Services />
       <HowItWorks />
-      <Pricing />
       <Kyc />
       <Testimonials />
       <Faq />

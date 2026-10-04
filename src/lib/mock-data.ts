@@ -55,7 +55,7 @@ export interface OfficeListing {
   landmarks: string[];
 }
 
-const IMAGES = [
+export const IMAGES = [
   "https://images.unsplash.com/photo-1497366216548-37526070297c?w=1000&auto=format&fit=crop&q=60",
   "https://images.unsplash.com/photo-1497366754035-f200968a6e72?w=1000&auto=format&fit=crop&q=60",
   "https://images.unsplash.com/photo-1524758631624-e2822e304c36?w=1000&auto=format&fit=crop&q=60",

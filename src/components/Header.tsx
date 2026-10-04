@@ -1,27 +1,22 @@
 import { useState } from "react";
 import { Link } from "@tanstack/react-router";
-import { Menu, Phone, Mail, ChevronDown, X, Building2, FileText, Receipt, ShoppingBag } from "lucide-react";
+import { Menu, Phone, Mail, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { Logo } from "./Logo";
 import { BRAND, whatsappUrl } from "@/lib/config";
 import { CallbackTrigger } from "./CallbackModal";
 import {
-  NavigationMenu, NavigationMenuContent, NavigationMenuItem, NavigationMenuList, NavigationMenuTrigger,
+  NavigationMenu,
+  NavigationMenuItem,
+  NavigationMenuList,
 } from "@/components/ui/navigation-menu";
-
-const SERVICE_LINKS = [
-  { to: "/services/business-registration", label: "Business Registration", icon: FileText },
-  { to: "/services/gst-registration", label: "GST Registration", icon: Receipt },
-  { to: "/services/mailing-address", label: "Mailing Address", icon: Mail },
-  { to: "/services/ecommerce-apob-vpob", label: "Ecommerce APoB/VPoB", icon: ShoppingBag },
-] as const;
 
 export function Header() {
   const [open, setOpen] = useState(false);
   return (
-    <header className="sticky top-0 z-40 w-full border-b border-border/70 bg-background/85 backdrop-blur">
-      <div className="container-x flex h-16 items-center justify-between gap-4">
+    <header className="sticky top-0 z-40 w-full border-b border-border/70 bg-accent">
+      <div className="container-x flex h-16 items-center justify-between gap-4 ">
         <Logo />
 
         <nav className="hidden lg:block">
@@ -30,41 +25,26 @@ export function Header() {
               <NavItem to="/" label="Home" />
               <NavItem to="/virtual-offices" label="Virtual Office" />
 
-              <NavigationMenuItem>
-                <NavigationMenuTrigger className="h-9 bg-transparent px-3 text-sm font-medium">Services</NavigationMenuTrigger>
-                <NavigationMenuContent>
-                  <ul className="grid w-[380px] gap-1 p-3">
-                    {SERVICE_LINKS.map(s => (
-                      <li key={s.to}>
-                        <Link to={s.to} className="flex items-start gap-3 rounded-md p-3 hover:bg-accent">
-                          <span className="grid h-9 w-9 place-items-center rounded-md bg-primary/10 text-primary">
-                            <s.icon className="h-4 w-4" />
-                          </span>
-                          <div>
-                            <div className="text-sm font-semibold text-navy">{s.label}</div>
-                            <div className="text-xs text-muted-foreground">Learn more →</div>
-                          </div>
-                        </Link>
-                      </li>
-                    ))}
-                  </ul>
-                </NavigationMenuContent>
-              </NavigationMenuItem>
+              <NavItem to="/services" label="Services" />
 
               <NavItem to="/locations/delhi" label="Locations" />
               <NavItem to="/about" label="About Us" />
               <NavItem to="/blogs" label="Blogs" />
-              <NavItem to="/booking-status" label="Check Booking" />
             </NavigationMenuList>
           </NavigationMenu>
         </nav>
 
         <div className="hidden items-center gap-3 lg:flex">
-          <a href={`tel:${BRAND.phone}`} className="flex items-center gap-1.5 text-sm text-muted-foreground hover:text-navy">
+          <a
+            href={`tel:${BRAND.phone}`}
+            className="flex items-center gap-1.5 text-sm text-muted-foreground hover:text-navy"
+          >
             <Phone className="h-4 w-4" /> {BRAND.phone}
           </a>
           <CallbackTrigger>
-            <Button size="sm" className="bg-orange text-orange-foreground hover:bg-orange/90">Get a Quote</Button>
+            <Button size="sm" className="bg-orange text-orange-foreground hover:bg-orange/90">
+              Get a Quote
+            </Button>
           </CallbackTrigger>
         </div>
 
@@ -77,7 +57,12 @@ export function Header() {
           <SheetContent side="right" className="w-[85%] max-w-sm p-0">
             <div className="flex items-center justify-between border-b px-4 py-3">
               <Logo />
-              <Button variant="ghost" size="icon" onClick={() => setOpen(false)} aria-label="Close menu">
+              <Button
+                variant="ghost"
+                size="icon"
+                onClick={() => setOpen(false)}
+                aria-label="Close menu"
+              >
                 <X className="h-5 w-5" />
               </Button>
             </div>
@@ -85,25 +70,38 @@ export function Header() {
               {[
                 ["/", "Home"],
                 ["/virtual-offices", "Virtual Office"],
-                ["/services/business-registration", "Business Registration"],
-                ["/services/gst-registration", "GST Registration"],
-                ["/services/mailing-address", "Mailing Address"],
-                ["/services/ecommerce-apob-vpob", "Ecommerce APoB/VPoB"],
+                ["/services", "Services"],
                 ["/locations/delhi", "Locations"],
                 ["/about", "About Us"],
                 ["/blogs", "Blogs"],
-                ["/booking-status", "Check Booking Status"],
               ].map(([to, label]) => (
-                <Link key={to + label} to={to} onClick={() => setOpen(false)} className="rounded-md px-3 py-2.5 text-sm font-medium text-navy hover:bg-accent">
+                <Link
+                  key={to + label}
+                  to={to}
+                  onClick={() => setOpen(false)}
+                  className="rounded-md px-3 py-2.5 text-sm font-medium text-navy"
+                >
                   {label}
                 </Link>
               ))}
               <div className="mt-3 border-t pt-3 px-3 space-y-2 text-sm">
-                <a href={`tel:${BRAND.phone}`} className="flex items-center gap-2 text-muted-foreground"><Phone className="h-4 w-4" /> {BRAND.phone}</a>
-                <a href={`mailto:${BRAND.email}`} className="flex items-center gap-2 text-muted-foreground"><Mail className="h-4 w-4" /> {BRAND.email}</a>
+                <a
+                  href={`tel:${BRAND.phone}`}
+                  className="flex items-center gap-2 text-muted-foreground"
+                >
+                  <Phone className="h-4 w-4" /> {BRAND.phone}
+                </a>
+                <a
+                  href={`mailto:${BRAND.email}`}
+                  className="flex items-center gap-2 text-muted-foreground"
+                >
+                  <Mail className="h-4 w-4" /> {BRAND.email}
+                </a>
               </div>
               <CallbackTrigger>
-                <Button className="mx-3 mt-4 bg-orange text-orange-foreground hover:bg-orange/90">Get a Quote</Button>
+                <Button className="mx-3 mt-4 bg-orange text-orange-foreground hover:bg-orange/90">
+                  Get a Quote
+                </Button>
               </CallbackTrigger>
             </nav>
           </SheetContent>
@@ -118,7 +116,7 @@ function NavItem({ to, label }: { to: string; label: string }) {
     <NavigationMenuItem>
       <Link
         to={to}
-        className="inline-flex h-9 items-center rounded-md px-3 text-sm font-medium text-navy/80 transition-colors hover:bg-accent hover:text-navy"
+        className="inline-flex h-9 items-center rounded-md px-3 text-sm font-medium text-navy/80"
         activeProps={{ className: "text-primary" }}
       >
         {label}
@@ -130,10 +128,20 @@ function NavItem({ to, label }: { to: string; label: string }) {
 export function MobileStickyBar() {
   return (
     <div className="fixed bottom-0 left-0 right-0 z-30 grid grid-cols-2 border-t bg-background/95 backdrop-blur lg:hidden">
-      <a href={`tel:${BRAND.phone}`} className="flex items-center justify-center gap-2 py-3 text-sm font-semibold text-navy">
+      <a
+        href={`tel:${BRAND.phone}`}
+        className="flex items-center justify-center gap-2 py-3 text-sm font-semibold text-navy"
+      >
         <Phone className="h-4 w-4" /> Call
       </a>
-      <a href={whatsappUrl("Hello OfficeMate, I'd like to know more about your virtual office services.")} target="_blank" rel="noreferrer" className="flex items-center justify-center gap-2 bg-success py-3 text-sm font-semibold text-success-foreground">
+      <a
+        href={whatsappUrl(
+          "Hello OfficeMate, I'd like to know more about your virtual office services.",
+        )}
+        target="_blank"
+        rel="noreferrer"
+        className="flex items-center justify-center gap-2 bg-success py-3 text-sm font-semibold text-success-foreground"
+      >
         WhatsApp
       </a>
     </div>

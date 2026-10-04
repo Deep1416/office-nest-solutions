@@ -16,6 +16,7 @@ import { Route as AdminRouteImport } from './routes/admin'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as VirtualOfficesIndexRouteImport } from './routes/virtual-offices.index'
+import { Route as ServicesIndexRouteImport } from './routes/services.index'
 import { Route as BlogsIndexRouteImport } from './routes/blogs.index'
 import { Route as VirtualOfficesIdRouteImport } from './routes/virtual-offices.$id'
 import { Route as ServicesMailingAddressRouteImport } from './routes/services.mailing-address'
@@ -62,6 +63,11 @@ const VirtualOfficesIndexRoute = VirtualOfficesIndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => VirtualOfficesRoute,
+} as any)
+const ServicesIndexRoute = ServicesIndexRouteImport.update({
+  id: '/services/',
+  path: '/services/',
+  getParentRoute: () => rootRouteImport,
 } as any)
 const BlogsIndexRoute = BlogsIndexRouteImport.update({
   id: '/',
@@ -137,6 +143,7 @@ export interface FileRoutesByFullPath {
   '/services/mailing-address': typeof ServicesMailingAddressRoute
   '/virtual-offices/$id': typeof VirtualOfficesIdRoute
   '/blogs/': typeof BlogsIndexRoute
+  '/services/': typeof ServicesIndexRoute
   '/virtual-offices/': typeof VirtualOfficesIndexRoute
   '/locations/$state/$city': typeof LocationsStateCityRoute
   '/locations/$state/': typeof LocationsStateIndexRoute
@@ -154,6 +161,7 @@ export interface FileRoutesByTo {
   '/services/mailing-address': typeof ServicesMailingAddressRoute
   '/virtual-offices/$id': typeof VirtualOfficesIdRoute
   '/blogs': typeof BlogsIndexRoute
+  '/services': typeof ServicesIndexRoute
   '/virtual-offices': typeof VirtualOfficesIndexRoute
   '/locations/$state/$city': typeof LocationsStateCityRoute
   '/locations/$state': typeof LocationsStateIndexRoute
@@ -175,6 +183,7 @@ export interface FileRoutesById {
   '/services/mailing-address': typeof ServicesMailingAddressRoute
   '/virtual-offices/$id': typeof VirtualOfficesIdRoute
   '/blogs/': typeof BlogsIndexRoute
+  '/services/': typeof ServicesIndexRoute
   '/virtual-offices/': typeof VirtualOfficesIndexRoute
   '/locations/$state/$city': typeof LocationsStateCityRoute
   '/locations/$state/': typeof LocationsStateIndexRoute
@@ -197,6 +206,7 @@ export interface FileRouteTypes {
     | '/services/mailing-address'
     | '/virtual-offices/$id'
     | '/blogs/'
+    | '/services/'
     | '/virtual-offices/'
     | '/locations/$state/$city'
     | '/locations/$state/'
@@ -214,6 +224,7 @@ export interface FileRouteTypes {
     | '/services/mailing-address'
     | '/virtual-offices/$id'
     | '/blogs'
+    | '/services'
     | '/virtual-offices'
     | '/locations/$state/$city'
     | '/locations/$state'
@@ -234,6 +245,7 @@ export interface FileRouteTypes {
     | '/services/mailing-address'
     | '/virtual-offices/$id'
     | '/blogs/'
+    | '/services/'
     | '/virtual-offices/'
     | '/locations/$state/$city'
     | '/locations/$state/'
@@ -252,6 +264,7 @@ export interface RootRouteChildren {
   ServicesEcommerceApobVpobRoute: typeof ServicesEcommerceApobVpobRoute
   ServicesGstRegistrationRoute: typeof ServicesGstRegistrationRoute
   ServicesMailingAddressRoute: typeof ServicesMailingAddressRoute
+  ServicesIndexRoute: typeof ServicesIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -304,6 +317,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/virtual-offices/'
       preLoaderRoute: typeof VirtualOfficesIndexRouteImport
       parentRoute: typeof VirtualOfficesRoute
+    }
+    '/services/': {
+      id: '/services/'
+      path: '/services'
+      fullPath: '/services/'
+      preLoaderRoute: typeof ServicesIndexRouteImport
+      parentRoute: typeof rootRouteImport
     }
     '/blogs/': {
       id: '/blogs/'
@@ -438,6 +458,7 @@ const rootRouteChildren: RootRouteChildren = {
   ServicesEcommerceApobVpobRoute: ServicesEcommerceApobVpobRoute,
   ServicesGstRegistrationRoute: ServicesGstRegistrationRoute,
   ServicesMailingAddressRoute: ServicesMailingAddressRoute,
+  ServicesIndexRoute: ServicesIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
