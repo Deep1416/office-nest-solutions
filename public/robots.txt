@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+Disallow: /admin
+Disallow: /booking/
+Disallow: /booking-status
+
+Sitemap: https://www.officemate.co.in/sitemap.xml

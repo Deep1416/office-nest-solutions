@@ -7,7 +7,7 @@ import { Kyc } from "@/components/home/Kyc";
 import { Testimonials } from "@/components/home/Testimonials";
 import { Faq } from "@/components/home/Faq";
 import { GetQuote } from "@/components/home/GetQuote";
-import { BRAND } from "@/lib/config";
+import { DEFAULT_DESCRIPTION, DEFAULT_TITLE, organizationLd, seoHead, websiteLd } from "@/lib/seo";
 
 const HOME_FAQS = [
   { q: "What is a virtual office address?", a: "A real commercial address in a prime location that you can use for registration, GST, billing and mail, without renting physical space." },
@@ -20,21 +20,14 @@ const HOME_FAQS = [
 
 export const Route = createFileRoute("/")({
   head: () => ({
-    scripts: [
-      {
-        type: "application/ld+json",
-        children: JSON.stringify({
-          "@context": "https://schema.org",
-          "@type": "LocalBusiness",
-          name: BRAND.name,
-          telephone: BRAND.phone,
-          email: BRAND.email,
-          address: { "@type": "PostalAddress", streetAddress: BRAND.address, addressCountry: "IN" },
-        }),
-      },
-      {
-        type: "application/ld+json",
-        children: JSON.stringify({
+    ...seoHead({
+      title: DEFAULT_TITLE,
+      description: DEFAULT_DESCRIPTION,
+      path: "/",
+      jsonLd: [
+        organizationLd,
+        websiteLd,
+        {
           "@context": "https://schema.org",
           "@type": "FAQPage",
           mainEntity: HOME_FAQS.map((f) => ({
@@ -42,9 +35,9 @@ export const Route = createFileRoute("/")({
             name: f.q,
             acceptedAnswer: { "@type": "Answer", text: f.a },
           })),
-        }),
-      },
-    ],
+        },
+      ],
+    }),
   }),
   component: Home,
 });

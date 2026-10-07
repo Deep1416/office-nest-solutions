@@ -8,6 +8,7 @@ import { officeQueryOptions, officesQueryOptions } from "@/lib/queries/offices";
 import { OfficeCard } from "@/components/OfficeCard";
 import { FaqAccordion } from "@/components/FaqAccordion";
 import { CallbackTrigger } from "@/components/CallbackModal";
+import { absoluteUrl, breadcrumbLd, seoHead } from "@/lib/seo";
 
 export const Route = createFileRoute("/virtual-offices/$id")({
   loader: async ({ params, context }) => {
@@ -18,12 +19,33 @@ export const Route = createFileRoute("/virtual-offices/$id")({
     if (!office) throw notFound();
     return { office, offices };
   },
-  head: ({ loaderData }) => ({
-    meta: [
-      { title: `${loaderData?.office.name ?? "Office"} — OfficeMate` },
-      { name: "description", content: loaderData?.office.description.slice(0, 160) ?? "" },
-    ],
-  }),
+  head: ({ loaderData, params }) => {
+    const o = loaderData?.office;
+    const path = `/virtual-offices/${params.id}`;
+    return seoHead({
+      title: o ? `${o.name}, ${o.city} — Virtual Office | OfficeMate` : "Virtual Office — OfficeMate",
+      description: o?.description.slice(0, 160) ?? "",
+      path,
+      image: o?.image,
+      jsonLd: o
+        ? [
+            {
+              "@context": "https://schema.org",
+              "@type": "LocalBusiness",
+              name: o.name,
+              url: absoluteUrl(path),
+              image: o.image,
+              address: { "@type": "PostalAddress", addressLocality: o.city, addressRegion: o.state, addressCountry: "IN" },
+            },
+            breadcrumbLd([
+              { name: "Home", path: "/" },
+              { name: "Virtual Offices", path: "/virtual-offices" },
+              { name: o.name, path },
+            ]),
+          ]
+        : [],
+    });
+  },
   component: Details,
 });
 

@@ -1,6 +1,8 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { BLOGS } from "@/lib/mock-data";
 import { Badge } from "@/components/ui/badge";
+import { SITE_URL } from "@/lib/config";
+import { absoluteUrl, breadcrumbLd, seoHead } from "@/lib/seo";
 
 export const Route = createFileRoute("/blogs/$slug")({
   loader: ({ params }) => {
@@ -8,15 +10,37 @@ export const Route = createFileRoute("/blogs/$slug")({
     if (!post) throw notFound();
     return { post };
   },
-  head: ({ loaderData }) => ({
-    meta: [
-      { title: `${loaderData?.post.title ?? "Blog"} — OfficeMate` },
-      { name: "description", content: loaderData?.post.excerpt ?? "" },
-      { property: "og:title", content: loaderData?.post.title ?? "" },
-      { property: "og:image", content: loaderData?.post.image ?? "" },
-      { property: "og:type", content: "article" },
-    ],
-  }),
+  head: ({ loaderData, params }) => {
+    const post = loaderData?.post;
+    const path = `/blogs/${params.slug}`;
+    return seoHead({
+      title: post ? `${post.title} — OfficeMate` : "Blog — OfficeMate",
+      description: post?.excerpt ?? "",
+      path,
+      image: post?.image,
+      type: "article",
+      jsonLd: post
+        ? [
+            {
+              "@context": "https://schema.org",
+              "@type": "Article",
+              headline: post.title,
+              description: post.excerpt,
+              image: post.image,
+              datePublished: post.date,
+              mainEntityOfPage: absoluteUrl(path),
+              author: { "@type": "Organization", name: "OfficeMate" },
+              publisher: { "@id": `${SITE_URL}/#organization` },
+            },
+            breadcrumbLd([
+              { name: "Home", path: "/" },
+              { name: "Blog", path: "/blogs" },
+              { name: post.title, path },
+            ]),
+          ]
+        : [],
+    });
+  },
   component: Post,
 });
 

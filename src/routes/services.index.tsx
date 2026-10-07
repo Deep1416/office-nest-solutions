@@ -13,6 +13,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { QuoteForm } from "@/components/QuoteForm";
 import { IMAGES, SERVICES, SERVICE_CONTENT } from "@/lib/mock-data";
+import { seoHead } from "@/lib/seo";
 
 const ICONS: Record<string, LucideIcon> = {
   Building2,
@@ -40,16 +41,7 @@ const SERVICE_ROUTES: Record<string, ServiceRoute> = {
 };
 
 export const Route = createFileRoute("/services/")({
-  head: () => ({
-    meta: [
-      { title: "Our Services — OfficeMate" },
-      {
-        name: "description",
-        content:
-          "Virtual office, business registration, GST registration, mailing address, ecommerce APoB/VPoB and meeting rooms — all in one place.",
-      },
-    ],
-  }),
+  head: () => seoHead({ title: "Virtual Office, GST & Registration Services — OfficeMate", description: "Virtual office, business registration, GST registration, mailing address, ecommerce APoB/VPoB and meeting rooms — all in one place across India.", path: "/services" }),
   component: ServicesPage,
 });
 

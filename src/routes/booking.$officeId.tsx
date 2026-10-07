@@ -16,6 +16,7 @@ import { KycStep } from "@/components/booking/KycStep";
 import { ReviewStep } from "@/components/booking/ReviewStep";
 import { PaymentStep } from "@/components/booking/PaymentStep";
 import { SuccessPage } from "@/components/booking/SuccessPage";
+import { seoHead } from "@/lib/seo";
 
 const bookingSearchSchema = z.object({
   plan: z.string().optional(),
@@ -29,6 +30,8 @@ export const Route = createFileRoute("/booking/$officeId")({
     if (!office) throw notFound();
     return { office };
   },
+  head: ({ params }) =>
+    seoHead({ title: "Book Your Virtual Office — OfficeMate", description: "Complete your OfficeMate virtual office booking.", path: `/booking/${params.officeId}`, noindex: true }),
   component: BookingFlow,
 });
 

@@ -4,9 +4,10 @@ import { Search } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
 import { BLOGS } from "@/lib/mock-data";
+import { seoHead } from "@/lib/seo";
 
 export const Route = createFileRoute("/blogs/")({
-  head: () => ({ meta: [{ title: "OfficeMate Blog — Guides on Virtual Offices, GST & Registration" }, { name: "description", content: "Practical guides for Indian founders on virtual offices, GST, company registration and ecommerce expansion." }] }),
+  head: () => seoHead({ title: "OfficeMate Blog — Guides on Virtual Offices, GST & Registration", description: "Practical guides for Indian founders on virtual offices, GST, company registration and ecommerce expansion.", path: "/blogs" }),
   component: Blogs,
 });
 

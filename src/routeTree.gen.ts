@@ -14,6 +14,7 @@ import { Route as AboutRouteImport } from './routes/about'
 import { Route as AdminRouteImport } from './routes/admin'
 import { Route as BlogsRouteImport } from './routes/blogs'
 import { Route as BookingStatusRouteImport } from './routes/booking-status'
+import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as VirtualOfficesRouteImport } from './routes/virtual-offices'
 import { Route as BlogsIndexRouteImport } from './routes/blogs.index'
 import { Route as BlogsSlugRouteImport } from './routes/blogs.$slug'
@@ -52,6 +53,11 @@ const BlogsRoute = BlogsRouteImport.update({
 const BookingStatusRoute = BookingStatusRouteImport.update({
   id: '/booking-status',
   path: '/booking-status',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
+  id: '/sitemap.xml',
+  path: '/sitemap.xml',
   getParentRoute: () => rootRouteImport,
 } as any)
 const VirtualOfficesRoute = VirtualOfficesRouteImport.update({
@@ -133,6 +139,7 @@ export interface FileRoutesByFullPath {
   '/admin': typeof AdminRoute
   '/blogs': typeof BlogsRouteWithChildren
   '/booking-status': typeof BookingStatusRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/virtual-offices': typeof VirtualOfficesRouteWithChildren
   '/blogs/$slug': typeof BlogsSlugRoute
   '/booking/$officeId': typeof BookingOfficeIdRoute
@@ -153,6 +160,7 @@ export interface FileRoutesByTo {
   '/about': typeof AboutRoute
   '/admin': typeof AdminRoute
   '/booking-status': typeof BookingStatusRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/blogs/$slug': typeof BlogsSlugRoute
   '/booking/$officeId': typeof BookingOfficeIdRoute
   '/services/business-registration': typeof ServicesBusinessRegistrationRoute
@@ -173,6 +181,7 @@ export interface FileRoutesById {
   '/admin': typeof AdminRoute
   '/blogs': typeof BlogsRouteWithChildren
   '/booking-status': typeof BookingStatusRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/virtual-offices': typeof VirtualOfficesRouteWithChildren
   '/blogs/$slug': typeof BlogsSlugRoute
   '/booking/$officeId': typeof BookingOfficeIdRoute
@@ -196,6 +205,7 @@ export interface FileRouteTypes {
     | '/admin'
     | '/blogs'
     | '/booking-status'
+    | '/sitemap.xml'
     | '/virtual-offices'
     | '/blogs/$slug'
     | '/booking/$officeId'
@@ -216,6 +226,7 @@ export interface FileRouteTypes {
     | '/about'
     | '/admin'
     | '/booking-status'
+    | '/sitemap.xml'
     | '/blogs/$slug'
     | '/booking/$officeId'
     | '/services/business-registration'
@@ -235,6 +246,7 @@ export interface FileRouteTypes {
     | '/admin'
     | '/blogs'
     | '/booking-status'
+    | '/sitemap.xml'
     | '/virtual-offices'
     | '/blogs/$slug'
     | '/booking/$officeId'
@@ -257,6 +269,7 @@ export interface RootRouteChildren {
   AdminRoute: typeof AdminRoute
   BlogsRoute: typeof BlogsRouteWithChildren
   BookingStatusRoute: typeof BookingStatusRoute
+  SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   VirtualOfficesRoute: typeof VirtualOfficesRouteWithChildren
   BookingOfficeIdRoute: typeof BookingOfficeIdRoute
   LocationsStateRoute: typeof LocationsStateRouteWithChildren
@@ -302,6 +315,13 @@ declare module '@tanstack/react-router' {
       path: '/booking-status'
       fullPath: '/booking-status'
       preLoaderRoute: typeof BookingStatusRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/sitemap.xml': {
+      id: '/sitemap.xml'
+      path: '/sitemap.xml'
+      fullPath: '/sitemap.xml'
+      preLoaderRoute: typeof SitemapDotxmlRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/virtual-offices': {
@@ -451,6 +471,7 @@ const rootRouteChildren: RootRouteChildren = {
   AdminRoute: AdminRoute,
   BlogsRoute: BlogsRouteWithChildren,
   BookingStatusRoute: BookingStatusRoute,
+  SitemapDotxmlRoute: SitemapDotxmlRoute,
   VirtualOfficesRoute: VirtualOfficesRouteWithChildren,
   BookingOfficeIdRoute: BookingOfficeIdRoute,
   LocationsStateRoute: LocationsStateRouteWithChildren,

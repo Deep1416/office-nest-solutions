@@ -9,6 +9,7 @@ import {
   Scripts,
 } from "@tanstack/react-router";
 import type { ReactNode } from "react";
+import { DEFAULT_DESCRIPTION, DEFAULT_OG_IMAGE, DEFAULT_TITLE, absoluteUrl } from "../lib/seo";
 
 import appCss from "../styles.css?url";
 import { SiteLayout } from "../components/SiteLayout";
@@ -53,13 +54,17 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "OfficeMate — Virtual Office Address & GST Registration in 50+ Indian Cities" },
-      { name: "description", content: "Book virtual offices, GST registration and business addresses across 50+ Indian cities. Transparent pricing, verified documentation, dedicated support." },
+      { title: DEFAULT_TITLE },
+      { name: "description", content: DEFAULT_DESCRIPTION },
+      { name: "theme-color", content: "#0b2a5b" },
       { property: "og:title", content: "OfficeMate — Virtual Offices Across India" },
       { property: "og:description", content: "Your business address, anywhere in India. Virtual offices for GST, company registration and mailing." },
       { property: "og:type", content: "website" },
       { property: "og:site_name", content: "OfficeMate" },
+      { property: "og:locale", content: "en_IN" },
+      { property: "og:image", content: absoluteUrl(DEFAULT_OG_IMAGE) },
       { name: "twitter:card", content: "summary_large_image" },
+      { name: "twitter:image", content: absoluteUrl(DEFAULT_OG_IMAGE) },
     ],
     links: [
       { rel: "stylesheet", href: appCss },

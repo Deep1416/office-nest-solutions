@@ -3,6 +3,7 @@ import { CITIES, STATES, inr } from "@/lib/mock-data";
 import { officesQueryOptions } from "@/lib/queries/offices";
 import { OfficeCard } from "@/components/OfficeCard";
 import { Badge } from "@/components/ui/badge";
+import { breadcrumbLd, seoHead } from "@/lib/seo";
 
 export const Route = createFileRoute("/locations/$state/")({
   loader: async ({ params, context }) => {
@@ -11,12 +12,16 @@ export const Route = createFileRoute("/locations/$state/")({
     const offices = await context.queryClient.ensureQueryData(officesQueryOptions());
     return { state, offices };
   },
-  head: ({ params }) => ({
-    meta: [
-      { title: `Virtual Offices in ${params.state.replace(/-/g, " ")} — OfficeMate` },
-      { name: "description", content: `Explore virtual office locations across ${params.state.replace(/-/g, " ")}.` },
-    ],
-  }),
+  head: ({ loaderData, params }) => {
+    const name = loaderData?.state.name ?? params.state.replace(/-/g, " ");
+    const path = `/locations/${params.state}`;
+    return seoHead({
+      title: `Virtual Office in ${name} — GST & Business Address | OfficeMate`,
+      description: `Explore verified virtual office locations across ${name}. GST registration, company registration and mailing addresses with transparent pricing.`,
+      path,
+      jsonLd: [breadcrumbLd([{ name: "Home", path: "/" }, { name, path }])],
+    });
+  },
   component: StatePage,
 });
 

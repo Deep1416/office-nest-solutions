@@ -8,6 +8,9 @@ export const BRAND = {
   address: "OfficeMate HQ, Cyber City, Gurugram, India",
 };
 
+// Canonical production origin (apex redirects to www on Vercel). Used for canonical links, og:url and the sitemap.
+export const SITE_URL = "https://www.officemate.co.in";
+
 export const whatsappUrl = (message: string) =>
   `https://wa.me/${BRAND.whatsapp}?text=${encodeURIComponent(message)}`;
 

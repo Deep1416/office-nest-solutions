@@ -1,9 +1,10 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { Target, Eye, Heart, MapPin, Users, TrendingUp, type LucideIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { seoHead } from "@/lib/seo";
 
 export const Route = createFileRoute("/about")({
-  head: () => ({ meta: [{ title: "About OfficeMate — Virtual Offices Across India" }, { name: "description", content: "OfficeMate helps founders, freelancers and sellers set up compliant business addresses in 50+ Indian cities." }] }),
+  head: () => seoHead({ title: "About OfficeMate — Virtual Office Provider in India", description: "OfficeMate helps founders, freelancers and sellers set up compliant business addresses in 50+ Indian cities, with verified documentation and dedicated support.", path: "/about" }),
   component: About,
 });
 

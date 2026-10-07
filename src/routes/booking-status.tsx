@@ -8,9 +8,10 @@ import { Label } from "@/components/ui/label";
 import { useFindBooking } from "@/lib/queries/bookings";
 import type { Booking } from "@/lib/storage";
 import { inr } from "@/lib/mock-data";
+import { seoHead } from "@/lib/seo";
 
 export const Route = createFileRoute("/booking-status")({
-  head: () => ({ meta: [{ title: "Check Booking Status — OfficeMate" }, { name: "description", content: "Track your OfficeMate virtual office booking with your reference number." }] }),
+  head: () => seoHead({ title: "Check Booking Status — OfficeMate", description: "Track your OfficeMate virtual office booking with your reference number.", path: "/booking-status", noindex: true }),
   component: Page,
 });
 

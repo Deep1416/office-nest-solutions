@@ -2,6 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { ServicePage } from "@/components/ServicePage";
 import { PopularLocations } from "@/components/PopularLocations";
 import { CITIES, STATES, SERVICE_CONTENT } from "@/lib/mock-data";
+import { seoHead } from "@/lib/seo";
 
 const GST_LOCATIONS = STATES.map((s) => ({
   name: s.name,
@@ -9,7 +10,7 @@ const GST_LOCATIONS = STATES.map((s) => ({
 }));
 
 export const Route = createFileRoute("/services/gst-registration")({
-  head: () => ({ meta: [{ title: "GST Registration Address — OfficeMate" }, { name: "description", content: "GST-ready virtual office addresses across all Indian states. Expand pan-India without physical offices." }] }),
+  head: () => seoHead({ title: "GST Registration Virtual Office Address in India — OfficeMate", description: "GST-ready virtual office addresses across all Indian states with rent agreement, NOC and utility bill. Expand pan-India without physical offices.", path: "/services/gst-registration" }),
   component: () => (
     <>
       <ServicePage slug="gst-registration" {...SERVICE_CONTENT["gst-registration"]} />

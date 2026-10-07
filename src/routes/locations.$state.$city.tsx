@@ -8,6 +8,7 @@ import { OfficeCard } from "@/components/OfficeCard";
 import { QuoteForm } from "@/components/QuoteForm";
 import { CityContent } from "@/components/CityContent";
 import { FaqAccordion } from "@/components/FaqAccordion";
+import { absoluteUrl, breadcrumbLd, seoHead } from "@/lib/seo";
 
 export const Route = createFileRoute("/locations/$state/$city")({
   loader: async ({ params, context }) => {
@@ -16,23 +17,33 @@ export const Route = createFileRoute("/locations/$state/$city")({
     const offices = await context.queryClient.ensureQueryData(officesQueryOptions());
     return { city, offices };
   },
-  head: ({ loaderData, params }) => ({
-    meta: [
-      { title: `Virtual Office in ${loaderData?.city.name ?? params.city} — OfficeMate` },
-      { name: "description", content: `Book a verified virtual office in ${loaderData?.city.name ?? params.city}. GST, business registration & mailing addresses starting at ${inr(loaderData?.city.startingPrice ?? 999)}.` },
-      { property: "og:title", content: `Virtual Office in ${loaderData?.city.name ?? ""} — OfficeMate` },
-    ],
-    links: [{ rel: "canonical", href: `/locations/${params.state}/${params.city}` }],
-    scripts: loaderData ? [{
-      type: "application/ld+json",
-      children: JSON.stringify({
-        "@context": "https://schema.org",
-        "@type": "LocalBusiness",
-        name: `OfficeMate ${loaderData.city.name}`,
-        address: { "@type": "PostalAddress", addressLocality: loaderData.city.name, addressRegion: loaderData.city.state, addressCountry: "IN" },
-      }),
-    }] : [],
-  }),
+  head: ({ loaderData, params }) => {
+    const name = loaderData?.city.name ?? params.city;
+    const path = `/locations/${params.state}/${params.city}`;
+    return seoHead({
+      title: `Virtual Office in ${name} for GST & Registration — OfficeMate`,
+      description: `Book a verified virtual office in ${name}. GST, business registration & mailing addresses starting at ${inr(loaderData?.city.startingPrice ?? 999)}.`,
+      path,
+      image: loaderData?.city.image,
+      jsonLd: loaderData
+        ? [
+            {
+              "@context": "https://schema.org",
+              "@type": "LocalBusiness",
+              name: `OfficeMate ${name}`,
+              url: absoluteUrl(path),
+              image: loaderData.city.image,
+              address: { "@type": "PostalAddress", addressLocality: name, addressRegion: loaderData.city.state, addressCountry: "IN" },
+            },
+            breadcrumbLd([
+              { name: "Home", path: "/" },
+              { name: loaderData.city.state, path: `/locations/${params.state}` },
+              { name, path },
+            ]),
+          ]
+        : [],
+    });
+  },
   component: CityPage,
 });
 

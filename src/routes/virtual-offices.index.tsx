@@ -1,6 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { z } from "zod";
 import { VirtualOfficeHero, VirtualOfficeContent } from "@/components/virtual-office/Landing";
+import { seoHead } from "@/lib/seo";
 
 // Search params are kept so existing links like /virtual-offices?city=... still type-check.
 const virtualOfficesSearchSchema = z.object({
@@ -16,12 +17,7 @@ const virtualOfficesSearchSchema = z.object({
 
 export const Route = createFileRoute("/virtual-offices/")({
   validateSearch: virtualOfficesSearchSchema,
-  head: () => ({
-    meta: [
-      { title: "Virtual Offices Across India — OfficeMate" },
-      { name: "description", content: "Get a verified virtual office for GST, business registration and mailing across Indian cities." },
-    ],
-  }),
+  head: () => seoHead({ title: "Virtual Offices in 50+ Indian Cities — OfficeMate", description: "Compare verified virtual offices for GST, business registration and mailing across Indian cities. Transparent pricing, quick KYC and dedicated support.", path: "/virtual-offices" }),
   component: VirtualOffices,
 });
 
