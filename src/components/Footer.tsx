@@ -39,7 +39,7 @@ export function Footer() {
 
         <FooterCol title="Quick Links" links={[
           ["/", "Home"], ["/virtual-offices", "Virtual Offices"], ["/about", "About Us"],
-          ["/blogs", "Blogs"], ["/admin", "Admin"],
+          ["/blogs", "Blogs"],
         ]} />
 
         <FooterCol title="Services" links={[
