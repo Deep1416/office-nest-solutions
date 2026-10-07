@@ -1,15 +1,16 @@
 import { Link } from "@tanstack/react-router";
-import { Building2 } from "lucide-react";
 
-export function Logo({ className = "" }: { className?: string }) {
+// `light` swaps in the white-text version for dark (navy) backgrounds.
+export function Logo({ className = "", light = false }: { className?: string; light?: boolean }) {
   return (
-    <Link to="/" className={`inline-flex items-center gap-2 ${className}`}>
-      <span className="grid h-9 w-9 place-items-center rounded-lg bg-primary text-primary-foreground shadow-sm">
-        <Building2 className="h-5 w-5" />
-      </span>
-      <span className="font-display text-xl font-extrabold tracking-tight text-navy">
-        Office<span className="text-primary">Mate</span>
-      </span>
+    <Link to="/" className={`inline-flex items-center ${className}`} aria-label="OfficeMate home">
+      <img
+        src={light ? "/logo-light.png" : "/logo.png"}
+        alt="OfficeMate — Your Business Address, Anywhere"
+        width={1203}
+        height={288}
+        className="h-12 w-auto"
+      />
     </Link>
   );
 }

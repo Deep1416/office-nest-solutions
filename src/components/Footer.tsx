@@ -19,7 +19,7 @@ export function Footer() {
     <footer className="mt-20 border-t bg-navy text-navy-foreground">
       <div className="container-x grid gap-10 py-14 lg:grid-cols-5">
         <div className="lg:col-span-2 space-y-4">
-          <div className="[&_span]:!text-white"><Logo /></div>
+          <Logo light />
           <p className="max-w-sm text-sm text-white/70">
             {BRAND.tagline}. OfficeMate helps founders, sellers and consultants set up compliant business addresses across India — faster, cheaper and simpler.
           </p>

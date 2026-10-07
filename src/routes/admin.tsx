@@ -41,7 +41,7 @@ function Admin() {
   return (
     <div className="flex min-h-screen">
       <aside className="hidden w-60 flex-col border-r bg-navy p-4 text-white lg:flex">
-        <div className="[&_span]:text-white! mb-6"><Logo /></div>
+        <div className="mb-6"><Logo light /></div>
         <nav className="flex-1 space-y-1">
           {NAV.map(([k, l, I]) => (
             <button key={k} onClick={() => setTab(k)} className={`flex w-full items-center gap-2 rounded-md px-3 py-2 text-sm ${tab === k ? "bg-white/15 font-semibold" : "hover:bg-white/10"}`}>
