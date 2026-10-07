@@ -57,7 +57,7 @@ function Page() {
           </div>
           <div className="grid gap-1.5">
             <Label>Phone (last digits)</Label>
-            <Input placeholder="98100..." value={phone} onChange={(e) => setPhone(e.target.value)} required />
+            <Input placeholder="79826..." value={phone} onChange={(e) => setPhone(e.target.value)} required />
           </div>
           <div className="flex items-end">
             <Button type="submit" className="bg-primary w-full sm:w-auto"><Search className="mr-1 h-4 w-4" /> Track</Button>
