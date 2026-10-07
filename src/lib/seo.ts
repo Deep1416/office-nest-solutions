@@ -53,7 +53,14 @@ export const organizationLd = {
   telephone: BRAND.phone,
   email: BRAND.email,
   areaServed: { "@type": "Country", name: "India" },
-  address: { "@type": "PostalAddress", streetAddress: BRAND.address, addressCountry: "IN" },
+  address: {
+    "@type": "PostalAddress",
+    streetAddress: BRAND.addressParts.street,
+    addressLocality: BRAND.addressParts.city,
+    addressRegion: BRAND.addressParts.region,
+    postalCode: BRAND.addressParts.postalCode,
+    addressCountry: "IN",
+  },
 };
 
 export const websiteLd = {

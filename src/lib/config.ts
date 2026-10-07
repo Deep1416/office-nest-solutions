@@ -1,3 +1,10 @@
+const ADDRESS = {
+  street: "New Palam Vihar, Sector 110",
+  city: "Gurugram",
+  region: "Haryana",
+  postalCode: "110017",
+};
+
 export const BRAND = {
   name: "OfficeMate",
   tagline: "Your Business Address, Anywhere in India",
@@ -5,7 +12,8 @@ export const BRAND = {
   phoneRaw: "917982694457",
   whatsapp: "917982694457",
   email: "officematesupport@gmail.com",
-  address: "OfficeMate HQ, Cyber City, Gurugram, India",
+  addressParts: ADDRESS,
+  address: `${ADDRESS.street}, ${ADDRESS.city}, ${ADDRESS.region} ${ADDRESS.postalCode}`,
 };
 
 // Canonical production origin (apex redirects to www on Vercel). Used for canonical links, og:url and the sitemap.
