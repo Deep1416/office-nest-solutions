@@ -11,6 +11,6 @@ export const BRAND = {
 export const whatsappUrl = (message: string) =>
   `https://wa.me/${BRAND.whatsapp}?text=${encodeURIComponent(message)}`;
 
-// Google Apps Script web-app URL that appends each enquiry to a Google Sheet.
-// See docs/leads-google-sheet.md. Leave unset to keep leads local-only.
-export const LEADS_SHEET_URL = import.meta.env.VITE_LEADS_SHEET_URL as string | undefined;
+// Google Apps Script web-app URL that emails each enquiry to BRAND.email.
+// See docs/enquiry-emails.md. Leave unset to keep enquiries local-only.
+export const ENQUIRY_EMAIL_URL = import.meta.env.VITE_ENQUIRY_EMAIL_URL as string | undefined;
