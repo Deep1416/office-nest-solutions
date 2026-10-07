@@ -4,7 +4,7 @@ export const BRAND = {
   phone: "+91 79826 94457",
   phoneRaw: "917982694457",
   whatsapp: "917982694457",
-  email: "hello@officemate.in",
+  email: "officematesupport@gmail.com",
   address: "OfficeMate HQ, Cyber City, Gurugram, India",
 };
 
