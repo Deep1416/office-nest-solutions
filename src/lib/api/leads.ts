@@ -12,7 +12,7 @@ export async function getLeads(): Promise<Lead[]> {
 
 export async function createLead(input: CreateLeadInput): Promise<void> {
   leadsStore.add(input);
-  await notifyByEmail("lead", input);
+  void notifyByEmail("lead", input);
 }
 
 export async function deleteLead(id: string): Promise<void> {

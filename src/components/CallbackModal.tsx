@@ -47,6 +47,8 @@ export function CallbackTrigger({ children }: { children: ReactNode }) {
               onSuccess: () => {
                 toast.success("Callback scheduled — our team will call you soon");
                 setOpen(false);
+                setWhen("now");
+                setCustomTime("");
               },
               onError: () => toast.error("Something went wrong scheduling your callback."),
             });
@@ -73,7 +75,9 @@ export function CallbackTrigger({ children }: { children: ReactNode }) {
             )}
           </div>
           <FormField label="Message (optional)">{(id) => <Textarea id={id} name="message" rows={3} maxLength={500} />}</FormField>
-          <Button type="submit" className="w-full bg-primary">Schedule Callback</Button>
+          <Button type="submit" disabled={createCallback.isPending} className="w-full bg-primary">
+            {createCallback.isPending ? "Scheduling..." : "Schedule Callback"}
+          </Button>
         </form>
       </DialogContent>
     </Dialog>

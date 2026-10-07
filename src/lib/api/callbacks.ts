@@ -11,7 +11,7 @@ export async function getCallbacks(): Promise<CallbackReq[]> {
 
 export async function createCallback(input: CreateCallbackInput): Promise<void> {
   callbacksStore.add(input);
-  await notifyByEmail("callback", input);
+  void notifyByEmail("callback", input);
 }
 
 export async function deleteCallback(id: string): Promise<void> {
