@@ -24,6 +24,6 @@ Every enquiry (home page "Send an Enquiry", quote forms) is saved locally and, i
    VITE_LEADS_SHEET_URL=https://script.google.com/macros/s/XXXX/exec
    ```
 
-5. Restart `bun dev` (and set the same variable in your hosting provider's environment for production).
+5. Restart `npm run dev` (and set the same variable in your hosting provider's environment for production).
 
 After changing the Apps Script code, publish a **new version** of the deployment.
