@@ -1,7 +1,7 @@
-import { useState } from "react";
+import { useState, type FormEvent } from "react";
 import { ArrowRight, Building2, Clock, HeadphonesIcon, MapPin, Search, ShieldCheck } from "lucide-react";
-import { Link } from "@tanstack/react-router";
-import { CITIES } from "@/lib/mock-data";
+import { Link, useNavigate } from "@tanstack/react-router";
+import { CITIES, STATES } from "@/lib/mock-data";
 import { IndiaMap } from "./IndiaMap";
 import { Section } from "./Section";
 
@@ -12,8 +12,31 @@ export const HIGHLIGHTS = [
   [HeadphonesIcon, "Pan India", "Support"],
 ] as const;
 
+const HIGHLIGHT_NOTES = [
+  "Addresses in top business hubs",
+  "Rent agreement, NOC & utility bill",
+  "Live in 24–72 hours after KYC",
+  "Dedicated help in every city",
+];
+
+const STATS = [
+  ["50+", "Cities"],
+  ["10,000+", "Businesses"],
+  [String(STATES.length), "States live"],
+] as const;
+
 export function Locations() {
+  const navigate = useNavigate();
   const [locationQuery, setLocationQuery] = useState("");
+  const q = locationQuery.trim().toLowerCase();
+  const matches = q ? CITIES.filter((c) => c.name.toLowerCase().includes(q) || c.state.toLowerCase().includes(q)) : [];
+  const chips = q ? matches : CITIES.slice(0, 8);
+
+  const onSearch = (e: FormEvent) => {
+    e.preventDefault();
+    const first = matches[0];
+    if (first) navigate({ to: "/locations/$state/$city", params: { state: first.stateSlug, city: first.slug } });
+  };
 
   return (
     <Section
@@ -30,7 +53,7 @@ export function Locations() {
     >
       <div className="grid gap-10 lg:grid-cols-[minmax(0,1fr)_26rem]">
         <div>
-          <div className="flex w-full max-w-md items-center gap-2 rounded-full border border-border bg-white p-2 shadow-card">
+          <form onSubmit={onSearch} className="flex w-full max-w-md items-center gap-2 rounded-full border border-border bg-white p-2 shadow-card transition-shadow focus-within:border-primary focus-within:shadow-elevated">
             <Search className="ml-2 h-4 w-4 shrink-0 text-muted-foreground" aria-hidden="true" />
             <input
               value={locationQuery}
@@ -39,20 +62,31 @@ export function Locations() {
               aria-label="Search city"
               className="h-11 flex-1 rounded-full bg-transparent px-1 text-sm outline-none placeholder:text-muted-foreground"
             />
-            <span className="grid h-11 w-11 shrink-0 place-items-center rounded-full bg-primary text-primary-foreground">
+            <button type="submit" aria-label="Go to city" className="grid h-11 w-11 shrink-0 place-items-center rounded-full bg-primary text-primary-foreground transition-colors hover:bg-primary/90">
               <Search className="h-5 w-5" aria-hidden="true" />
-            </span>
+            </button>
+          </form>
+
+          <div className="mt-6 flex flex-wrap gap-x-8 gap-y-3">
+            {STATS.map(([n, l]) => (
+              <div key={l}>
+                <div className="text-2xl font-extrabold text-navy">{n}</div>
+                <div className="text-xs font-medium text-muted-foreground">{l}</div>
+              </div>
+            ))}
           </div>
 
           <div className="mt-6 flex flex-wrap gap-2">
-            {CITIES.slice(0, 8).map((c) => (
+            {q && chips.length === 0 && <span className="text-sm text-muted-foreground">No city found for “{locationQuery.trim()}” yet — we are expanding fast.</span>}
+            {chips.map((c) => (
               <Link
                 key={c.slug}
                 to="/locations/$state/$city"
                 params={{ state: c.stateSlug, city: c.slug }}
-                className="rounded-full border border-border bg-white px-3 py-1 text-xs font-medium text-navy transition-colors hover:border-primary hover:text-primary"
+                className="inline-flex items-center gap-1.5 rounded-full border border-border bg-white px-3 py-1.5 text-xs font-medium text-navy transition-colors hover:border-primary hover:bg-primary-50 hover:text-primary"
               >
-                {c.name}
+                <MapPin className="h-3 w-3 text-primary" aria-hidden="true" /> {c.name}
+                <span className="text-[10px] font-normal text-muted-foreground">{c.officeCount}</span>
               </Link>
             ))}
             <Link to="/virtual-offices" className="rounded-full border border-primary bg-primary px-3 py-1 text-xs font-medium inline-flex items-center gap-1 text-primary-foreground transition-colors hover:bg-primary/90">
@@ -71,24 +105,30 @@ export function Locations() {
             </span>
           </div>
 
-          <div className="mt-8 grid grid-cols-2 gap-5 sm:grid-cols-4">
-            {HIGHLIGHTS.map(([Icon, l1, l2]) => (
-              <div key={`${l1}-${l2}`} className="flex flex-col items-start gap-2">
-                <span className="grid h-9 w-9 place-items-center rounded-lg bg-primary-50 text-primary">
-                  <Icon className="h-4 w-4" />
+          <div className="mt-8 grid gap-3 sm:grid-cols-2">
+            {HIGHLIGHTS.map(([Icon, l1, l2], i) => (
+              <div key={`${l1}-${l2}`} className="card-soft card-soft-hover flex items-start gap-3 p-4">
+                <span className="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-primary-50 text-primary">
+                  <Icon className="h-5 w-5" />
                 </span>
-                <span className="text-xs font-medium text-navy">
-                  {l1}
-                  <br />
-                  {l2}
-                </span>
+                <div>
+                  <div className="text-sm font-semibold text-navy">
+                    {l1} {l2}
+                  </div>
+                  <div className="mt-0.5 text-xs text-muted-foreground">{HIGHLIGHT_NOTES[i]}</div>
+                </div>
               </div>
             ))}
           </div>
         </div>
 
-        <div className="w-full max-w-md justify-self-center lg:absolute lg:right-8 lg:top-10 lg:w-104 lg:max-w-none">
-          <IndiaMap query={locationQuery} />
+        <div className="relative w-full max-w-md justify-self-center overflow-hidden rounded-3xl bg-linear-to-br from-primary-50 via-white to-surface p-6 shadow-card ring-1 ring-border/60 lg:absolute lg:right-8 lg:top-10 lg:w-104 lg:max-w-none">
+          <div className="pointer-events-none absolute -right-16 -top-16 h-56 w-56 rounded-full bg-primary/10 blur-3xl" aria-hidden="true" />
+          <div className="pointer-events-none absolute -bottom-16 -left-16 h-48 w-48 rounded-full bg-orange/10 blur-3xl" aria-hidden="true" />
+          <div className="relative">
+            <IndiaMap query={locationQuery} />
+            <p className="mt-3 text-center text-xs text-muted-foreground">Hover a state to see our offices · click to explore</p>
+          </div>
         </div>
       </div>
     </Section>
