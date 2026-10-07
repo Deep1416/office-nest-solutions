@@ -12,6 +12,8 @@ const STATIC_PATHS = [
   "/services/ecommerce-apob-vpob",
   "/virtual-offices",
   "/blogs",
+  "/privacy-policy",
+  "/terms-and-conditions",
 ];
 
 const urlEntry = (path: string, lastmod?: string) =>

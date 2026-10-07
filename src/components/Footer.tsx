@@ -73,9 +73,8 @@ export function FooterBottomBar() {
       <div className="container-x flex flex-col items-center gap-2 py-4 text-xs text-white/60 md:flex-row md:justify-between">
         <span>© {new Date().getFullYear()} {BRAND.name}. All rights reserved.</span>
         <div className="flex gap-4">
-          <a href="#" className="hover:text-white">Privacy Policy</a>
-          <a href="#" className="hover:text-white">Terms & Conditions</a>
-          <a href="#" className="hover:text-white">Refund Policy</a>
+          <Link to="/privacy-policy" className="hover:text-white">Privacy Policy</Link>
+          <Link to="/terms-and-conditions" className="hover:text-white">Terms & Conditions</Link>
         </div>
       </div>
     </div>

@@ -14,7 +14,9 @@ import { Route as AboutRouteImport } from './routes/about'
 import { Route as AdminRouteImport } from './routes/admin'
 import { Route as BlogsRouteImport } from './routes/blogs'
 import { Route as BookingStatusRouteImport } from './routes/booking-status'
+import { Route as PrivacyPolicyRouteImport } from './routes/privacy-policy'
 import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
+import { Route as TermsAndConditionsRouteImport } from './routes/terms-and-conditions'
 import { Route as VirtualOfficesRouteImport } from './routes/virtual-offices'
 import { Route as BlogsIndexRouteImport } from './routes/blogs.index'
 import { Route as BlogsSlugRouteImport } from './routes/blogs.$slug'
@@ -55,9 +57,19 @@ const BookingStatusRoute = BookingStatusRouteImport.update({
   path: '/booking-status',
   getParentRoute: () => rootRouteImport,
 } as any)
+const PrivacyPolicyRoute = PrivacyPolicyRouteImport.update({
+  id: '/privacy-policy',
+  path: '/privacy-policy',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
   id: '/sitemap.xml',
   path: '/sitemap.xml',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const TermsAndConditionsRoute = TermsAndConditionsRouteImport.update({
+  id: '/terms-and-conditions',
+  path: '/terms-and-conditions',
   getParentRoute: () => rootRouteImport,
 } as any)
 const VirtualOfficesRoute = VirtualOfficesRouteImport.update({
@@ -139,7 +151,9 @@ export interface FileRoutesByFullPath {
   '/admin': typeof AdminRoute
   '/blogs': typeof BlogsRouteWithChildren
   '/booking-status': typeof BookingStatusRoute
+  '/privacy-policy': typeof PrivacyPolicyRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/terms-and-conditions': typeof TermsAndConditionsRoute
   '/virtual-offices': typeof VirtualOfficesRouteWithChildren
   '/blogs/$slug': typeof BlogsSlugRoute
   '/booking/$officeId': typeof BookingOfficeIdRoute
@@ -160,7 +174,9 @@ export interface FileRoutesByTo {
   '/about': typeof AboutRoute
   '/admin': typeof AdminRoute
   '/booking-status': typeof BookingStatusRoute
+  '/privacy-policy': typeof PrivacyPolicyRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/terms-and-conditions': typeof TermsAndConditionsRoute
   '/blogs/$slug': typeof BlogsSlugRoute
   '/booking/$officeId': typeof BookingOfficeIdRoute
   '/services/business-registration': typeof ServicesBusinessRegistrationRoute
@@ -181,7 +197,9 @@ export interface FileRoutesById {
   '/admin': typeof AdminRoute
   '/blogs': typeof BlogsRouteWithChildren
   '/booking-status': typeof BookingStatusRoute
+  '/privacy-policy': typeof PrivacyPolicyRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/terms-and-conditions': typeof TermsAndConditionsRoute
   '/virtual-offices': typeof VirtualOfficesRouteWithChildren
   '/blogs/$slug': typeof BlogsSlugRoute
   '/booking/$officeId': typeof BookingOfficeIdRoute
@@ -205,7 +223,9 @@ export interface FileRouteTypes {
     | '/admin'
     | '/blogs'
     | '/booking-status'
+    | '/privacy-policy'
     | '/sitemap.xml'
+    | '/terms-and-conditions'
     | '/virtual-offices'
     | '/blogs/$slug'
     | '/booking/$officeId'
@@ -226,7 +246,9 @@ export interface FileRouteTypes {
     | '/about'
     | '/admin'
     | '/booking-status'
+    | '/privacy-policy'
     | '/sitemap.xml'
+    | '/terms-and-conditions'
     | '/blogs/$slug'
     | '/booking/$officeId'
     | '/services/business-registration'
@@ -246,7 +268,9 @@ export interface FileRouteTypes {
     | '/admin'
     | '/blogs'
     | '/booking-status'
+    | '/privacy-policy'
     | '/sitemap.xml'
+    | '/terms-and-conditions'
     | '/virtual-offices'
     | '/blogs/$slug'
     | '/booking/$officeId'
@@ -269,7 +293,9 @@ export interface RootRouteChildren {
   AdminRoute: typeof AdminRoute
   BlogsRoute: typeof BlogsRouteWithChildren
   BookingStatusRoute: typeof BookingStatusRoute
+  PrivacyPolicyRoute: typeof PrivacyPolicyRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
+  TermsAndConditionsRoute: typeof TermsAndConditionsRoute
   VirtualOfficesRoute: typeof VirtualOfficesRouteWithChildren
   BookingOfficeIdRoute: typeof BookingOfficeIdRoute
   LocationsStateRoute: typeof LocationsStateRouteWithChildren
@@ -317,11 +343,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof BookingStatusRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/privacy-policy': {
+      id: '/privacy-policy'
+      path: '/privacy-policy'
+      fullPath: '/privacy-policy'
+      preLoaderRoute: typeof PrivacyPolicyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/sitemap.xml': {
       id: '/sitemap.xml'
       path: '/sitemap.xml'
       fullPath: '/sitemap.xml'
       preLoaderRoute: typeof SitemapDotxmlRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/terms-and-conditions': {
+      id: '/terms-and-conditions'
+      path: '/terms-and-conditions'
+      fullPath: '/terms-and-conditions'
+      preLoaderRoute: typeof TermsAndConditionsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/virtual-offices': {
@@ -471,7 +511,9 @@ const rootRouteChildren: RootRouteChildren = {
   AdminRoute: AdminRoute,
   BlogsRoute: BlogsRouteWithChildren,
   BookingStatusRoute: BookingStatusRoute,
+  PrivacyPolicyRoute: PrivacyPolicyRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
+  TermsAndConditionsRoute: TermsAndConditionsRoute,
   VirtualOfficesRoute: VirtualOfficesRouteWithChildren,
   BookingOfficeIdRoute: BookingOfficeIdRoute,
   LocationsStateRoute: LocationsStateRouteWithChildren,
