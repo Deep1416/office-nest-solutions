@@ -35,8 +35,8 @@ const SECTIONS: LegalSection[] = [
       "To handle mail, courier and customer support for the services you purchase.",
       "To meet legal, tax and regulatory requirements, and to prevent fraud and misuse.",
       "To improve our website and services.",
+      "We do not sell your personal information.",
     ],
-    paragraphs: ["We do not sell your personal information."],
   },
   {
     heading: "Where your information is stored",
