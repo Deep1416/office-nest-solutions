@@ -66,7 +66,7 @@ export function Kyc() {
         <div className="relative mt-10 hidden w-[22rem] lg:block">
           <Annotation
             text="Simple Documentation, Faster Activation"
-            className="absolute -top-16 right-0 w-56"
+            className="absolute -top-24 right-0 w-56"
             rotate={-4}
           />
           <div className="aspect-[4/3] overflow-hidden rounded-2xl shadow-elevated">

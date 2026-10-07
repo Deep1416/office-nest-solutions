@@ -25,6 +25,16 @@ export function Hero() {
       </div>
 
       <div className="container-x relative py-16 lg:py-24">
+        <Annotation
+          text="Work Without Boundaries"
+          className="absolute bottom-8 right-4 w-64 lg:bottom-12 lg:right-8"
+          rotate={-8}
+          arrowUp
+          flip
+          textClassName="text-navy"
+          arrowClassName="text-orange"
+        />
+
         <div className="max-w-xl">
           <Badge variant="secondary" className="rounded-full bg-orange-50 text-orange hover:bg-orange-50">
             <Sparkles className="mr-1.5 h-3 w-3" /> Virtual Office Solutions Across India
@@ -33,13 +43,6 @@ export function Hero() {
             <h1 id="hero-heading" className="mt-4 max-w-md text-4xl font-extrabold leading-[1.05] tracking-tight sm:text-6xl">
               Your Business<br />Everywhere<br /><span className="text-primary">in India.</span>
             </h1>
-            <Annotation
-              text="Work Without Boundaries"
-              className="absolute -top-2 left-full ml-2 w-36"
-              rotate={-8}
-              textClassName="text-navy"
-              arrowClassName="text-orange"
-            />
           </div>
           <p className="mt-4 max-w-md text-base text-foreground sm:text-[17px]">
             Get a prestigious business address, GST registration support, and complete virtual office solutions in 50+ cities.

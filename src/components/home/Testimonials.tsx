@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { ChevronLeft, ChevronRight, ShieldCheck, Star, Users } from "lucide-react";
+import { ChevronLeft, ChevronRight, Quote, ShieldCheck, Star, Users } from "lucide-react";
 import { Annotation } from "@/components/Annotation";
 import { TESTIMONIALS } from "@/lib/mock-data";
 import { Section } from "./Section";
@@ -52,49 +52,56 @@ export function Testimonials() {
             touchStartX.current = null;
           }}
         >
-          <button
-            onClick={prev}
-            aria-label="Previous testimonial"
-            className="absolute left-0 top-1/2 z-10 hidden h-10 w-10 -translate-x-1/2 -translate-y-1/2 place-items-center rounded-full bg-primary text-primary-foreground hover:bg-primary-600 md:grid"
-          >
-            <ChevronLeft className="h-5 w-5" />
-          </button>
-          <button
-            onClick={next}
-            aria-label="Next testimonial"
-            className="absolute right-0 top-1/2 z-10 hidden h-10 w-10 translate-x-1/2 -translate-y-1/2 place-items-center rounded-full bg-primary text-primary-foreground hover:bg-primary-600 md:grid"
-          >
-            <ChevronRight className="h-5 w-5" />
-          </button>
-
-          <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+          <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-3">
             {visible.map((t, i) => (
-              <div key={`${t.name}-${index}-${i}`} className={`card-soft flex gap-4 p-4 ${i === 2 ? "hidden lg:flex" : i === 1 ? "hidden md:flex" : ""}`}>
-                <img src={t.image} alt={t.name} className="h-[140px] w-[110px] flex-shrink-0 rounded-xl object-cover" />
-                <div className="flex flex-col justify-center">
-                  <div className="flex gap-0.5 text-orange">
-                    {Array.from({ length: t.rating }).map((_, k) => <Star key={k} className="h-3.5 w-3.5 fill-current" />)}
-                  </div>
-                  <p className="mt-2 text-[13px] text-navy">&ldquo;{t.feedback}&rdquo;</p>
-                  <div className="mt-3 text-[13px] font-bold text-primary">{t.name}</div>
-                  <div className="text-xs text-muted-foreground">{t.company}</div>
+              <figure
+                key={`${t.name}-${index}-${i}`}
+                className={`card-soft relative flex animate-in fade-in-0 slide-in-from-right-4 flex-col rounded-2xl p-6 duration-500 ${i === 2 ? "hidden lg:flex" : i === 1 ? "hidden md:flex" : ""}`}
+              >
+                <Quote className="absolute right-5 top-5 h-8 w-8 fill-primary/10 text-primary/10" aria-hidden="true" />
+                <div className="flex gap-0.5 text-orange" aria-label={`${t.rating} out of 5 stars`}>
+                  {Array.from({ length: t.rating }).map((_, k) => <Star key={k} className="h-4 w-4 fill-current" />)}
                 </div>
-              </div>
+                <blockquote className="mt-4 flex-1 text-[15px] leading-relaxed text-navy">&ldquo;{t.feedback}&rdquo;</blockquote>
+                <figcaption className="mt-6 flex items-center gap-3 border-t border-border pt-4">
+                  <img src={t.image} alt={t.name} className="h-12 w-12 flex-shrink-0 rounded-full object-cover ring-2 ring-primary/20" />
+                  <div>
+                    <div className="text-sm font-bold text-navy">{t.name}</div>
+                    <div className="text-xs text-muted-foreground">{t.company}</div>
+                  </div>
+                </figcaption>
+              </figure>
             ))}
           </div>
         </div>
 
-        <div className="mt-6 flex justify-center gap-1.5" role="tablist" aria-label="Testimonial slides">
-          {TESTIMONIALS.map((t, i) => (
-            <button
-              key={t.name}
-              role="tab"
-              aria-selected={i === index}
-              aria-label={`Show testimonial from ${t.name}`}
-              onClick={() => setIndex(i)}
-              className={`h-1.5 rounded-full transition-all ${i === index ? "w-6 bg-primary" : "w-2 bg-border"}`}
-            />
-          ))}
+        <div className="mt-8 flex items-center justify-center gap-4">
+          <button
+            onClick={prev}
+            aria-label="Previous testimonial"
+            className="grid h-10 w-10 place-items-center rounded-full border border-border bg-white text-navy shadow-card transition-colors hover:border-primary hover:bg-primary hover:text-primary-foreground"
+          >
+            <ChevronLeft className="h-5 w-5" />
+          </button>
+          <div className="flex justify-center gap-1.5" role="tablist" aria-label="Testimonial slides">
+            {TESTIMONIALS.map((t, i) => (
+              <button
+                key={t.name}
+                role="tab"
+                aria-selected={i === index}
+                aria-label={`Show testimonial from ${t.name}`}
+                onClick={() => setIndex(i)}
+                className={`h-1.5 rounded-full transition-all ${i === index ? "w-6 bg-primary" : "w-2 bg-border"}`}
+              />
+            ))}
+          </div>
+          <button
+            onClick={next}
+            aria-label="Next testimonial"
+            className="grid h-10 w-10 place-items-center rounded-full border border-border bg-white text-navy shadow-card transition-colors hover:border-primary hover:bg-primary hover:text-primary-foreground"
+          >
+            <ChevronRight className="h-5 w-5" />
+          </button>
         </div>
 
         <div className="mt-10 grid grid-cols-2 gap-6 border-y border-border py-6 sm:grid-cols-4 sm:divide-x sm:divide-border">

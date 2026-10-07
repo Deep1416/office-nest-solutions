@@ -25,7 +25,7 @@ export function QuoteForm({ compact = false, defaultCity }: { compact?: boolean;
 
   return (
     <form
-      className={compact ? "grid gap-3" : "grid gap-4 sm:grid-cols-2"}
+      className={compact ? "grid gap-x-3 gap-y-2.5 sm:grid-cols-2" : "grid gap-4 sm:grid-cols-2"}
       onSubmit={(e) => {
         e.preventDefault();
         const form = e.currentTarget;
@@ -60,7 +60,7 @@ export function QuoteForm({ compact = false, defaultCity }: { compact?: boolean;
           </Select>
         )}
       </FormField>
-      <FormField label="Service purpose" className={compact ? "" : "sm:col-span-2"}>
+      <FormField label="Service purpose" className="sm:col-span-2">
         {(id) => (
           <Select value={purpose} onValueChange={setPurpose}>
             <SelectTrigger id={id}><SelectValue placeholder="What do you need?" /></SelectTrigger>
@@ -68,11 +68,11 @@ export function QuoteForm({ compact = false, defaultCity }: { compact?: boolean;
           </Select>
         )}
       </FormField>
-      <FormField label="Message (optional)" className={compact ? "" : "sm:col-span-2"}>
-        {(id) => <Textarea id={id} name="message" rows={3} maxLength={500} placeholder="Tell us a bit about your requirement" />}
+      <FormField label="Message (optional)" className="sm:col-span-2">
+        {(id) => <Textarea id={id} name="message" rows={compact ? 2 : 3} maxLength={500} placeholder="Tell us a bit about your requirement" />}
       </FormField>
-      <div className={compact ? "" : "sm:col-span-2"}>
-        <Button type="submit" disabled={createLead.isPending} className="w-full bg-primary sm:w-auto">{createLead.isPending ? "Submitting..." : "Get Free Quote"}</Button>
+      <div className="sm:col-span-2">
+        <Button type="submit" disabled={createLead.isPending} className={compact ? "w-full bg-primary" : "w-full bg-primary sm:w-auto"}>{createLead.isPending ? "Submitting..." : "Get Free Quote"}</Button>
       </div>
     </form>
   );

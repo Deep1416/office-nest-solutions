@@ -27,7 +27,6 @@ export function Header() {
 
               <NavItem to="/services" label="Services" />
 
-              <NavItem to="/locations/delhi" label="Locations" />
               <NavItem to="/about" label="About Us" />
               <NavItem to="/blogs" label="Blogs" />
             </NavigationMenuList>
@@ -71,7 +70,6 @@ export function Header() {
                 ["/", "Home"],
                 ["/virtual-offices", "Virtual Office"],
                 ["/services", "Services"],
-                ["/locations/delhi", "Locations"],
                 ["/about", "About Us"],
                 ["/blogs", "Blogs"],
               ].map(([to, label]) => (

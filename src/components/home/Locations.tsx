@@ -1,11 +1,11 @@
 import { useState } from "react";
-import { Building2, Clock, HeadphonesIcon, MapPin, Search, ShieldCheck } from "lucide-react";
+import { ArrowRight, Building2, Clock, HeadphonesIcon, MapPin, Search, ShieldCheck } from "lucide-react";
 import { Link } from "@tanstack/react-router";
 import { CITIES } from "@/lib/mock-data";
 import { IndiaMap } from "./IndiaMap";
 import { Section } from "./Section";
 
-const HIGHLIGHTS = [
+export const HIGHLIGHTS = [
   [Building2, "Prime", "Locations"],
   [ShieldCheck, "GST", "Compliant"],
   [Clock, "Easy", "Setup"],
@@ -55,6 +55,9 @@ export function Locations() {
                 {c.name}
               </Link>
             ))}
+            <Link to="/virtual-offices" className="rounded-full border border-primary bg-primary px-3 py-1 text-xs font-medium inline-flex items-center gap-1 text-primary-foreground transition-colors hover:bg-primary/90">
+                View all <ArrowRight className="h-3 w-3" />
+              </Link>
           </div>
 
           <div className="mt-6 flex items-center gap-5 text-xs text-muted-foreground">
