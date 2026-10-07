@@ -122,13 +122,9 @@ export function Locations() {
           </div>
         </div>
 
-        <div className="relative w-full max-w-md justify-self-center overflow-hidden rounded-3xl bg-linear-to-br from-primary-50 via-white to-surface p-6 shadow-card ring-1 ring-border/60 lg:absolute lg:right-8 lg:top-10 lg:w-104 lg:max-w-none">
-          <div className="pointer-events-none absolute -right-16 -top-16 h-56 w-56 rounded-full bg-primary/10 blur-3xl" aria-hidden="true" />
-          <div className="pointer-events-none absolute -bottom-16 -left-16 h-48 w-48 rounded-full bg-orange/10 blur-3xl" aria-hidden="true" />
-          <div className="relative">
-            <IndiaMap query={locationQuery} />
-            <p className="mt-3 text-center text-xs text-muted-foreground">Hover a state to see our offices · click to explore</p>
-          </div>
+        <div className="w-full max-w-md justify-self-center lg:absolute lg:right-8 lg:top-10 lg:w-104 lg:max-w-none">
+          <IndiaMap query={locationQuery} />
+          <p className="mt-3 text-center text-xs text-muted-foreground">Hover a state to see our offices · click to explore</p>
         </div>
       </div>
     </Section>
