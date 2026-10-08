@@ -14,7 +14,7 @@ export function OfficesTable() {
               <td className="p-3 font-mono text-xs">{o.id}</td>
               <td className="p-3 font-medium">{o.name}</td>
               <td className="p-3">{o.city}, {o.state}</td>
-              <td className="p-3">{o.rating.toFixed(1)}</td>
+              <td className="p-3">{o.rating?.toFixed(1) ?? "—"}</td>
               <td className="p-3">{o.services.length}</td>
             </tr>
           ))}

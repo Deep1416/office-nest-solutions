@@ -19,6 +19,9 @@ export const BRAND = {
 // Canonical production origin (apex redirects to www on Vercel). Used for canonical links, og:url and the sitemap.
 export const SITE_URL = "https://www.officemate.co.in";
 
+export const googleMapsEmbedUrl = (query: string) =>
+  `https://www.google.com/maps?q=${encodeURIComponent(query)}&output=embed`;
+
 export const whatsappUrl = (message: string) =>
   `https://wa.me/${BRAND.whatsapp}?text=${encodeURIComponent(message)}`;
 

@@ -5,7 +5,7 @@ export function FormField({
   label,
   children,
   className = "",
-  labelClassName = "text-xs font-medium text-navy/70",
+  labelClassName = "text-[13px] font-semibold text-navy",
 }: {
   label: string;
   children: (id: string) => ReactNode;

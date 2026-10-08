@@ -20,21 +20,13 @@ export interface City {
 }
 
 export const CITIES: City[] = [
-  { slug: "delhi", name: "Delhi", state: "Delhi", stateSlug: "delhi", startingPrice: 999, officeCount: 24, image: "https://images.unsplash.com/photo-1587474260584-136574528ed5?w=800&auto=format&fit=crop&q=60", areas: ["Connaught Place", "Nehru Place", "Saket", "Karol Bagh"] },
-  { slug: "bengaluru", name: "Bengaluru", state: "Karnataka", stateSlug: "karnataka", startingPrice: 1099, officeCount: 32, image: "https://images.unsplash.com/photo-1596176530529-78163a4f7af2?w=800&auto=format&fit=crop&q=60", areas: ["Koramangala", "Indiranagar", "Whitefield", "HSR Layout"] },
-  { slug: "mumbai", name: "Mumbai", state: "Maharashtra", stateSlug: "maharashtra", startingPrice: 1299, officeCount: 28, image: "https://images.unsplash.com/photo-1570168007204-dfb528c6958f?w=800&auto=format&fit=crop&q=60", areas: ["Andheri", "Bandra", "Powai", "Lower Parel"] },
-  { slug: "noida", name: "Noida", state: "Uttar Pradesh", stateSlug: "uttar-pradesh", startingPrice: 899, officeCount: 18, image: "https://images.unsplash.com/photo-1517502884422-41eaead166d4?w=800&auto=format&fit=crop&q=60", areas: ["Sector 62", "Sector 18", "Sector 132"] },
-  { slug: "gurugram", name: "Gurugram", state: "Haryana", stateSlug: "haryana", startingPrice: 999, officeCount: 22, image: "https://images.unsplash.com/photo-1577415124269-fc1140a69e91?w=800&auto=format&fit=crop&q=60", areas: ["Cyber City", "Golf Course Road", "Sohna Road"] },
-  { slug: "hyderabad", name: "Hyderabad", state: "Telangana", stateSlug: "telangana", startingPrice: 899, officeCount: 20, image: "https://images.unsplash.com/photo-1556761175-5973dc0f32e7?w=800&auto=format&fit=crop&q=60", areas: ["HITEC City", "Gachibowli", "Banjara Hills"] },
-  { slug: "pune", name: "Pune", state: "Maharashtra", stateSlug: "maharashtra", startingPrice: 899, officeCount: 16, image: "https://images.unsplash.com/photo-1580655653885-65763b2597d0?w=800&auto=format&fit=crop&q=60", areas: ["Baner", "Hinjewadi", "Kharadi"] },
-  { slug: "chennai", name: "Chennai", state: "Tamil Nadu", stateSlug: "tamil-nadu", startingPrice: 899, officeCount: 14, image: "https://images.unsplash.com/photo-1621996659490-3275b4d0d951?w=800&auto=format&fit=crop&q=60", areas: ["OMR", "T. Nagar", "Guindy"] },
-  { slug: "kolkata", name: "Kolkata", state: "West Bengal", stateSlug: "west-bengal", startingPrice: 799, officeCount: 10, image: "https://images.unsplash.com/photo-1558431382-27e303142255?w=800&auto=format&fit=crop&q=60", areas: ["Salt Lake", "Park Street", "New Town"] },
-  { slug: "ahmedabad", name: "Ahmedabad", state: "Gujarat", stateSlug: "gujarat", startingPrice: 799, officeCount: 12, image: "https://images.unsplash.com/photo-1599940824399-b87987ceb72a?w=800&auto=format&fit=crop&q=60", areas: ["SG Highway", "Prahlad Nagar", "Bodakdev"] },
+  { slug: "bengaluru", name: "Bengaluru", state: "Karnataka", stateSlug: "karnataka", startingPrice: 7500, officeCount: 4, image: "https://images.unsplash.com/photo-1596176530529-78163a4f7af2?w=800&auto=format&fit=crop&q=60", areas: ["Ganganagar", "Indiranagar", "Koramangala", "HMT Layout"] },
+  { slug: "noida", name: "Noida", state: "Uttar Pradesh", stateSlug: "uttar-pradesh", startingPrice: 7000, officeCount: 1, image: "https://images.unsplash.com/photo-1517502884422-41eaead166d4?w=800&auto=format&fit=crop&q=60", areas: ["Sector 1, Greater Noida"] },
 ];
 
 export const STATES = Array.from(new Map(CITIES.map(c => [c.stateSlug, { slug: c.stateSlug, name: c.state }])).values());
 
-export const AMENITIES = ["Meeting Room", "Courier Handling", "Reception Support", "Signage", "Parking", "High-Speed Internet"];
+export const OFFICE_ADDONS = ["GST registration application", "GST registration with complete support", "Standard Permanent Signage", "Premium Permanent Signage"];
 
 export interface OfficeListing {
   id: string;
@@ -44,8 +36,8 @@ export interface OfficeListing {
   city: string;
   state: string;
   stateSlug: string;
-  rating: number;
-  reviews: number;
+  rating?: number;
+  reviews?: number;
   image: string;
   gallery: string[];
   services: ServiceType[];
@@ -55,6 +47,7 @@ export interface OfficeListing {
   landmarks: string[];
 }
 
+// Generic stock photos for blog/service cards (not property images).
 export const IMAGES = [
   "https://images.unsplash.com/photo-1497366216548-37526070297c?w=1000&auto=format&fit=crop&q=60",
   "https://images.unsplash.com/photo-1497366754035-f200968a6e72?w=1000&auto=format&fit=crop&q=60",
@@ -64,47 +57,101 @@ export const IMAGES = [
   "https://images.unsplash.com/photo-1568992687947-868a62a9f521?w=1000&auto=format&fit=crop&q=60",
 ];
 
-function makeOffice(i: number, city: City, name: string, area: string): OfficeListing {
-  const services: ServiceType[] = ["business-registration", "gst-registration", "mailing-address"];
-  const base = city.startingPrice;
-  return {
-    id: `ON-${city.slug.toUpperCase()}-${String(i).padStart(3, "0")}`,
-    name,
-    area,
-    citySlug: city.slug,
-    city: city.name,
-    state: city.state,
-    stateSlug: city.stateSlug,
-    rating: 4.3 + ((i * 7) % 6) / 10,
-    reviews: 40 + ((i * 13) % 200),
-    image: IMAGES[i % IMAGES.length],
-    gallery: [IMAGES[i % IMAGES.length], IMAGES[(i + 1) % IMAGES.length], IMAGES[(i + 2) % IMAGES.length]],
-    services,
-    pricing: {
-      "mailing-address": base,
-      "gst-registration": base + 800,
-      "business-registration": base + 1500,
-    },
-    amenities: AMENITIES.slice(0, 3 + (i % 4)),
-    description: `A premium ${city.name} workspace located in ${area}. Fully compliant address for GST, business registration and professional mailing needs. Backed by dedicated reception and courier management for a seamless experience.`,
-    landmarks: ["Metro station 5 min", "Major banks nearby", "Restaurants & cafes"],
-  };
-}
+// Real listings only. Add new properties here (photos go in public/offices/<city>/<property>/).
+const SAFALTA_SQUARE: OfficeListing = {
+  id: "ON-NOIDA-001",
+  name: "Safalta Square",
+  area: "Sector 1, Greater Noida",
+  citySlug: "noida",
+  city: "Noida",
+  state: "Uttar Pradesh",
+  stateSlug: "uttar-pradesh",
+  image: "/offices/noida/safalta/1.jpg",
+  gallery: ["/offices/noida/safalta/1.jpg", "/offices/noida/safalta/2.jpg", "/offices/noida/safalta/3.jpg"],
+  services: ["business-registration", "gst-registration", "mailing-address"],
+  pricing: { "business-registration": 8500, "gst-registration": 8000, "mailing-address": 7000 },
+  amenities: ["Reception Support", "Courier Handling", "Signage"],
+  description: "Safalta Square is a ready-to-use business address in Sector 1, Greater Noida, behind Ace City. Fully compliant for GST, business registration and professional mailing needs.",
+  landmarks: ["Behind Ace City", "Sector 1, Greater Noida (G.B. Nagar)"],
+};
 
-export const OFFICES: OfficeListing[] = (() => {
-  const list: OfficeListing[] = [];
-  const names = ["NestHub", "PrimeSuite", "MetroWorks", "OrbitOffice", "Signature Space", "PinnacleHub"];
-  let counter = 1;
-  CITIES.forEach(city => {
-    city.areas.slice(0, 2).forEach((area, idx) => {
-      list.push(makeOffice(counter++, city, `${names[counter % names.length]} ${city.name}`, area));
-      if (idx === 0 && list.length < 22) {
-        list.push(makeOffice(counter++, city, `${names[(counter + 2) % names.length]} ${area}`, area));
-      }
-    });
-  });
-  return list;
-})();
+const GANGANAGAR_WORKSPACE: OfficeListing = {
+  id: "ON-BENGALURU-001",
+  name: "Virtual Office",
+  area: "Ganganagar",
+  citySlug: "bengaluru",
+  city: "Bengaluru",
+  state: "Karnataka",
+  stateSlug: "karnataka",
+  image: "/offices/bengaluru/ganganagar/1.jpg",
+  gallery: [1, 2, 3, 4].map(n => `/offices/bengaluru/ganganagar/${n}.jpg`),
+  services: ["business-registration", "gst-registration", "mailing-address"],
+  pricing: { "business-registration": 9000, "gst-registration": 8500, "mailing-address": 8000 },
+  amenities: ["Reception Support", "Courier Handling", "Meeting Room"],
+  description: "A ready-to-use business address in Ganganagar, Bengaluru. Fully compliant for GST, business registration and professional mailing needs.",
+  landmarks: [],
+};
+
+const INDIRANAGAR_WORKSPACE: OfficeListing = {
+  id: "ON-BENGALURU-002",
+  name: "Virtual Office",
+  area: "Indiranagar",
+  citySlug: "bengaluru",
+  city: "Bengaluru",
+  state: "Karnataka",
+  stateSlug: "karnataka",
+  image: "/offices/bengaluru/indiranagar/1.jpg",
+  gallery: [1, 2, 3, 4].map(n => `/offices/bengaluru/indiranagar/${n}.jpg`),
+  services: ["business-registration", "gst-registration", "mailing-address"],
+  pricing: { "business-registration": 9500, "gst-registration": 9500, "mailing-address": 9000 },
+  amenities: ["Reception Support", "Courier Handling", "Meeting Room"],
+  description: "A ready-to-use business address in Indiranagar, Bengaluru. Fully compliant for GST, business registration and professional mailing needs.",
+  landmarks: [],
+};
+
+const KORAMANGALA_WORKSPACE: OfficeListing = {
+  id: "ON-BENGALURU-003",
+  name: "Virtual Office",
+  area: "Koramangala",
+  citySlug: "bengaluru",
+  city: "Bengaluru",
+  state: "Karnataka",
+  stateSlug: "karnataka",
+  image: "/offices/bengaluru/koramangala/1.webp",
+  gallery: [1, 2, 3].map(n => `/offices/bengaluru/koramangala/${n}.webp`),
+  services: ["business-registration", "gst-registration", "mailing-address"],
+  pricing: { "business-registration": 9500, "gst-registration": 9500, "mailing-address": 9000 },
+  amenities: ["Reception Support", "Courier Handling", "Meeting Room"],
+  description: "A ready-to-use business address in Koramangala, Bengaluru. Fully compliant for GST, business registration and professional mailing needs.",
+  landmarks: [],
+};
+
+const HMT_LAYOUT_WORKSPACE: OfficeListing = {
+  id: "ON-BENGALURU-004",
+  name: "Virtual Office",
+  area: "HMT Layout",
+  citySlug: "bengaluru",
+  city: "Bengaluru",
+  state: "Karnataka",
+  stateSlug: "karnataka",
+  image: "/offices/bengaluru/hmt-layout/1.webp",
+  gallery: [1, 2, 3].map(n => `/offices/bengaluru/hmt-layout/${n}.webp`),
+  services: ["business-registration", "gst-registration", "mailing-address"],
+  pricing: { "business-registration": 8500, "gst-registration": 8500, "mailing-address": 7500 },
+  amenities: ["Reception Support", "Courier Handling", "Meeting Room"],
+  description: "A ready-to-use business address in HMT Layout, Bengaluru. Fully compliant for GST, business registration and professional mailing needs.",
+  landmarks: [],
+};
+
+const REAL_OFFICES: OfficeListing[] = [
+  SAFALTA_SQUARE,
+  GANGANAGAR_WORKSPACE,
+  INDIRANAGAR_WORKSPACE,
+  KORAMANGALA_WORKSPACE,
+  HMT_LAYOUT_WORKSPACE,
+];
+
+export const OFFICES: OfficeListing[] = REAL_OFFICES;
 
 export const SERVICES = [
   { slug: "virtual-office", title: "Virtual Office", icon: "Building2", short: "A complete business address with mail handling & compliance.", benefits: ["Prestigious address", "Mail & courier", "Meeting room access"] },

@@ -18,14 +18,15 @@ const schema = z.object({
   message: z.string().max(500).optional(),
 });
 
-export function QuoteForm({ compact = false, defaultCity }: { compact?: boolean; defaultCity?: string }) {
+export function QuoteForm({ compact = false, stacked = false, defaultCity }: { compact?: boolean; stacked?: boolean; defaultCity?: string }) {
   const [city, setCity] = useState(defaultCity ?? "");
   const [purpose, setPurpose] = useState("");
   const createLead = useCreateLead();
+  const span2 = stacked ? "col-span-2" : "sm:col-span-2";
 
   return (
     <form
-      className={compact ? "grid gap-x-3 gap-y-2.5 sm:grid-cols-2" : "grid gap-4 sm:grid-cols-2"}
+      className={`grid ${compact ? "gap-x-3 gap-y-2.5" : "gap-4"} ${stacked ? "grid-cols-2" : "sm:grid-cols-2"}`}
       onSubmit={(e) => {
         e.preventDefault();
         const form = e.currentTarget;
@@ -51,7 +52,7 @@ export function QuoteForm({ compact = false, defaultCity }: { compact?: boolean;
     >
       <FormField label="Full name">{(id) => <Input id={id} name="name" required maxLength={80} placeholder="Your full name" />}</FormField>
       <FormField label="Phone">{(id) => <Input id={id} name="phone" required maxLength={15} placeholder="+91 ..." />}</FormField>
-      <FormField label="Email">{(id) => <Input id={id} type="email" name="email" required maxLength={255} placeholder="you@company.com" />}</FormField>
+      <FormField label="Email" className={stacked ? "col-span-2" : undefined}>{(id) => <Input id={id} type="email" name="email" required maxLength={255} placeholder="you@company.com" />}</FormField>
       <FormField label="Preferred city">
         {(id) => (
           <Select value={city} onValueChange={setCity}>
@@ -60,7 +61,7 @@ export function QuoteForm({ compact = false, defaultCity }: { compact?: boolean;
           </Select>
         )}
       </FormField>
-      <FormField label="Service purpose" className="sm:col-span-2">
+      <FormField label="Service purpose" className={stacked ? undefined : span2}>
         {(id) => (
           <Select value={purpose} onValueChange={setPurpose}>
             <SelectTrigger id={id}><SelectValue placeholder="What do you need?" /></SelectTrigger>
@@ -68,11 +69,11 @@ export function QuoteForm({ compact = false, defaultCity }: { compact?: boolean;
           </Select>
         )}
       </FormField>
-      <FormField label="Message (optional)" className="sm:col-span-2">
-        {(id) => <Textarea id={id} name="message" rows={compact ? 2 : 3} maxLength={500} placeholder="Tell us a bit about your requirement" />}
+      <FormField label="Message (optional)" className={span2}>
+        {(id) => <Textarea id={id} name="message" rows={compact ? 3 : 3} maxLength={500} placeholder="Tell us a bit about your requirement" />}
       </FormField>
-      <div className="sm:col-span-2">
-        <Button type="submit" disabled={createLead.isPending} className={compact ? "w-full bg-primary" : "w-full bg-primary sm:w-auto"}>{createLead.isPending ? "Submitting..." : "Get Free Quote"}</Button>
+      <div className={span2}>
+        <Button type="submit" disabled={createLead.isPending} size="lg" className={compact ? "h-12 w-full rounded-xl bg-primary text-base font-semibold shadow-lg shadow-primary/25" : "h-12 w-full rounded-xl bg-primary text-base font-semibold shadow-lg shadow-primary/25 sm:w-auto sm:px-8"}>{createLead.isPending ? "Submitting..." : "Get Free Quote"}</Button>
       </div>
     </form>
   );

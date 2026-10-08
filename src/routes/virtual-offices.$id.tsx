@@ -1,12 +1,14 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { useState } from "react";
-import { Star, MapPin, Check, Shield, ArrowRight } from "lucide-react";
+import { Star, MapPin, Check, Users, ArrowRight, Shield } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { SERVICE_LABEL, inr, type ServiceType } from "@/lib/mock-data";
+import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from "@/components/ui/breadcrumb";
+import { OFFICE_ADDONS, SERVICE_LABEL, inr, type ServiceType } from "@/lib/mock-data";
+import { googleMapsEmbedUrl } from "@/lib/config";
+import { QuoteForm } from "@/components/QuoteForm";
 import { officeQueryOptions, officesQueryOptions } from "@/lib/queries/offices";
 import { OfficeCard } from "@/components/OfficeCard";
-import { FaqAccordion } from "@/components/FaqAccordion";
 import { CallbackTrigger } from "@/components/CallbackModal";
 import { absoluteUrl, breadcrumbLd, seoHead } from "@/lib/seo";
 
@@ -52,129 +54,140 @@ export const Route = createFileRoute("/virtual-offices/$id")({
 function Details() {
   const { office, offices } = Route.useLoaderData();
   const [service, setService] = useState<ServiceType>(office.services[0]);
-  const [duration, setDuration] = useState<"1y" | "2y">("1y");
-  const basePrice = office.pricing[service] ?? 999;
-  const price = duration === "1y" ? basePrice : Math.round(basePrice * 1.8);
-
+  const [activeImage, setActiveImage] = useState(0);
+  const plans = office.services.filter(s => office.pricing[s] != null);
   const similar = offices.filter(o => o.id !== office.id && o.citySlug === office.citySlug).slice(0, 3);
 
   return (
     <div className="bg-background">
-      <div className="container-x py-8">
-        <nav className="text-xs text-muted-foreground">
-          <Link to="/" className="hover:text-primary">Home</Link> /{" "}
-          <Link to="/virtual-offices" className="hover:text-primary">Virtual Offices</Link> /{" "}
-          <span className="text-navy">{office.name}</span>
-        </nav>
+      <div className="border-b">
+        <div className="container-x py-5">
+          <Breadcrumb>
+            <BreadcrumbList>
+              <BreadcrumbItem><BreadcrumbLink asChild><Link to="/">Home</Link></BreadcrumbLink></BreadcrumbItem>
+              <BreadcrumbSeparator />
+              <BreadcrumbItem><BreadcrumbLink asChild><Link to="/virtual-offices">Virtual offices</Link></BreadcrumbLink></BreadcrumbItem>
+              <BreadcrumbSeparator />
+              <BreadcrumbItem>
+                <BreadcrumbLink asChild><Link to="/locations/$state" params={{ state: office.stateSlug }}>{office.state}</Link></BreadcrumbLink>
+              </BreadcrumbItem>
+              <BreadcrumbSeparator />
+              <BreadcrumbItem><BreadcrumbPage>{office.area}</BreadcrumbPage></BreadcrumbItem>
+            </BreadcrumbList>
+          </Breadcrumb>
+        </div>
+      </div>
 
-        <div className="mt-4 grid gap-8 lg:grid-cols-[1fr_380px]">
-          <div>
-            {/* Gallery */}
-            <div className="grid grid-cols-4 gap-2">
-              <img src={office.gallery[0]} alt={office.name} className="col-span-4 aspect-[16/9] w-full rounded-2xl object-cover sm:col-span-3" />
-              <div className="hidden sm:grid gap-2">
-                {office.gallery.slice(1, 3).map((g, i) => (
-                  <img key={i} src={g} alt="" className="aspect-square w-full rounded-xl object-cover" />
-                ))}
-              </div>
+      <div className="container-x py-8 lg:py-10">
+        <div className="grid gap-8 lg:grid-cols-[400px_minmax(0,1fr)] lg:gap-12">
+          {/* Gallery */}
+          <div className="lg:sticky lg:top-24 lg:self-start">
+            <img src={office.gallery[activeImage]} alt={office.name} className="aspect-4/5 w-full rounded-2xl object-cover shadow-md" />
+            <div className="mt-3 flex gap-2">
+              {office.gallery.map((g, i) => (
+                <button
+                  key={i}
+                  type="button"
+                  onClick={() => setActiveImage(i)}
+                  aria-label={`Show photo ${i + 1}`}
+                  aria-pressed={activeImage === i}
+                  className={`min-w-0 flex-1 overflow-hidden rounded-lg border-2 transition ${activeImage === i ? "border-primary" : "border-transparent opacity-70 hover:opacity-100"}`}
+                >
+                  <img src={g} alt="" className="aspect-4/3 w-full object-cover" />
+                </button>
+              ))}
             </div>
-
-            <div className="mt-6">
-              <h1 className="text-3xl font-extrabold">{office.name}</h1>
-              <div className="mt-2 flex flex-wrap items-center gap-3 text-sm text-muted-foreground">
-                <span className="flex items-center gap-1"><MapPin className="h-4 w-4" /> {office.area}, {office.city}, {office.state}</span>
-                <span className="flex items-center gap-1"><Star className="h-4 w-4 fill-orange text-orange" /> {office.rating.toFixed(1)} ({office.reviews} reviews)</span>
-              </div>
-              <p className="mt-4 text-muted-foreground">{office.description}</p>
-            </div>
-
-            <Section title="Available services">
-              <div className="grid gap-3 sm:grid-cols-3">
-                {office.services.map(s => (
-                  <div key={s} className="card-soft p-4">
-                    <div className="text-sm font-semibold text-navy">{SERVICE_LABEL[s]}</div>
-                    <div className="mt-1 text-xl font-extrabold text-primary">{inr(office.pricing[s] ?? 0)}<span className="text-xs font-medium text-muted-foreground">/yr</span></div>
-                  </div>
-                ))}
-              </div>
-            </Section>
-
-            <Section title="Amenities">
-              <ul className="grid gap-2 sm:grid-cols-2">
-                {office.amenities.map(a => (
-                  <li key={a} className="flex items-center gap-2 text-sm text-navy"><Check className="h-4 w-4 text-success" /> {a}</li>
-                ))}
-              </ul>
-            </Section>
-
-            <Section title="Included documents">
-              <ul className="grid gap-2 sm:grid-cols-2">
-                {["Rent / lease agreement", "No Objection Certificate (NOC)", "Utility bill copy", "Signage / board placement"].map(d => (
-                  <li key={d} className="flex items-center gap-2 text-sm text-navy"><Check className="h-4 w-4 text-success" /> {d}</li>
-                ))}
-              </ul>
-            </Section>
-
-            <Section title="Location & nearby">
-              <div className="grid aspect-[16/8] w-full place-items-center rounded-xl bg-gradient-to-br from-primary/10 to-orange/10 text-sm text-muted-foreground">
-                Map placeholder — {office.area}, {office.city}
-              </div>
-              <div className="mt-3 flex flex-wrap gap-2">
-                {office.landmarks.map(l => <Badge key={l} variant="secondary">{l}</Badge>)}
-              </div>
-            </Section>
-
-            <Section title="Terms & refunds">
-              <p className="text-sm text-muted-foreground">
-                Refund available within 7 days if the address is unusable for the intended purpose. Contract minimum is one year. Signage subject to landlord approval.
-              </p>
-            </Section>
-
-            <Section title="Frequently asked questions">
-              <FaqAccordion />
-            </Section>
           </div>
 
-          {/* Sticky booking card */}
-          <aside className="lg:sticky lg:top-24 h-fit">
-            <div className="card-soft p-6">
-              <div className="text-xs text-muted-foreground">Selected service</div>
-              <div className="mt-2 grid gap-2">
-                {office.services.map(s => (
-                  <button key={s} onClick={() => setService(s)} className={`flex items-center justify-between rounded-md border p-3 text-left text-sm ${service === s ? "border-primary bg-primary/5" : ""}`}>
-                    <span className="font-medium">{SERVICE_LABEL[s]}</span>
-                    <span className="font-semibold">{inr(office.pricing[s] ?? 0)}</span>
+          {/* Details */}
+          <div>
+            <div className="flex flex-wrap items-center gap-2">
+              <Badge variant="secondary" className="gap-1"><MapPin className="h-3 w-3" /> {office.city}, {office.state}</Badge>
+              {office.rating != null && (
+                <Badge variant="secondary" className="gap-1"><Star className="h-3 w-3 fill-orange text-orange" /> {office.rating.toFixed(1)} · {office.reviews} reviews</Badge>
+              )}
+              <Badge variant="secondary" className="gap-1"><Shield className="h-3 w-3 text-success" /> Verified address</Badge>
+            </div>
+            <h1 className="mt-4 text-3xl text-navy sm:text-4xl">
+              {office.name} at <span className="font-extrabold">{office.area}</span>
+            </h1>
+            <p className="mt-3 max-w-2xl text-muted-foreground">{office.description}</p>
+
+            <h2 className="mt-8 text-lg font-extrabold">Choose your plan</h2>
+            <div className="mt-3 grid gap-3 sm:grid-cols-3" role="radiogroup" aria-label="Available plans">
+              {plans.map(s => {
+                const selected = service === s;
+                return (
+                  <button
+                    key={s}
+                    type="button"
+                    role="radio"
+                    aria-checked={selected}
+                    onClick={() => setService(s)}
+                    className={`relative rounded-xl border-2 p-4 text-left transition ${selected ? "border-primary bg-primary/5 shadow-sm" : "border-border bg-card hover:border-primary/40"}`}
+                  >
+                    <span className={`absolute right-3 top-3 grid h-5 w-5 place-items-center rounded-full ${selected ? "bg-primary text-primary-foreground" : "border border-border"}`}>
+                      {selected && <Check className="h-3 w-3" />}
+                    </span>
+                    <span className="block pr-6 text-sm font-semibold text-navy">{SERVICE_LABEL[s]}</span>
+                    <span className="mt-3 block text-2xl font-extrabold text-primary">{inr(office.pricing[s] as number)}</span>
+                    <span className="text-xs text-muted-foreground">per year + 18% GST</span>
                   </button>
-                ))}
+                );
+              })}
+            </div>
+
+            <div className="mt-4 flex flex-wrap items-center justify-between gap-4 rounded-xl bg-muted p-4">
+              <div>
+                <div className="text-xs text-muted-foreground">Selected plan</div>
+                <div className="font-bold text-navy">{SERVICE_LABEL[service]} · {inr(office.pricing[service] as number)}/yr</div>
               </div>
-              <div className="mt-4">
-                <div className="text-xs text-muted-foreground">Duration</div>
-                <div className="mt-2 grid grid-cols-2 gap-2">
-                  {(["1y", "2y"] as const).map(d => (
-                    <button key={d} onClick={() => setDuration(d)} className={`rounded-md border py-2 text-sm ${duration === d ? "border-primary bg-primary/5" : ""}`}>
-                      {d === "1y" ? "1 year" : "2 years"}
-                    </button>
-                  ))}
-                </div>
-              </div>
-              <div className="mt-5 border-t pt-4">
-                <div className="flex justify-between text-sm text-muted-foreground"><span>Subtotal</span><span>{inr(price)}</span></div>
-                <div className="flex justify-between text-sm text-muted-foreground"><span>Taxes (18%)</span><span>{inr(Math.round(price * 0.18))}</span></div>
-                <div className="mt-2 flex justify-between text-lg font-extrabold text-navy"><span>Total</span><span>{inr(Math.round(price * 1.18))}</span></div>
-              </div>
-              <div className="mt-4 grid gap-2">
+              <div className="flex flex-wrap gap-3">
+                <CallbackTrigger>
+                  <Button variant="outline" className="bg-background">Request Callback</Button>
+                </CallbackTrigger>
                 <Button asChild className="bg-primary">
-                  <Link to="/booking/$officeId" params={{ officeId: office.id }} search={{ plan: service, duration }}>
-                    Proceed to Book <ArrowRight className="ml-1 h-4 w-4" />
+                  <Link to="/booking/$officeId" params={{ officeId: office.id }} search={{ plan: service }}>
+                    Proceed to checkout <ArrowRight className="ml-1 h-4 w-4" />
                   </Link>
                 </Button>
-                <CallbackTrigger>
-                  <Button variant="outline">Request Callback</Button>
-                </CallbackTrigger>
               </div>
-              <div className="mt-4 flex items-center gap-2 text-xs text-muted-foreground">
-                <Shield className="h-3.5 w-3.5 text-success" /> Refund-friendly · Verified address
+            </div>
+
+            <div className="mt-8">
+              <h2 className="flex items-center gap-2 text-lg font-extrabold"><Users className="h-5 w-5 text-primary" /> Optional add-ons</h2>
+              <ul className="mt-3 grid gap-x-6 gap-y-2.5 sm:grid-cols-2">
+                {OFFICE_ADDONS.map(a => (
+                  <li key={a} className="flex items-center gap-2 text-sm text-navy"><Check className="h-4 w-4 shrink-0 text-success" /> {a}</li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        {/* Location + quote */}
+        <div className="mt-12 grid gap-8 lg:grid-cols-[minmax(0,1fr)_420px]">
+          <section>
+            <h2 className="flex items-center gap-2 text-xl font-extrabold"><MapPin className="h-5 w-5 text-primary" /> Location</h2>
+            <iframe
+              title={`Map of ${office.area}, ${office.city}`}
+              src={googleMapsEmbedUrl(`${office.area}, ${office.city}, ${office.state}`)}
+              loading="lazy"
+              referrerPolicy="no-referrer-when-downgrade"
+              className="mt-4 h-[420px] w-full rounded-xl border-0 lg:h-[520px]"
+            />
+          </section>
+
+          <aside className="h-fit lg:sticky lg:top-24">
+            <div className="card-soft border-t-4 border-t-primary p-6">
+              <h2 className="text-xl font-extrabold">Request A Free Quote</h2>
+              <p className="mt-1 text-sm text-muted-foreground">Tell us what you need — we reply within a few hours.</p>
+              <div className="mt-5">
+                <QuoteForm compact stacked defaultCity={office.citySlug} />
               </div>
+              <p className="mt-4 flex items-center justify-center gap-1.5 text-xs text-muted-foreground">
+                <Shield className="h-3.5 w-3.5 text-success" /> No spam. Your details stay private.
+              </p>
             </div>
           </aside>
         </div>
@@ -193,8 +206,8 @@ function Details() {
 
 function Section({ title, children }: { title: string; children: React.ReactNode }) {
   return (
-    <section className="mt-10">
-      <h2 className="text-xl font-bold">{title}</h2>
+    <section className="mt-12">
+      <h2 className="text-xl font-extrabold">{title}</h2>
       <div className="mt-4">{children}</div>
     </section>
   );
