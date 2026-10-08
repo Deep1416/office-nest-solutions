@@ -2,14 +2,14 @@ import { Link } from "@tanstack/react-router";
 import { Star, MapPin } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { inr, SERVICE_LABEL, type OfficeListing } from "@/lib/mock-data";
+import { inr, SERVICE_LABEL, onOfficeImageError, type OfficeListing } from "@/lib/mock-data";
 
 export function OfficeCard({ office }: { office: OfficeListing }) {
   const plans = office.services.filter((s) => office.pricing[s] != null);
   return (
     <div className="card-soft card-soft-hover flex flex-col overflow-hidden">
       <Link to="/virtual-offices/$id" params={{ id: office.id }} className="relative block aspect-8/7 w-full overflow-hidden bg-muted">
-        <img src={office.image} alt={office.name} loading="lazy" className="h-full w-full object-cover transition-transform duration-500 hover:scale-105" />
+        <img src={office.image} alt={office.name} loading="lazy" onError={onOfficeImageError} className="h-full w-full object-cover transition-transform duration-500 hover:scale-105" />
         {office.rating != null && (
           <Badge className="absolute right-3 top-3 bg-white text-navy shadow">
             <Star className="mr-1 h-3 w-3 fill-orange text-orange" /> {office.rating.toFixed(1)}

@@ -2,7 +2,7 @@ import { BRAND, SITE_URL } from "@/lib/config";
 
 export const DEFAULT_TITLE = "OfficeMate — Virtual Office & GST Registration Address in India";
 export const DEFAULT_DESCRIPTION =
-  "Book virtual offices, GST registration and business addresses across 50+ Indian cities. Transparent pricing, verified documentation, dedicated support.";
+  "Book virtual offices, GST registration and business addresses across 14+ Indian cities. Transparent pricing, verified documentation, dedicated support.";
 export const DEFAULT_OG_IMAGE = "/og-image.png";
 
 export const absoluteUrl = (path = "/") => `${SITE_URL}${path.startsWith("/") ? path : `/${path}`}`;

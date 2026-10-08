@@ -6,7 +6,7 @@ import { Section } from "./Section";
 
 const STATS = [
   { icon: Users, value: "10,000+", label: "Businesses", color: "text-orange", filled: false },
-  { icon: Star, value: "50+", label: "Cities", color: "text-orange", filled: true },
+  { icon: Star, value: "14+", label: "Cities", color: "text-orange", filled: true },
   { icon: Star, value: "4.8/5", label: "Rating", color: "text-orange", filled: true },
   { icon: ShieldCheck, value: "99%", label: "Client Satisfaction", color: "text-primary", filled: false },
 ];

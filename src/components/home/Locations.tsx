@@ -1,4 +1,5 @@
 import { useState, type FormEvent } from "react";
+import { StatesDialog } from "@/components/StatesDialog";
 import { ArrowRight, Building2, Clock, HeadphonesIcon, MapPin, Search, ShieldCheck } from "lucide-react";
 import { Link, useNavigate } from "@tanstack/react-router";
 import { CITIES, STATES } from "@/lib/mock-data";
@@ -20,7 +21,7 @@ const HIGHLIGHT_NOTES = [
 ];
 
 const STATS = [
-  ["50+", "Cities"],
+  ["14+", "Cities"],
   ["10,000+", "Businesses"],
   [String(STATES.length), "States live"],
 ] as const;
@@ -30,7 +31,10 @@ export function Locations() {
   const [locationQuery, setLocationQuery] = useState("");
   const q = locationQuery.trim().toLowerCase();
   const matches = q ? CITIES.filter((c) => c.name.toLowerCase().includes(q) || c.state.toLowerCase().includes(q)) : [];
-  const chips = q ? matches : CITIES.slice(0, 8);
+  const stateChips = STATES.map((st) => ({
+    ...st,
+    offices: CITIES.filter((c) => c.stateSlug === st.slug).reduce((n, c) => n + c.officeCount, 0),
+  })).filter((st) => !q || st.name.toLowerCase().includes(q) || matches.some((c) => c.stateSlug === st.slug));
 
   const onSearch = (e: FormEvent) => {
     e.preventDefault();
@@ -44,7 +48,7 @@ export function Locations() {
       eyebrow="Our Locations"
       title={
         <>
-          50+ Cities
+          14+ Cities
           <br />
           Across India
         </>
@@ -77,21 +81,23 @@ export function Locations() {
           </div>
 
           <div className="mt-6 flex flex-wrap gap-2">
-            {q && chips.length === 0 && <span className="text-sm text-muted-foreground">No city found for “{locationQuery.trim()}” yet — we are expanding fast.</span>}
-            {chips.map((c) => (
+            {q && stateChips.length === 0 && <span className="text-sm text-muted-foreground">No city found for “{locationQuery.trim()}” yet — we are expanding fast.</span>}
+            {stateChips.map((st) => (
               <Link
-                key={c.slug}
-                to="/locations/$state/$city"
-                params={{ state: c.stateSlug, city: c.slug }}
+                key={st.slug}
+                to="/locations/$state"
+                params={{ state: st.slug }}
                 className="inline-flex items-center gap-1.5 rounded-full border border-border bg-white px-3 py-1.5 text-xs font-medium text-navy transition-colors hover:border-primary hover:bg-primary-50 hover:text-primary"
               >
-                <MapPin className="h-3 w-3 text-primary" aria-hidden="true" /> {c.name}
-                <span className="text-[10px] font-normal text-muted-foreground">{c.officeCount}</span>
+                <MapPin className="h-3 w-3 text-primary" aria-hidden="true" /> {st.name}
+                <span className="text-[10px] font-normal text-muted-foreground">{st.offices}</span>
               </Link>
             ))}
-            <Link to="/virtual-offices" className="rounded-full border border-primary bg-primary px-3 py-1 text-xs font-medium inline-flex items-center gap-1 text-primary-foreground transition-colors hover:bg-primary/90">
+            <StatesDialog>
+<button type="button" className="rounded-full border border-primary bg-primary px-3 py-1 text-xs font-medium inline-flex items-center gap-1 text-primary-foreground transition-colors hover:bg-primary/90">
                 View all <ArrowRight className="h-3 w-3" />
-              </Link>
+              </button>
+</StatesDialog>
           </div>
 
           <div className="mt-6 flex items-center gap-5 text-xs text-muted-foreground">

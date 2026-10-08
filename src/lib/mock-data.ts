@@ -19,9 +19,20 @@ export interface City {
   areas: string[];
 }
 
+// Shown for listings without photos and when an office image fails to load.
+export const OFFICE_FALLBACK_IMAGE = "/offices/placeholder.svg";
+
 export const CITIES: City[] = [
-  { slug: "bengaluru", name: "Bengaluru", state: "Karnataka", stateSlug: "karnataka", startingPrice: 7500, officeCount: 4, image: "https://images.unsplash.com/photo-1596176530529-78163a4f7af2?w=800&auto=format&fit=crop&q=60", areas: ["Ganganagar", "Indiranagar", "Koramangala", "HMT Layout"] },
-  { slug: "noida", name: "Noida", state: "Uttar Pradesh", stateSlug: "uttar-pradesh", startingPrice: 7000, officeCount: 1, image: "https://images.unsplash.com/photo-1517502884422-41eaead166d4?w=800&auto=format&fit=crop&q=60", areas: ["Sector 1, Greater Noida"] },
+  { slug: "guwahati", name: "Guwahati", state: "Assam", stateSlug: "assam", startingPrice: 14000, officeCount: 1, image: "/offices/guwahati/1.jpg", areas: ["Guwahati"] },
+  { slug: "patna", name: "Patna", state: "Bihar", stateSlug: "bihar", startingPrice: 10000, officeCount: 1, image: "/offices/patna/1.jpg", areas: ["Patna"] },
+  { slug: "kolkata", name: "Kolkata", state: "West Bengal", stateSlug: "west-bengal", startingPrice: 8000, officeCount: 2, image: "/offices/kolkata/park-street/1.jpg", areas: ["Park Street", "S.P. Mukherjee Road"] },
+  { slug: "faridabad", name: "Faridabad", state: "Haryana", stateSlug: "haryana", startingPrice: 7000, officeCount: 1, image: "/offices/faridabad/1.jpg", areas: ["Faridabad"] },
+  { slug: "sonipat", name: "Sonipat", state: "Haryana", stateSlug: "haryana", startingPrice: 7000, officeCount: 1, image: OFFICE_FALLBACK_IMAGE, areas: ["Sonipat"] },
+  { slug: "surat", name: "Surat", state: "Gujarat", stateSlug: "gujarat", startingPrice: 10000, officeCount: 1, image: "/offices/surat/1.jpg", areas: ["Surat"] },
+  { slug: "ahmedabad", name: "Ahmedabad", state: "Gujarat", stateSlug: "gujarat", startingPrice: 9000, officeCount: 1, image: OFFICE_FALLBACK_IMAGE, areas: ["Ahmedabad"] },
+  { slug: "thane", name: "Thane", state: "Maharashtra", stateSlug: "maharashtra", startingPrice: 9000, officeCount: 1, image: OFFICE_FALLBACK_IMAGE, areas: ["Thane"] },
+  { slug: "bengaluru", name: "Bengaluru", state: "Karnataka", stateSlug: "karnataka", startingPrice: 7500, officeCount: 4, image: "/offices/bengaluru/ganganagar/1.jpg", areas: ["Ganganagar", "Indiranagar", "Koramangala", "HMT Layout"] },
+  { slug: "noida", name: "Noida", state: "Uttar Pradesh", stateSlug: "uttar-pradesh", startingPrice: 7000, officeCount: 1, image: "/offices/noida/safalta/1.jpg", areas: ["Sector 1, Greater Noida"] },
 ];
 
 export const STATES = Array.from(new Map(CITIES.map(c => [c.stateSlug, { slug: c.stateSlug, name: c.state }])).values());
@@ -45,6 +56,12 @@ export interface OfficeListing {
   amenities: string[];
   description: string;
   landmarks: string[];
+}
+
+// <img onError> handler: swap a broken office image for the placeholder (once).
+export function onOfficeImageError(e: { currentTarget: HTMLImageElement }) {
+  const img = e.currentTarget;
+  if (!img.src.endsWith(OFFICE_FALLBACK_IMAGE)) img.src = OFFICE_FALLBACK_IMAGE;
 }
 
 // Generic stock photos for blog/service cards (not property images).
@@ -143,12 +160,175 @@ const HMT_LAYOUT_WORKSPACE: OfficeListing = {
   landmarks: [],
 };
 
+// No photos yet: uses the shared placeholder until real Thane photos are added.
+const THANE_WORKSPACE: OfficeListing = {
+  id: "ON-THANE-001",
+  name: "Virtual Office",
+  area: "Thane",
+  citySlug: "thane",
+  city: "Thane",
+  state: "Maharashtra",
+  stateSlug: "maharashtra",
+  image: OFFICE_FALLBACK_IMAGE,
+  gallery: [OFFICE_FALLBACK_IMAGE],
+  services: ["business-registration", "gst-registration", "mailing-address"],
+  pricing: { "business-registration": 15000, "gst-registration": 15000, "mailing-address": 9000 },
+  amenities: ["Reception Support", "Courier Handling", "Meeting Room"],
+  description: "A ready-to-use business address in Thane, Maharashtra. Fully compliant for GST, business registration and professional mailing needs.",
+  landmarks: [],
+};
+
+const AHMEDABAD_WORKSPACE: OfficeListing = {
+  id: "ON-AHMEDABAD-001",
+  name: "Virtual Office",
+  area: "Ahmedabad",
+  citySlug: "ahmedabad",
+  city: "Ahmedabad",
+  state: "Gujarat",
+  stateSlug: "gujarat",
+  image: OFFICE_FALLBACK_IMAGE,
+  gallery: [OFFICE_FALLBACK_IMAGE],
+  services: ["business-registration", "gst-registration", "mailing-address"],
+  pricing: { "business-registration": 11000, "gst-registration": 11000, "mailing-address": 9000 },
+  amenities: ["Reception Support", "Courier Handling", "Meeting Room"],
+  description: "A ready-to-use business address in Ahmedabad, Gujarat. Fully compliant for GST, business registration and professional mailing needs.",
+  landmarks: [],
+};
+
+const SURAT_WORKSPACE: OfficeListing = {
+  id: "ON-SURAT-001",
+  name: "Virtual Office",
+  area: "Surat",
+  citySlug: "surat",
+  city: "Surat",
+  state: "Gujarat",
+  stateSlug: "gujarat",
+  image: "/offices/surat/1.jpg",
+  gallery: [1, 2, 3].map(n => `/offices/surat/${n}.jpg`),
+  services: ["business-registration", "gst-registration", "mailing-address"],
+  pricing: { "business-registration": 10500, "gst-registration": 10500, "mailing-address": 10000 },
+  amenities: ["Reception Support", "Courier Handling", "Meeting Room"],
+  description: "A ready-to-use business address in Surat, Gujarat. Fully compliant for GST, business registration and professional mailing needs.",
+  landmarks: [],
+};
+
+const SONIPAT_WORKSPACE: OfficeListing = {
+  id: "ON-SONIPAT-001",
+  name: "Virtual Office",
+  area: "Sonipat",
+  citySlug: "sonipat",
+  city: "Sonipat",
+  state: "Haryana",
+  stateSlug: "haryana",
+  image: OFFICE_FALLBACK_IMAGE,
+  gallery: [OFFICE_FALLBACK_IMAGE],
+  services: ["business-registration", "gst-registration", "mailing-address"],
+  pricing: { "business-registration": 8500, "gst-registration": 8500, "mailing-address": 7000 },
+  amenities: ["Reception Support", "Courier Handling", "Meeting Room"],
+  description: "A ready-to-use business address in Sonipat, Haryana. Fully compliant for GST, business registration and professional mailing needs.",
+  landmarks: [],
+};
+
+const FARIDABAD_WORKSPACE: OfficeListing = {
+  id: "ON-FARIDABAD-001",
+  name: "Virtual Office",
+  area: "Faridabad",
+  citySlug: "faridabad",
+  city: "Faridabad",
+  state: "Haryana",
+  stateSlug: "haryana",
+  image: "/offices/faridabad/1.jpg",
+  gallery: [1, 2, 3].map(n => `/offices/faridabad/${n}.jpg`),
+  services: ["business-registration", "gst-registration", "mailing-address"],
+  pricing: { "business-registration": 8000, "gst-registration": 8000, "mailing-address": 7000 },
+  amenities: ["Reception Support", "Courier Handling", "Meeting Room"],
+  description: "A ready-to-use business address in Faridabad, Haryana. Fully compliant for GST, business registration and professional mailing needs.",
+  landmarks: [],
+};
+
+const PARK_STREET_WORKSPACE: OfficeListing = {
+  id: "ON-KOLKATA-001",
+  name: "Virtual Office",
+  area: "Park Street",
+  citySlug: "kolkata",
+  city: "Kolkata",
+  state: "West Bengal",
+  stateSlug: "west-bengal",
+  image: "/offices/kolkata/park-street/1.jpg",
+  gallery: [1, 2, 3].map(n => `/offices/kolkata/park-street/${n}.jpg`),
+  services: ["business-registration", "gst-registration", "mailing-address"],
+  pricing: { "business-registration": 9500, "gst-registration": 9500, "mailing-address": 8000 },
+  amenities: ["Reception Support", "Courier Handling", "Meeting Room"],
+  description: "A ready-to-use business address in Park Street, Kolkata. Fully compliant for GST, business registration and professional mailing needs.",
+  landmarks: [],
+};
+
+const SP_MUKHERJEE_ROAD_WORKSPACE: OfficeListing = {
+  id: "ON-KOLKATA-002",
+  name: "Virtual Office",
+  area: "83 S.P. Mukherjee Road",
+  citySlug: "kolkata",
+  city: "Kolkata",
+  state: "West Bengal",
+  stateSlug: "west-bengal",
+  image: "/offices/kolkata/sp-mukherjee-road/1.jpg",
+  gallery: [1, 2, 3].map(n => `/offices/kolkata/sp-mukherjee-road/${n}.jpg`),
+  services: ["business-registration", "gst-registration", "mailing-address"],
+  pricing: { "business-registration": 9500, "gst-registration": 9500, "mailing-address": 8000 },
+  amenities: ["Reception Support", "Courier Handling", "Meeting Room"],
+  description: "A ready-to-use business address at 83 S.P. Mukherjee Road, Kolkata. Fully compliant for GST, business registration and professional mailing needs.",
+  landmarks: [],
+};
+
+const PATNA_WORKSPACE: OfficeListing = {
+  id: "ON-PATNA-001",
+  name: "Virtual Office",
+  area: "Patna",
+  citySlug: "patna",
+  city: "Patna",
+  state: "Bihar",
+  stateSlug: "bihar",
+  image: "/offices/patna/1.jpg",
+  gallery: ["/offices/patna/1.jpg"],
+  services: ["business-registration", "gst-registration", "mailing-address"],
+  pricing: { "business-registration": 13000, "gst-registration": 13000, "mailing-address": 10000 },
+  amenities: ["Reception Support", "Courier Handling", "Meeting Room"],
+  description: "A ready-to-use business address in Patna, Bihar. Fully compliant for GST, business registration and professional mailing needs.",
+  landmarks: [],
+};
+
+const GUWAHATI_WORKSPACE: OfficeListing = {
+  id: "ON-GUWAHATI-001",
+  name: "Virtual Office",
+  area: "Guwahati",
+  citySlug: "guwahati",
+  city: "Guwahati",
+  state: "Assam",
+  stateSlug: "assam",
+  image: "/offices/guwahati/1.jpg",
+  gallery: ["/offices/guwahati/1.jpg"],
+  services: ["business-registration", "gst-registration", "mailing-address"],
+  pricing: { "business-registration": 16500, "gst-registration": 16500, "mailing-address": 14000 },
+  amenities: ["Reception Support", "Courier Handling", "Meeting Room"],
+  description: "A ready-to-use business address in Guwahati, Assam. Fully compliant for GST, business registration and professional mailing needs.",
+  landmarks: [],
+};
+
 const REAL_OFFICES: OfficeListing[] = [
   SAFALTA_SQUARE,
   GANGANAGAR_WORKSPACE,
   INDIRANAGAR_WORKSPACE,
   KORAMANGALA_WORKSPACE,
   HMT_LAYOUT_WORKSPACE,
+  THANE_WORKSPACE,
+  AHMEDABAD_WORKSPACE,
+  SURAT_WORKSPACE,
+  SONIPAT_WORKSPACE,
+  FARIDABAD_WORKSPACE,
+  PARK_STREET_WORKSPACE,
+  SP_MUKHERJEE_ROAD_WORKSPACE,
+  PATNA_WORKSPACE,
+  GUWAHATI_WORKSPACE,
 ];
 
 export const OFFICES: OfficeListing[] = REAL_OFFICES;

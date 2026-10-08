@@ -4,7 +4,7 @@ import { Star, MapPin, Check, Users, ArrowRight, Shield } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from "@/components/ui/breadcrumb";
-import { OFFICE_ADDONS, SERVICE_LABEL, inr, type ServiceType } from "@/lib/mock-data";
+import { OFFICE_ADDONS, SERVICE_LABEL, inr, onOfficeImageError, type ServiceType } from "@/lib/mock-data";
 import { googleMapsEmbedUrl } from "@/lib/config";
 import { QuoteForm } from "@/components/QuoteForm";
 import { officeQueryOptions, officesQueryOptions } from "@/lib/queries/offices";
@@ -82,8 +82,8 @@ function Details() {
         <div className="grid gap-8 lg:grid-cols-[400px_minmax(0,1fr)] lg:gap-12">
           {/* Gallery */}
           <div className="lg:sticky lg:top-24 lg:self-start">
-            <img src={office.gallery[activeImage]} alt={office.name} className="aspect-4/5 w-full rounded-2xl object-cover shadow-md" />
-            <div className="mt-3 flex gap-2">
+            <img src={office.gallery[activeImage]} alt={office.name} onError={onOfficeImageError} className="aspect-4/5 w-full rounded-2xl object-cover shadow-md" />
+            <div className={`mt-3 flex gap-2 ${office.gallery.length < 2 ? "hidden" : ""}`}>
               {office.gallery.map((g, i) => (
                 <button
                   key={i}
@@ -93,7 +93,7 @@ function Details() {
                   aria-pressed={activeImage === i}
                   className={`min-w-0 flex-1 overflow-hidden rounded-lg border-2 transition ${activeImage === i ? "border-primary" : "border-transparent opacity-70 hover:opacity-100"}`}
                 >
-                  <img src={g} alt="" className="aspect-4/3 w-full object-cover" />
+                  <img src={g} alt="" onError={onOfficeImageError} className="aspect-4/3 w-full object-cover" />
                 </button>
               ))}
             </div>
