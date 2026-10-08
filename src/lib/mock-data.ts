@@ -23,6 +23,7 @@ export interface City {
 export const OFFICE_FALLBACK_IMAGE = "/offices/placeholder.svg";
 
 export const CITIES: City[] = [
+  { slug: "hyderabad", name: "Hyderabad", state: "Telangana", stateSlug: "telangana", startingPrice: 8500, officeCount: 1, image: "/offices/hyderabad/1.jpg", areas: ["Hyderabad"] },
   { slug: "guwahati", name: "Guwahati", state: "Assam", stateSlug: "assam", startingPrice: 14000, officeCount: 1, image: "/offices/guwahati/1.jpg", areas: ["Guwahati"] },
   { slug: "patna", name: "Patna", state: "Bihar", stateSlug: "bihar", startingPrice: 10000, officeCount: 1, image: "/offices/patna/1.jpg", areas: ["Patna"] },
   { slug: "kolkata", name: "Kolkata", state: "West Bengal", stateSlug: "west-bengal", startingPrice: 8000, officeCount: 2, image: "/offices/kolkata/park-street/1.jpg", areas: ["Park Street", "S.P. Mukherjee Road"] },
@@ -314,6 +315,23 @@ const GUWAHATI_WORKSPACE: OfficeListing = {
   landmarks: [],
 };
 
+const HYDERABAD_WORKSPACE: OfficeListing = {
+  id: "ON-HYDERABAD-001",
+  name: "Virtual Office",
+  area: "Hyderabad",
+  citySlug: "hyderabad",
+  city: "Hyderabad",
+  state: "Telangana",
+  stateSlug: "telangana",
+  image: "/offices/hyderabad/1.jpg",
+  gallery: [1, 2, 3, 4].map(n => `/offices/hyderabad/${n}.jpg`),
+  services: ["business-registration", "gst-registration", "mailing-address"],
+  pricing: { "business-registration": 10500, "gst-registration": 9500, "mailing-address": 8500 },
+  amenities: ["Reception Support", "Courier Handling", "Meeting Room"],
+  description: "A ready-to-use business address in Hyderabad, Telangana. Fully compliant for GST, business registration and professional mailing needs.",
+  landmarks: [],
+};
+
 const REAL_OFFICES: OfficeListing[] = [
   SAFALTA_SQUARE,
   GANGANAGAR_WORKSPACE,
@@ -329,6 +347,7 @@ const REAL_OFFICES: OfficeListing[] = [
   SP_MUKHERJEE_ROAD_WORKSPACE,
   PATNA_WORKSPACE,
   GUWAHATI_WORKSPACE,
+  HYDERABAD_WORKSPACE,
 ];
 
 export const OFFICES: OfficeListing[] = REAL_OFFICES;
