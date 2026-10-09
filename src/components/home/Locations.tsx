@@ -16,13 +16,13 @@ export const HIGHLIGHTS = [
 const HIGHLIGHT_NOTES = [
   "Addresses in top business hubs",
   "Rent agreement, NOC & utility bill",
-  "Live in 24–72 hours after KYC",
+  "Live in 0–48 hours after KYC",
   "Dedicated help in every city",
 ];
 
 const STATS = [
-  ["14+", "Cities"],
-  ["10,000+", "Businesses"],
+  ["15+", "Cities"],
+  ["1,000+", "Businesses"],
   [String(STATES.length), "States live"],
 ] as const;
 
@@ -48,7 +48,7 @@ export function Locations() {
       eyebrow="Our Locations"
       title={
         <>
-          14+ Cities
+          15+ Cities
           <br />
           Across India
         </>

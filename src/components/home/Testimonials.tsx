@@ -5,8 +5,8 @@ import { TESTIMONIALS } from "@/lib/mock-data";
 import { Section } from "./Section";
 
 const STATS = [
-  { icon: Users, value: "10,000+", label: "Businesses", color: "text-orange", filled: false },
-  { icon: Star, value: "14+", label: "Cities", color: "text-orange", filled: true },
+  { icon: Users, value: "1,000+", label: "Businesses", color: "text-orange", filled: false },
+  { icon: Star, value: "15+", label: "Cities", color: "text-orange", filled: true },
   { icon: Star, value: "4.8/5", label: "Rating", color: "text-orange", filled: true },
   { icon: ShieldCheck, value: "99%", label: "Client Satisfaction", color: "text-primary", filled: false },
 ];
@@ -35,7 +35,7 @@ export function Testimonials() {
   const visible = [0, 1, 2].map((o) => TESTIMONIALS[(index + o) % count]);
 
   return (
-    <Section id="testimonials" eyebrow="Testimonials" title={<>Trusted by <span className="text-primary">10,000+</span> Businesses Across India</>} sub="From startups to established enterprises, businesses across India trust OfficeMate for their virtual office needs." muted>
+    <Section id="testimonials" eyebrow="Testimonials" title={<>Trusted by <span className="text-primary">1,000+</span> Businesses Across India</>} sub="From startups to established enterprises, businesses across India trust OfficeMate for their virtual office needs." muted>
       <div className="relative">
         <Annotation text="Real Businesses Real Growth" className="absolute -top-16 right-0" rotate={5} />
 
@@ -116,7 +116,7 @@ export function Testimonials() {
 
         <div className="mt-8 flex flex-wrap items-center justify-center gap-x-8 gap-y-3 text-sm font-semibold text-navy/50">
           {LOGOS.map((l) => <span key={l}>{l}</span>)}
-          <span className="text-primary">and 10,000+ more...</span>
+          <span className="text-primary">and 1,000+ more...</span>
         </div>
       </div>
     </Section>
