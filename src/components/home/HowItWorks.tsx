@@ -8,7 +8,7 @@ const STEPS = [
   { icon: ClipboardList, title: "Submit Details", desc: "Fill in your business requirements." },
   { icon: Upload, title: "Share Documents", desc: "Upload required KYC documents." },
   { icon: ShieldCheck, title: "Verification", desc: "Our team verifies your documents." },
-  { icon: CheckCircle2, title: "Get Approval", desc: "Receive confirmation within 24-72 hours." },
+  { icon: CheckCircle2, title: "Get Approval", desc: "Receive confirmation within 0-48 hours." },
   { icon: Rocket, title: "Go Live", desc: "Start using your virtual office address." },
 ];
 

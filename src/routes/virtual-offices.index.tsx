@@ -17,7 +17,7 @@ const virtualOfficesSearchSchema = z.object({
 
 export const Route = createFileRoute("/virtual-offices/")({
   validateSearch: virtualOfficesSearchSchema,
-  head: () => seoHead({ title: "Virtual Offices in 14+ Indian Cities — OfficeMate", description: "Compare verified virtual offices for GST, business registration and mailing across Indian cities. Transparent pricing, quick KYC and dedicated support.", path: "/virtual-offices" }),
+  head: () => seoHead({ title: "Virtual Offices in 15+ Indian Cities — OfficeMate", description: "Compare verified virtual offices for GST, business registration and mailing across Indian cities. Transparent pricing, quick KYC and dedicated support.", path: "/virtual-offices" }),
   component: VirtualOffices,
 });
 

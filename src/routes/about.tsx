@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { seoHead } from "@/lib/seo";
 
 export const Route = createFileRoute("/about")({
-  head: () => seoHead({ title: "About OfficeMate — Virtual Office Provider in India", description: "OfficeMate helps founders, freelancers and sellers set up compliant business addresses in 14+ Indian cities, with verified documentation and dedicated support.", path: "/about" }),
+  head: () => seoHead({ title: "About OfficeMate — Virtual Office Provider in India", description: "OfficeMate helps founders, freelancers and sellers set up compliant business addresses in 15+ Indian cities, with verified documentation and dedicated support.", path: "/about" }),
   component: About,
 });
 
@@ -17,7 +17,7 @@ const MISSION_VISION_VALUES: IconCard[] = [
 ];
 
 const APPROACH: IconCard[] = [
-  { icon: MapPin, title: "Pan-India coverage", body: "14+ cities. Every metro plus emerging Tier-2 hubs." },
+  { icon: MapPin, title: "Pan-India coverage", body: "15+ cities. Every metro plus emerging Tier-2 hubs." },
   { icon: Users, title: "Customer-first", body: "Real humans, real answers, real accountability." },
   { icon: TrendingUp, title: "Built to scale", body: "From your first company to your tenth GST filing." },
 ];
@@ -48,7 +48,7 @@ function About() {
 
       <section className="section-y bg-surface">
         <div className="container-x grid gap-8 lg:grid-cols-4">
-          {[["14+", "Cities served"], ["10k+", "Businesses supported"], ["24-72h", "Avg setup time"], ["4.8★", "Customer rating"]].map(([a, b]) => (
+          {[["15+", "Cities served"], ["1k+", "Businesses supported"], ["0-48h", "Avg setup time"], ["4.8★", "Customer rating"]].map(([a, b]) => (
             <div key={a} className="text-center">
               <div className="text-4xl font-extrabold text-primary">{a}</div>
               <div className="text-sm text-muted-foreground">{b}</div>
