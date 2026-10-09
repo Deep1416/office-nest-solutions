@@ -47,7 +47,7 @@ const SECURITY_POINTS = [
   "Encrypted & secure storage",
   "Used only for verification",
   "Completely confidential",
-  "Quick processing (24-72 hrs)",
+  "Quick processing (0-48 hrs)",
 ];
 
 export function Kyc() {

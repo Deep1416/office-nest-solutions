@@ -388,7 +388,7 @@ export const SERVICE_CONTENT: Record<string, ServiceContent> = {
     documents: ["PAN card of directors", "Aadhaar / passport", "Passport-size photograph", "Utility bill (recent)", "Board resolution (if applicable)", "Cancelled cheque"],
     benefits: [
       { title: "MCA-compliant", body: "Every address passes MCA scrutiny. No rejections.", icon: "Shield" },
-      { title: "Fast turnaround", body: "Documents delivered in 24–72 hours.", icon: "Zap" },
+      { title: "Fast turnaround", body: "Documents delivered in 0–48 hours.", icon: "Zap" },
       { title: "Dedicated support", body: "One account manager, end-to-end.", icon: "Users" },
       { title: "Complete kit", body: "Rent agreement, NOC and utility bill included.", icon: "FileText" },
     ],
