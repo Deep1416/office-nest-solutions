@@ -6,9 +6,9 @@ import { Annotation } from "@/components/Annotation";
 import { CallbackTrigger } from "@/components/CallbackModal";
 
 const STATS = [
-  [MapPin, "14+", "Cities"],
-  [Users, "10,000+", "Businesses"],
-  [Clock, "24-72 Hours", "Setup Time"],
+  [MapPin, "15+", "Cities"],
+  [Users, "1,000+", "Businesses"],
+  [Clock, "0-48 Hours", "Setup Time"],
   [ShieldCheck, "Dedicated", "Support"],
 ] as const;
 
@@ -45,7 +45,7 @@ export function Hero() {
             </h1>
           </div>
           <p className="mt-4 max-w-md text-base text-foreground sm:text-[17px]">
-            Get a prestigious business address, GST registration support, and complete virtual office solutions in 14+ cities.
+            Get a prestigious business address, GST registration support, and complete virtual office solutions in 15+ cities.
           </p>
           <div className="mt-6 flex flex-wrap gap-4">
             <Button asChild size="lg" className="bg-orange text-orange-foreground shadow-cta hover:bg-orange-600">
