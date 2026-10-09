@@ -22,7 +22,7 @@ const FAQS = [
   },
   {
     q: "How long does the setup process take?",
-    a: "Most addresses go live within 24–72 hours after KYC verification.",
+    a: "Most addresses go live within 0–48 hours after KYC verification.",
   },
   {
     q: "Can I upgrade or change my plan later?",

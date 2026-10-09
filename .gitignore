@@ -6,7 +6,6 @@ yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
-.env
 
 node_modules
 dist
@@ -22,8 +21,6 @@ dist-ssr
 .dev.vars
 
 # Editor directories and files
-.vscode/*
-!.vscode/extensions.json
 .idea
 .DS_Store
 *.suo
@@ -37,3 +34,5 @@ temp_interactive_push.bat
 
 # Vercel
 .vercel
+.gitignore
+config.bat
